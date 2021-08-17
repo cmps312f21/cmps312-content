@@ -12,7 +12,7 @@ object SurahRepository {
         surahs = Json.decodeFromString(jsonData)
     }
 
-    val totalAyat = surahs.sumBy { it.ayaCount }
+    val totalAyat = surahs.sumOf { it.ayaCount }
 
     // Get Surah Count by Surah type (Meccan vs. Medinan)
     val surahCountByType = surahs.groupingBy { it.type }.eachCount()

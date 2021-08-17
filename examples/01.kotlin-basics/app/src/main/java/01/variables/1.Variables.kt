@@ -17,6 +17,13 @@ fun main() {
     val age = 30 // integer
     var married = false // boolean
 
+    // 'val' cannot be reassigned --> The following produce errors:
+    // name = "James Smith"
+    // age = 31 --> Error
+
+    // 'var' can be reassigned --> No error produced
+    married = true
+
     //Mutable - can be changed
     var x = 5
     x += 1
@@ -25,13 +32,6 @@ fun main() {
     // Note: When no value is assigned, we must specify the datatype
     val lastname: String
     val month: Int
-
-    // 'val' cannot be reassigned --> The following produce errors:
-    // name = "James Smith"
-    // age = 31 --> Error
-
-    // 'var' can be reassigned --> No error produced
-    married = true
 
     // Printing results using 'String templates' instead of string concatenation.
     println("> Name: $name")

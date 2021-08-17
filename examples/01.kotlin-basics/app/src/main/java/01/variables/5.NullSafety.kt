@@ -24,9 +24,11 @@ fun main() {
     val measure = iCanBeNull?.length // Only executes if 'iCanBeNull' is not null
     val size = iCannotBeNull.length // It is guaranteed that length will not be null
 
+    println("measure: $measure")
     // Notice the below statement does not crash the program.
     measure.toString()
 
     // Version 4: Using the elvis operator to still get a value in case 'iCanBeNull' is null
     val distance = iCanBeNull?.length ?: -1
+    println("distance: $distance")
 }

@@ -5,7 +5,7 @@ Infix function must satisfy the following requirements:
 - Must be member function or extension function.
 - Must have a single parameter.
 - The parameter must not accept a variable number of arguments
-   and must have no default value.
+  and must have no default value.
  */
 infix fun Int.add(b : Int) : Int = this + b
 
