@@ -1,18 +1,22 @@
 package `06`.collections
 
+import android.annotation.TargetApi
+import android.os.Build
+
+@TargetApi(Build.VERSION_CODES.N)
 fun main() {
 
     // immutable list and mutable list
     val numsList = listOf(1, 2, 3)
     println(numsList)
     val sum = numsList.sum() // => 6
-    val result = numsList.reduce { sum, n -> sum + n }
+    val result = numsList.reduce { acc, n -> acc + n }
     println("numsList sum = $result")
 
     val mutableNumsList = mutableListOf(1, 2, 3)
     mutableNumsList.add(4)
 
-    listOf("a", "b", "cc").sumBy { it.length } // => 4
+    listOf("a", "b", "cc").sumOf { it.length } // => 4
 
     // immutable set and mutable set
     val colors = setOf("red", "blue", "yellow")

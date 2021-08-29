@@ -16,9 +16,12 @@ fun main() {
     // .with changes the object  but DOES returns Unit (which is equivalent to void in Java)
     // .also execute some processing on the object and returns it
     with(conference) {
-        conference.city = "Doha"
-        conference.fee = 200.0
+        city = "Kabul"
+        fee = 100.0
     }.also { println(it) }
+
+    // conference object did change using with
+    println(conference)
 
     // Version 3 ** Best 👍 ** - Change the conference city and fee then print it
     // .apply changes the object and returns it
@@ -27,4 +30,7 @@ fun main() {
         city = "Doha"
         fee = 200.0
     }.also { println(it) }
+
+    // conference object did change using apply
+    println(conference)
 }

@@ -1,5 +1,7 @@
 package collections
 
+import java.util.*
+
 fun main() {
     /* Sequence allows lazy evaluation:
     multi-step processing of sequences is executed lazily when possible:
@@ -7,7 +9,7 @@ fun main() {
     chain is requested.
      */
     val numbersSequence = sequenceOf("four", "three", "two", "one")
-    numbersSequence.map { it.toUpperCase() }
+    numbersSequence.map { it.uppercase() }
                    .take(2)
                    .joinToString()
                     //.also execute some processing on the object and returns it

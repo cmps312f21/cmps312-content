@@ -14,5 +14,6 @@ fun people(): List<Person> =
     }
 
 fun main() {
+    println( names.zip(ages) )
     people().sortedBy { it.name }.forEach(::println)
 }

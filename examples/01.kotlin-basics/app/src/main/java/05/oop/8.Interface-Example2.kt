@@ -26,10 +26,6 @@ class DBBookRepository() : BookRepository {
 }
 
 fun main() {
-    val input = "Test"
-    val num = try { input.toInt() } catch (e: NumberFormatException){ null }
-    println(num)
-
     val bookRepository: BookRepository
     bookRepository = DBBookRepository()
     // Programming more generic - See polymorphism studied in CMPS 251

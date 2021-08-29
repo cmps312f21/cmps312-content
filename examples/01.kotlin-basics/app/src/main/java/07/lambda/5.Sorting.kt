@@ -9,7 +9,7 @@ fun main() {
     println(sorted)
 
     println("\n>Sorted by length and then alphabetically:")
-    //Sort strings by length (shortest, longest) and then alphabetically
+    //Sort strings by length (shortest to longest) and then alphabetically
     sorted = names.sortedWith( compareBy( { it.length }, { it }) )
     println(sorted)
 
