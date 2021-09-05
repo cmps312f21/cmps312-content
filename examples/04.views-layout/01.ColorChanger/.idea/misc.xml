@@ -3,10 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/_Teaching/cmps312f21/cmps312-content/examples/04.views-layout/01.ColorChanger/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/_Teaching/cmps312f21/cmps312-content/examples/04.views-layout/01.ColorChanger/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/_Teaching/cmps312f21/cmps312-content/examples/04.views-layout/01.ColorChanger/app/src/main/res/layout/activity_textview.xml" value="0.1" />
+        <entry key="..\:/_Teaching/cmps312f21/cmps312-content/examples/04.views-layout/01.ColorChanger/app/src/main/res/layout/example_layout.xml" value="0.3333333333333333" />
+        <entry key="..\:/_Teaching/cmps312f21/cmps312-content/examples/04.views-layout/01.ColorChanger/app/src/main/res/layout/test_layout.xml" value="0.4466666666666667" />
       </map>
     </option>
   </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
 </project>

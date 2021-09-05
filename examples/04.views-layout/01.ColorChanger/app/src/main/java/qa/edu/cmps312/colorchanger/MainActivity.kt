@@ -11,8 +11,7 @@ class MainActivity : AppCompatActivity() {
 
         changeColorBtn.setOnClickListener {
             greetingTv.setTextColor(getRandomColor())
-            greetingTv.text = "Salam"
-
+            greetingTv.text = "Salamou Aleikoum"
         }
     }
 }
