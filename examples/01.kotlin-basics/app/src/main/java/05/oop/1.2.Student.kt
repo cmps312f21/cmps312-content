@@ -7,11 +7,16 @@ package oop
         2. If the child class has no primary constructor, then each secondary
             constructor has to initialize the base type using the 'super' keyword.
  */
+
+class Address(val street: String = "", val city: String = "")
+
 class Student(firstName: String,
               lastName: String,
               age: Int,
               val gpa: Double
 ) : Person(firstName, lastName, age) {
+
+    var address = Address()
 
     /*
     - Override a base class method

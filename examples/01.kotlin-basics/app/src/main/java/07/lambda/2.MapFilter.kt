@@ -28,4 +28,11 @@ fun main() {
     val max = nums.maxOrNull()
     val min = nums.minOrNull()
     println("\nSum: $sum, Count: $count, Average: $average, Max: $max, Min: $min, Product: $product")
+
+    // mapNotNull
+    val strings = listOf("1", "3", "5", "a", "c", "d")
+    val ints = strings.mapNotNull { it.toIntOrNull() }
+    println(ints)
+
+
 }

@@ -3,22 +3,20 @@ package oop
 import kotlin.math.pow
 
 abstract class Shape {
-    abstract val area: Double
+    abstract fun area() : Double
     open val name: String
         get() = "Shape"
 }
 
 class Rectangle(val width: Double, val height: Double) : Shape() {
-    override val area: Double
-        get() = width * height
+    override fun area() = width * height
 
     override val name: String
         get() = "Rectangle"
 }
 
 class Circle(val radius: Double) : Shape() {
-    override val area: Double
-        get() = Math.PI * radius.pow(2)
+    override fun area() = Math.PI * radius.pow(2)
 
     override val name: String
         get() = "Circle"
@@ -37,8 +35,8 @@ fun main() {
             is Rectangle -> "Its width is ${it.width} and its height is ${it.height}"
             else -> ""
         }
-        println("${it.name} area is ${it.area}. $shapeInfo")
+        println("${it.name} area is ${it.area()}. $shapeInfo")
     }
-    val areaSum = shapes.sumByDouble { it.area }
+    val areaSum = shapes.sumOf { it.area() }
     println("Sum of area of all shapes ${"%.2f".format(areaSum)}")
 }
