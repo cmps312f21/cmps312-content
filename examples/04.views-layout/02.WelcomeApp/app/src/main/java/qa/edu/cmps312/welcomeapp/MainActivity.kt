@@ -59,6 +59,7 @@ fun NameEditor(name: String, nameChange: (String) -> Unit) {
 @Composable
 fun Welcome(name: String) {
     // Internal state. It observed is => when changed to UI part that uses it get recomposed
+    // UI = f(state)
     var backgroundColor by remember { mutableStateOf(Color.White) }
     var count by remember { mutableStateOf(0) }
 
