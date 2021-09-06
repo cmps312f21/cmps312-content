@@ -41,17 +41,17 @@ fun WelcomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        NameEditor(name = userName, nameChanged = { newName -> userName = newName })
+        NameEditor(name = userName, nameChange = { newName -> userName = newName })
         Spacer(modifier = Modifier.size(16.dp))
         Welcome(userName)
     }
 }
 
 @Composable
-fun NameEditor(name: String, nameChanged: (String) -> Unit) {
+fun NameEditor(name: String, nameChange: (String) -> Unit) {
     OutlinedTextField(
         value = name,
-        onValueChange = { nameChanged(it) },
+        onValueChange = { nameChange(it) },
         label = { Text("Your name") }
     )
 }
@@ -62,10 +62,8 @@ fun Welcome(name: String) {
     var backgroundColor by remember { mutableStateOf(Color.White) }
     var count by remember { mutableStateOf(0) }
 
-    // There are multiple methods available to load an image resource in Compose. However, it would
-    // be advisable to use the painterResource method as it loads an image resource asynchronously
-    val image = painterResource(R.drawable.img_yahala)
-
+    // Modifiers modify the composable that its applied to.
+    // In this example, we configure the column to have a padding of 16 dp
     val padding = 16.dp
     Column(
         modifier = Modifier
@@ -75,13 +73,9 @@ fun Welcome(name: String) {
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
-        // Image is a pre-defined composable that lays out and draws a given [ImageBitmap].
-
-        // You can think of Modifiers as implementations of the decorators pattern that are
-        // used to modify the composable that its applied to. In this example, we configure the
-        // Image composable to have a height of 400 dp.
+        // Image is a pre-defined composable to display an image
         Image(
-            painter = image,
+            painter = painterResource(R.drawable.img_yahala),
             contentDescription = "Yahala Image",
             modifier = Modifier
                 .sizeIn(maxHeight = 400.dp)
