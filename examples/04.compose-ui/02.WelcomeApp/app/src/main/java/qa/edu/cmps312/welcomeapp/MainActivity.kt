@@ -3,8 +3,6 @@ package qa.edu.cmps312.welcomeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -38,16 +36,17 @@ fun WelcomeScreen() {
     // State in an app = any value that can change over time
     // State hoisting in Compose is a pattern of moving state to
     // the caller to make a composable stateless
-    var userName by remember { mutableStateOf("Android") }
+    var name by remember { mutableStateOf("Android") }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        NameEditor(name = userName, nameChange = { newName -> userName = newName })
+        NameEditor(name = name, nameChange = { newName -> name = newName })
         Spacer(modifier = Modifier.size(16.dp))
-        Welcome(userName)
+        Welcome(name)
         Spacer(modifier = Modifier.size(16.dp))
+        //BoxDemo()
         //JetpackCompose()
     }
 }
@@ -74,7 +73,6 @@ fun Welcome(name: String) {
     Column(
         modifier = Modifier
             .padding(padding)
-            //.fillMaxSize()
             .background(color = backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -121,6 +119,31 @@ fun JetpackCompose() {
     }
 }
 
+@Composable
+fun BoxDemo() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        var count by remember { mutableStateOf(10) }
+        Row {
+            Text(
+                text = "-  ",
+                modifier = Modifier.clickable {
+                    count -= 1
+                }
+            )
+            Text(text = "${count}")
+            Text(
+                text = "  +",
+                modifier = Modifier.clickable {
+                    count += 1
+                }
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -128,16 +151,3 @@ fun DefaultPreview() {
         WelcomeScreen()
     }
 }
-
-/*
-@Composable
-fun Trendings(newsList: List<News>){
-    if (newsList.isEmpty()) {
-        Text("You have no news today.")
-    } else {
-        for (news in newsList) {
-            NewsCard(news)
-        }
-    }
-}
- */
