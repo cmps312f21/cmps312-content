@@ -3,8 +3,11 @@ package qa.edu.cmps312.welcomeapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -44,6 +47,8 @@ fun WelcomeScreen() {
         NameEditor(name = userName, nameChange = { newName -> userName = newName })
         Spacer(modifier = Modifier.size(16.dp))
         Welcome(userName)
+        Spacer(modifier = Modifier.size(16.dp))
+        //JetpackCompose()
     }
 }
 
@@ -69,7 +74,7 @@ fun Welcome(name: String) {
     Column(
         modifier = Modifier
             .padding(padding)
-            .fillMaxSize()
+            //.fillMaxSize()
             .background(color = backgroundColor),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -79,7 +84,7 @@ fun Welcome(name: String) {
             painter = painterResource(R.drawable.img_yahala),
             contentDescription = "Yahala Image",
             modifier = Modifier
-                .sizeIn(maxHeight = 400.dp)
+                .sizeIn(maxHeight = 300.dp)
                 .padding(padding)
         )
         Spacer(Modifier.size(padding))
@@ -94,6 +99,28 @@ fun Welcome(name: String) {
     }
 }
 
+@Composable
+fun JetpackCompose() {
+    Card {
+        var expanded by remember { mutableStateOf(false) }
+        Column (
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.clickable { expanded = !expanded   })
+        {
+            Image(painter =
+                painterResource(R.drawable.img_compose_logo),
+                contentDescription = "Jetpack compose logo",
+                modifier = Modifier.sizeIn(maxHeight = 300.dp))
+            if (expanded) {
+                Text(
+                    text = "Jetpack Compose",
+                    style = MaterialTheme.typography.h4,
+                )
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -101,3 +128,16 @@ fun DefaultPreview() {
         WelcomeScreen()
     }
 }
+
+/*
+@Composable
+fun Trendings(newsList: List<News>){
+    if (newsList.isEmpty()) {
+        Text("You have no news today.")
+    } else {
+        for (news in newsList) {
+            NewsCard(news)
+        }
+    }
+}
+ */
