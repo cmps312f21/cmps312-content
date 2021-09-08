@@ -42,7 +42,7 @@ fun WelcomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        NameEditor(name = name, nameChange = { newName -> name = newName })
+        NameEditor(name = name, onNameChange = { name = it })
         Spacer(modifier = Modifier.size(16.dp))
         Welcome(name)
         Spacer(modifier = Modifier.size(16.dp))
@@ -52,10 +52,10 @@ fun WelcomeScreen() {
 }
 
 @Composable
-fun NameEditor(name: String, nameChange: (String) -> Unit) {
+fun NameEditor(name: String, onNameChange: (String) -> Unit) {
     OutlinedTextField(
         value = name,
-        onValueChange = { nameChange(it) },
+        onValueChange = onNameChange,
         label = { Text("Your name") }
     )
 }
