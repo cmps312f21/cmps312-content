@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Welcome App</string>
-    <string name="title_activity_list">ListActivity</string>
-    <string name="title_activity_main2">MainActivity2</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
-</resources>
