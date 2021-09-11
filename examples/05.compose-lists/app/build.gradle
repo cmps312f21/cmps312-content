@@ -66,6 +66,8 @@ dependencies {
 
     //For Navigation Component
     implementation "androidx.navigation:navigation-compose:2.4.0-alpha08"
+    //For Kotlin Serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
     //For using material icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 }

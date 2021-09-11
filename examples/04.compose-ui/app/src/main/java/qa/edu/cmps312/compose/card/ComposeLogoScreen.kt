@@ -20,7 +20,7 @@ import qa.edu.cmps312.compose.ui.theme.ComposeUITheme
 
 @Composable
 fun ComposeLogoScreen() {
-    Card (elevation = 20.dp) {
+    Card (elevation = 10.dp) {
         var expanded by remember { mutableStateOf(false) }
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -34,7 +34,7 @@ fun ComposeLogoScreen() {
             if (expanded) {
                 Text(
                     text = "Jetpack Compose",
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.h4
                 )
             }
         }

@@ -11,24 +11,20 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import qa.edu.cmps312.compose.basics.ClicksCounterScreen
-import qa.edu.cmps312.compose.basics.HelloScreen
-import qa.edu.cmps312.compose.card.ComposeLogoScreen
-import qa.edu.cmps312.compose.layout.weight.ResponsiveScreen
-import qa.edu.cmps312.compose.modifier.clickable.CounterScreen
-import qa.edu.cmps312.compose.state.WelcomeScreen
-import qa.edu.cmps312.compose.ui.theme.ComposeUITheme
-import qa.edu.cmps312.compose.widgets.button.ButtonScreen
+import qa.edu.cmps312.compose.lists.SurahColumnScreen
+import qa.edu.cmps312.compose.lists.SurahLazyColumnScreen
+import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeUITheme {
+            ComposeListsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     MainScreen()
@@ -57,28 +53,12 @@ fun MainScreen() {
 
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.ComposeLogo.route) {
-        composable(NavigationItem.Hello.route) {
-            HelloScreen()
+    NavHost(navController, startDestination = NavigationItem.SurahLazyColumn.route) {
+        composable(NavigationItem.SurahColumn.route) {
+            SurahColumnScreen()
         }
-        composable(NavigationItem.ClicksCounter.route) {
-            ClicksCounterScreen()
-        }
-        composable(NavigationItem.ComposeLogo.route) {
-            ComposeLogoScreen()
-        }
-        composable(NavigationItem.Welcome.route) {
-            WelcomeScreen()
-        }
-        composable(NavigationItem.Counter.route) {
-            CounterScreen()
-        }
-        composable(NavigationItem.Buttons.route) {
-           ButtonScreen()
-        }
-
-        composable(NavigationItem.Responsive.route) {
-            ResponsiveScreen()
+        composable(NavigationItem.SurahLazyColumn.route) {
+            SurahLazyColumnScreen()
         }
     }
 }
@@ -86,8 +66,12 @@ fun Navigation(navController: NavHostController) {
 @Composable
 fun TopBar(onRouteChange: (String) -> Unit) {
    TopAppBar(
-        title = { Text("Compose UI")},
+        title = { Text("Compose Lists")},
         actions = {
+            IconButton(onClick = { onRouteChange(NavigationItem.SurahColumn.route) }) {
+                Icon(painterResource(id = NavigationItem.SurahColumn.icon!!), "Quran Surahs")
+            }
+
             TopBarMenu(onRouteChange)
         }
    )
@@ -98,15 +82,8 @@ fun TopBarMenu(onRouteChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
-        NavigationItem.Hello,
-        NavigationItem.ComposeLogo,
-        NavigationItem.Divider,
-        NavigationItem.ClicksCounter,
-        NavigationItem.Welcome,
-        NavigationItem.Counter,
-        NavigationItem.Divider,
-        NavigationItem.Buttons,
-        NavigationItem.Responsive
+        NavigationItem.SurahColumn,
+        NavigationItem.SurahLazyColumn
     )
 
     Box(Modifier.wrapContentSize(Alignment.TopEnd)) {

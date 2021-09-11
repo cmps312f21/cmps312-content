@@ -5,12 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import qa.edu.cmps312.compose.ui.theme.ComposeUITheme
 
 @Composable
 fun CounterScreen() {
@@ -24,14 +27,16 @@ fun CounterScreen() {
                 text = "-",
                 modifier = Modifier.clickable {
                     count -= 1
-                }
+                },
+                style = MaterialTheme.typography.h5
             )
-            Text(text = "$count")
+            Text(text = "$count", style = MaterialTheme.typography.h5)
             Text(
                 text = "+",
                 modifier = Modifier.clickable {
                     count += 1
-                }
+                },
+                style = MaterialTheme.typography.h5
             )
         }
     }
@@ -40,5 +45,7 @@ fun CounterScreen() {
 @Preview
 @Composable
 fun CounterScreenPreview() {
-    CounterScreen()
+    ComposeUITheme {
+        CounterScreen()
+    }
 }
