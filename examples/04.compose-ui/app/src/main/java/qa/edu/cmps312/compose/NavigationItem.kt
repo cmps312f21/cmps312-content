@@ -8,5 +8,6 @@ sealed class NavigationItem(var route: String, var title: String, var icon: Int?
     object Counter : NavigationItem("counter", "Counter (Modifier.clickable)")
     object Responsive : NavigationItem("responsive", "Responsive Screen (Responsive Design)")
     object Buttons : NavigationItem("buttons", "Buttons")
+    object Styling : NavigationItem("styling", "Styling using Modifiers")
     object Divider: NavigationItem("Divider", "Divider")
 }

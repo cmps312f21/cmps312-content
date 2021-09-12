@@ -20,6 +20,7 @@ import qa.edu.cmps312.compose.basics.HelloScreen
 import qa.edu.cmps312.compose.card.ComposeLogoScreen
 import qa.edu.cmps312.compose.layout.weight.ResponsiveScreen
 import qa.edu.cmps312.compose.modifier.clickable.CounterScreen
+import qa.edu.cmps312.compose.modifier.styling.StylingScreen
 import qa.edu.cmps312.compose.state.WelcomeScreen
 import qa.edu.cmps312.compose.ui.theme.ComposeUITheme
 import qa.edu.cmps312.compose.widgets.button.ButtonScreen
@@ -37,7 +38,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Composable
 fun MainScreen() {
@@ -77,6 +77,10 @@ fun Navigation(navController: NavHostController) {
            ButtonScreen()
         }
 
+        composable(NavigationItem.Styling.route) {
+            StylingScreen()
+        }
+
         composable(NavigationItem.Responsive.route) {
             ResponsiveScreen()
         }
@@ -106,6 +110,8 @@ fun TopBarMenu(onRouteChange: (String) -> Unit) {
         NavigationItem.Counter,
         NavigationItem.Divider,
         NavigationItem.Buttons,
+        NavigationItem.Divider,
+        NavigationItem.Styling,
         NavigationItem.Responsive
     )
 
