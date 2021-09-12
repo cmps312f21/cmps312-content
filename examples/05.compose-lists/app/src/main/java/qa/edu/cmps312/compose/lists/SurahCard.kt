@@ -1,6 +1,7 @@
 package qa.edu.cmps312.compose.lists
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -20,11 +21,11 @@ fun SurahCard(surah: Surah) {
     val lightYellow = Color(android.graphics.Color.rgb(255,255,241))
     val lightGreen = Color(android.graphics.Color.rgb(199, 246, 182))
     Card (elevation = 10.dp,
-        shape = RoundedCornerShape(8.dp),
         backgroundColor = if (surah.type == "Medinan") lightGreen else lightYellow,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 5.dp)
+            .border(width = 2.dp, color = Color.LightGray, shape = RoundedCornerShape(8.dp))
     ) {
         Row (verticalAlignment = Alignment.CenterVertically,
              horizontalArrangement = Arrangement.spacedBy(4.dp),
