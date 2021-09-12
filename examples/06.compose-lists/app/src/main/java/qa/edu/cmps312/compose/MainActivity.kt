@@ -1,6 +1,8 @@
 package qa.edu.cmps312.compose
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -11,13 +13,15 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import qa.edu.cmps312.compose.lists.SurahListScreen
-import qa.edu.cmps312.compose.lists.SurahLazyListScreen
+import qa.edu.cmps312.compose.components.SimpleDialog
+import qa.edu.cmps312.compose.surah.SurahListScreen
+import qa.edu.cmps312.compose.surah.SurahLazyListScreen
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,7 +37,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Composable
 fun MainScreen() {

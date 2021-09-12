@@ -17,7 +17,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import qa.edu.cmps312.compose.layout.weight.ResponsiveScreen
 import qa.edu.cmps312.compose.ui.theme.UIComponentsTheme
-import qa.edu.cmps312.compose.components.button.ButtonScreen
+import qa.edu.cmps312.compose.components.ButtonScreen
+import qa.edu.cmps312.compose.components.RadioButtonScreen
+import qa.edu.cmps312.compose.components.SwitchScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +53,17 @@ fun MainScreen() {
 
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.Buttons.route) {
-        composable(NavigationItem.Buttons.route) {
+    NavHost(navController, startDestination = NavigationItem.Button.route) {
+        composable(NavigationItem.Button.route) {
            ButtonScreen()
+        }
+
+        composable(NavigationItem.RadioButton.route) {
+            RadioButtonScreen()
+        }
+
+        composable(NavigationItem.Switch.route) {
+            SwitchScreen()
         }
 
         composable(NavigationItem.Responsive.route) {
@@ -77,9 +87,11 @@ fun TopBarMenu(onRouteChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
-        NavigationItem.Buttons,
-        NavigationItem.Responsive,
-        NavigationItem.Divider
+        NavigationItem.Button,
+        NavigationItem.RadioButton,
+        NavigationItem.Switch,
+        NavigationItem.Divider,
+        NavigationItem.Responsive
     )
 
     Box(Modifier.wrapContentSize(Alignment.TopEnd)) {

@@ -1,4 +1,4 @@
-package qa.edu.cmps312.compose.lists
+package qa.edu.cmps312.compose.surah
 
 import kotlinx.serialization.Serializable
 
