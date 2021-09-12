@@ -15,19 +15,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import qa.edu.cmps312.compose.state.ClicksCounterScreen
-import qa.edu.cmps312.compose.basics.ComposeLogoScreen
-import qa.edu.cmps312.compose.basics.HelloScreen
-import qa.edu.cmps312.compose.modifier.clickable.ClickableTextScreen
-import qa.edu.cmps312.compose.modifier.styling.StylingScreen
-import qa.edu.cmps312.compose.state.WelcomeScreen
-import qa.edu.cmps312.compose.ui.theme.ComposeUITheme
+import qa.edu.cmps312.compose.layout.weight.ResponsiveScreen
+import qa.edu.cmps312.compose.ui.theme.UIComponentsTheme
+import qa.edu.cmps312.compose.components.button.ButtonScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeUITheme {
+            UIComponentsTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     MainScreen()
@@ -55,27 +51,14 @@ fun MainScreen() {
 
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.ComposeLogo.route) {
-        composable(NavigationItem.Hello.route) {
-            HelloScreen()
-        }
-        composable(NavigationItem.ClicksCounter.route) {
-            ClicksCounterScreen()
-        }
-        composable(NavigationItem.ComposeLogo.route) {
-            ComposeLogoScreen()
-        }
-        composable(NavigationItem.Welcome.route) {
-            WelcomeScreen()
-        }
-        composable(NavigationItem.Clickable.route) {
-            ClickableTextScreen()
+    NavHost(navController, startDestination = NavigationItem.Buttons.route) {
+        composable(NavigationItem.Buttons.route) {
+           ButtonScreen()
         }
 
-        composable(NavigationItem.Styling.route) {
-            StylingScreen()
+        composable(NavigationItem.Responsive.route) {
+            ResponsiveScreen()
         }
-
     }
 }
 
@@ -94,14 +77,9 @@ fun TopBarMenu(onRouteChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
-        NavigationItem.Hello,
-        NavigationItem.ComposeLogo,
-        NavigationItem.Divider,
-        NavigationItem.ClicksCounter,
-        NavigationItem.Welcome,
-        NavigationItem.Divider,
-        NavigationItem.Styling,
-        NavigationItem.Clickable
+        NavigationItem.Buttons,
+        NavigationItem.Responsive,
+        NavigationItem.Divider
     )
 
     Box(Modifier.wrapContentSize(Alignment.TopEnd)) {

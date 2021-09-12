@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,7 +66,7 @@ If you give any a fraction value (e.g., 0.25)
 @Composable
 fun FillHeightModifier() {
     Text(
-        text = " Text with 25% Height ",
+        text = "Text with 25% avaiable height",
         color = Color.White,
         modifier = Modifier
             .padding(16.dp)

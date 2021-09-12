@@ -15,8 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import qa.edu.cmps312.compose.getRandomColor
 import qa.edu.cmps312.compose.R
+
+fun getRandomColor() : Int {
+    val rgbValues = (0..255).shuffled().take(4)
+    return android.graphics.Color.argb(rgbValues[0], rgbValues[1], rgbValues[2], rgbValues[3])
+}
 
 @Composable
 fun WelcomeScreen() {

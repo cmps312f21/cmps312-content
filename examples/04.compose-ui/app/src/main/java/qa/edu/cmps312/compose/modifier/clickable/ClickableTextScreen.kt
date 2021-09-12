@@ -9,13 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import qa.edu.cmps312.compose.ui.theme.ComposeUITheme
 
 @Composable
-fun CounterScreen() {
+fun ClickableTextScreen() {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()
@@ -49,8 +48,8 @@ fun CounterScreen() {
 
 @Preview
 @Composable
-fun CounterScreenPreview() {
+fun ClickableTextScreenPreview() {
     ComposeUITheme {
-        CounterScreen()
+        ClickableTextScreen()
     }
 }

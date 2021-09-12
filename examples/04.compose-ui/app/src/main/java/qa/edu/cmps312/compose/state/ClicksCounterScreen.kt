@@ -1,4 +1,4 @@
-package qa.edu.cmps312.compose.basics
+package qa.edu.cmps312.compose.state
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
