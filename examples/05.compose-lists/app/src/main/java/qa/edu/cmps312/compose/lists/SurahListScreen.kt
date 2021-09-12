@@ -1,30 +1,26 @@
 package qa.edu.cmps312.compose.lists
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 @Composable
-fun SurahColumnScreen() {
+fun SurahListScreen() {
     SurahRepository.getSurahs(LocalContext.current)
-    SurahsColumn(SurahRepository.surahs)
+    SurahList(SurahRepository.surahs)
 }
 
 @Composable
-fun SurahsColumn(surahs: List<Surah>) {
+fun SurahList(surahs: List<Surah>) {
     /*Row(horizontalArrangement = Arrangement.spacedBy(8.dp),
     modifier =  Modifier.horizontalScroll(rememberScrollState())*/
     Column(verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -44,8 +40,8 @@ fun SurahsColumn(surahs: List<Surah>) {
 
 @Preview
 @Composable
-fun SurahColumnScreenPreview() {
+fun SurahListScreenPreview() {
     ComposeListsTheme {
-        SurahColumnScreen()
+        SurahListScreen()
     }
 }

@@ -1,15 +1,13 @@
 package qa.edu.cmps312.compose.lists
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -23,13 +21,13 @@ import androidx.compose.ui.unit.sp
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 @Composable
-fun SurahLazyColumnScreen() {
+fun SurahLazyListScreen() {
     SurahRepository.getSurahs(LocalContext.current)
-    SurahsLazyColumn(SurahRepository.surahs)
+    SurahsLazyList(SurahRepository.surahs)
 }
 
 @Composable
-fun SurahsLazyColumn(surahs: List<Surah>) {
+fun SurahsLazyList(surahs: List<Surah>) {
     if (surahs.isEmpty()) {
         Text("Loading surahs failed.")
     } else {
@@ -39,6 +37,10 @@ fun SurahsLazyColumn(surahs: List<Surah>) {
         - add 8.dp of padding to the horizontal edges (left and right),
         - and then 8.dp to the top and bottom of the content
        */
+        /*LazyRow(contentPadding =
+        PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {*/
         LazyColumn(contentPadding =
             PaddingValues(horizontal = 8.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -78,8 +80,8 @@ fun SurahsLazyColumn(surahs: List<Surah>) {
 
 @Preview
 @Composable
-fun SurahLazyColumnScreenPreview() {
+fun SurahLazyListScreenPreview() {
     ComposeListsTheme {
-        SurahLazyColumnScreen()
+        SurahLazyListScreen()
     }
 }

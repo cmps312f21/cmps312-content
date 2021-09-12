@@ -16,8 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import qa.edu.cmps312.compose.lists.SurahColumnScreen
-import qa.edu.cmps312.compose.lists.SurahLazyColumnScreen
+import qa.edu.cmps312.compose.lists.SurahListScreen
+import qa.edu.cmps312.compose.lists.SurahLazyListScreen
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 class MainActivity : ComponentActivity() {
@@ -53,12 +53,12 @@ fun MainScreen() {
 
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.SurahLazyColumn.route) {
-        composable(NavigationItem.SurahColumn.route) {
-            SurahColumnScreen()
+    NavHost(navController, startDestination = NavigationItem.SurahLazyList.route) {
+        composable(NavigationItem.SurahList.route) {
+            SurahListScreen()
         }
-        composable(NavigationItem.SurahLazyColumn.route) {
-            SurahLazyColumnScreen()
+        composable(NavigationItem.SurahLazyList.route) {
+            SurahLazyListScreen()
         }
     }
 }
@@ -68,8 +68,8 @@ fun TopBar(onRouteChange: (String) -> Unit) {
    TopAppBar(
         title = { Text("Compose Lists")},
         actions = {
-            IconButton(onClick = { onRouteChange(NavigationItem.SurahColumn.route) }) {
-                Icon(painterResource(id = NavigationItem.SurahColumn.icon!!), "Quran Surahs")
+            IconButton(onClick = { onRouteChange(NavigationItem.SurahList.route) }) {
+                Icon(painterResource(id = NavigationItem.SurahList.icon!!), "Quran Surahs")
             }
 
             TopBarMenu(onRouteChange)
@@ -82,8 +82,8 @@ fun TopBarMenu(onRouteChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
-        NavigationItem.SurahColumn,
-        NavigationItem.SurahLazyColumn
+        NavigationItem.SurahList,
+        NavigationItem.SurahLazyList
     )
 
     Box(Modifier.wrapContentSize(Alignment.TopEnd)) {
