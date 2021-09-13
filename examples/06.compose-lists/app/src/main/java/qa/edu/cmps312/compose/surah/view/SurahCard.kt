@@ -1,4 +1,4 @@
-package qa.edu.cmps312.compose.surah
+package qa.edu.cmps312.compose.surah.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

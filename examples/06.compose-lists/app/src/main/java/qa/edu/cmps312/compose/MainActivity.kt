@@ -16,8 +16,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import qa.edu.cmps312.compose.surah.ui.SurahListScreen
-import qa.edu.cmps312.compose.surah.SurahLazyListScreen
+import qa.edu.cmps312.compose.surah.view.SurahListScreen
+import qa.edu.cmps312.compose.surah.view.SurahLazyListScreen
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 class MainActivity : ComponentActivity() {
