@@ -1,4 +1,4 @@
-package qa.edu.cmps312.compose.surah
+package qa.edu.cmps312.compose.surah.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,12 +11,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import qa.edu.cmps312.compose.surah.SurahCard
+import qa.edu.cmps312.compose.surah.model.Surah
+import qa.edu.cmps312.compose.surah.model.SurahRepository
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 @Composable
 fun SurahListScreen() {
-    SurahRepository.getSurahs(LocalContext.current)
-    SurahList(SurahRepository.surahs)
+    SurahList(SurahRepository.getSurahs(LocalContext.current))
 }
 
 @Composable

@@ -1,11 +1,11 @@
-package qa.edu.cmps312.compose.surah
+package qa.edu.cmps312.compose.surah.model
 
 import android.content.Context
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 object SurahRepository {
-    var surahs = listOf<Surah>()
+    private var surahs = listOf<Surah>()
 
     fun getSurahs(context: Context): List<Surah> {
         if (surahs.isEmpty()) {

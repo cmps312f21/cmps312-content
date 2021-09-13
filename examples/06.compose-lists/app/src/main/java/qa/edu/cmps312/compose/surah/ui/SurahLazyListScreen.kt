@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import qa.edu.cmps312.compose.surah.model.Surah
+import qa.edu.cmps312.compose.surah.model.SurahRepository
 import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 @Composable
