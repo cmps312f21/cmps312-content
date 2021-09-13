@@ -1,4 +1,4 @@
-package qa.edu.cmps312.compose.surah
+package qa.edu.cmps312.compose.surah.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,8 +23,7 @@ import qa.edu.cmps312.compose.ui.theme.ComposeListsTheme
 
 @Composable
 fun SurahLazyListScreen() {
-    SurahRepository.getSurahs(LocalContext.current)
-    SurahsLazyList(SurahRepository.surahs)
+    SurahsLazyList(SurahRepository.getSurahs(LocalContext.current))
 }
 
 @Composable
