@@ -23,6 +23,7 @@ import cmps312.compose.ui.theme.AppTheme
 import cmps312.compose.components.ButtonScreen
 import cmps312.compose.components.RadioButtonScreen
 import cmps312.compose.components.SwitchScreen
+import cmps312.compose.components.TextFieldScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +61,10 @@ fun MainScreen() {
 @Composable
 fun AppNavigator(navController: NavHostController) {
     NavHost(navController, startDestination = NavigationItem.Button.route) {
+        composable(NavigationItem.TextField.route) {
+            TextFieldScreen()
+        }
+
         composable(NavigationItem.Button.route) {
            ButtonScreen()
         }
@@ -100,6 +105,7 @@ fun TopBarMenu(onRouteChange: (NavigationItem) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
+        NavigationItem.TextField,
         NavigationItem.Button,
         NavigationItem.RadioButton,
         NavigationItem.Switch,
