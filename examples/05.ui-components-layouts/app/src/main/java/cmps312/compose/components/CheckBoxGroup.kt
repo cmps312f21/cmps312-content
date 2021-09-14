@@ -1,10 +1,13 @@
 package cmps312.compose.components
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.RadioButton
+import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,11 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RadioButtonGroup(
-    options: List<String>,
+fun CheckBoxGroup(
+    options: Map<String, Boolean>,
     title: String = "",
-    selectedOptionIndex: Int,
-    onOptionSelected: (Int, String) -> Unit,
+    onCheckedChange: (String, Boolean) -> Unit,
     cardBackgroundColor: Color = Color.LightGray
 ) {
     if (options.isNotEmpty()) {
@@ -35,23 +37,23 @@ fun RadioButtonGroup(
                         modifier = Modifier.padding(5.dp),
                     )
 
-                options.forEachIndexed { optionIndex, optionText ->
+                options.forEach { (option, isChecked) ->
                     Row(
                         Modifier
                             .fillMaxWidth()
                             .selectable(
-                                selected = (optionIndex == selectedOptionIndex),
-                                onClick = { onOptionSelected(optionIndex, optionText) }
+                                selected = isChecked,
+                                onClick = { onCheckedChange(option, !isChecked) }
                             )
                             .padding(horizontal = 16.dp, vertical = 4.dp)
                     ) {
-                        RadioButton(
-                            selected = (optionIndex == selectedOptionIndex),
-                            onClick = { onOptionSelected(optionIndex, optionText) }
+                        Checkbox(
+                            checked = isChecked,
+                            onCheckedChange = { onCheckedChange(option, it) }
                         )
 
                         Text(
-                            text = optionText,
+                            text = option,
                             modifier = Modifier.padding(start = 8.dp)
                         )
                     }

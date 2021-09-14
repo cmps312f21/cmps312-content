@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Feed
+import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -37,7 +39,7 @@ fun ButtonScreen() {
         // Search for icons @ https://fonts.google.com/icons
         IconButton(onClick = { message = "Search IconButton clicked" }) {
             Icon(
-                Icons.Outlined.Search,
+                Icons.Outlined.Feed,
                 contentDescription = "Search",
             )
         }

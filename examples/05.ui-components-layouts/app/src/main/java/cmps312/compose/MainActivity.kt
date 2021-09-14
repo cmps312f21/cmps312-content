@@ -9,21 +9,19 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.AttachMoney
+import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cmps312.compose.layout.weight.ResponsiveScreen
+import cmps312.compose.components.*
+import cmps312.compose.layout.ResponsiveScreen
 import cmps312.compose.ui.theme.AppTheme
-import cmps312.compose.components.ButtonScreen
-import cmps312.compose.components.RadioButtonScreen
-import cmps312.compose.components.SwitchScreen
-import cmps312.compose.components.TextFieldScreen
+import cmps312.compose.layout.ArtistCardScreen
+import cmps312.compose.layout.BoxLayoutScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,13 +74,30 @@ fun AppNavigator(navController: NavHostController) {
         composable(NavigationItem.Switch.route) {
             SwitchScreen()
         }
+        composable(NavigationItem.CheckBox.route) {
+            CheckBoxScreen()
+        }
+        composable(NavigationItem.Dropdown.route) {
+            DropdownScreen()
+        }
+        composable(NavigationItem.Slider.route) {
+            SliderScreen()
+        }
 
-        composable(NavigationItem.TipCalculator.route) {
-            TipCalculator()
+        composable(NavigationItem.Card.route) {
+            ArtistCardScreen()
+        }
+
+        composable(NavigationItem.Box.route) {
+            BoxLayoutScreen()
         }
 
         composable(NavigationItem.Responsive.route) {
             ResponsiveScreen()
+        }
+
+        composable(NavigationItem.TipCalculator.route) {
+            TipCalculator()
         }
     }
 }
@@ -93,7 +108,7 @@ fun TopBar(onRouteChange: (NavigationItem) -> Unit, screenTitle: String = "Compo
         title = { Text(screenTitle)},
         actions = {
             IconButton(onClick = { onRouteChange(NavigationItem.TipCalculator) }) {
-                Icon(imageVector = Icons.Outlined.AttachMoney, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.Restaurant, contentDescription = "Tip Calculator")
             }
             TopBarMenu(onRouteChange)
         }
@@ -109,7 +124,12 @@ fun TopBarMenu(onRouteChange: (NavigationItem) -> Unit) {
         NavigationItem.Button,
         NavigationItem.RadioButton,
         NavigationItem.Switch,
+        NavigationItem.CheckBox,
+        NavigationItem.Dropdown,
+        NavigationItem.Slider,
         NavigationItem.Divider,
+        NavigationItem.Card,
+        NavigationItem.Box,
         NavigationItem.Responsive,
         NavigationItem.Divider,
         NavigationItem.TipCalculator
