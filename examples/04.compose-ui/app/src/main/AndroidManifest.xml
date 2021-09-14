@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="qa.edu.cmps312.compose">
+    package="cmps312.compose">
 
     <application
         android:allowBackup="true"
