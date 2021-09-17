@@ -1,4 +1,4 @@
-package cmps312.compose.surah.view
+package cmps312.compose.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cmps312.compose.R
-import cmps312.compose.surah.model.Surah
+import cmps312.compose.model.Surah
 import cmps312.compose.ui.theme.ComposeListsTheme
 
 @Composable

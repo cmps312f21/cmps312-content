@@ -1,4 +1,4 @@
-package cmps312.compose.surah.view
+package cmps312.compose.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.*
