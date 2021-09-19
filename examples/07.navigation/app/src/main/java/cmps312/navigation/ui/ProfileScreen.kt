@@ -1,4 +1,4 @@
-package cmps312.navigation.components
+package cmps312.navigation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -7,24 +7,25 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 
 @Composable
-fun SearchScreen() {
+fun ProfileScreen(navController: NavController, userId: Int = 0) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Icon(
-            imageVector = Icons.Default.Search,
-            contentDescription = "search",
+            imageVector = Icons.Default.Person,
+            contentDescription = "Profile",
             tint = MaterialTheme.colors.primarySurface
         )
-        Text(text = "Search")
+        Text(text = "Profile")
     }
 }

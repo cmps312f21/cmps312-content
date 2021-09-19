@@ -8,7 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import cmps312.navigation.components.MainScreen
+import cmps312.navigation.ui.MainScreen
 import cmps312.navigation.ui.theme.NavigationTheme
 
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package cmps312.navigation.components
+package cmps312.navigation.ui
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -11,9 +11,3 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object Search : Screen(route = "search", title = "Search", icon = Icons.Filled.Search)
     object Profile : Screen(route = "profile", title = "Profile", icon = Icons.Filled.Person)
 }
-
-data class BottomNavItem(
-    val label: String,
-    val icon: ImageVector,
-    val route:String,
-)

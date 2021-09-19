@@ -1,4 +1,4 @@
-package cmps312.navigation
+package cmps312.navigation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

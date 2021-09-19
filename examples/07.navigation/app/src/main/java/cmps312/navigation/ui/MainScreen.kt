@@ -1,9 +1,12 @@
-package cmps312.navigation.components
+package cmps312.navigation.ui
 
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -11,17 +14,18 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 
 fun displayMessage(context: Context, message: String) {
@@ -39,7 +43,6 @@ fun MainScreen() {
     //remember navController so it does not get recreated on recomposition
     val navController = rememberNavController()
 
-    //Scaffold Composable
     Scaffold(
         //pass the scaffold state
         scaffoldState = scaffoldState,
@@ -149,6 +152,7 @@ fun AppNavigator(
         navController = navController,
         //set the start destination as home
         startDestination = Screen.Home.route,
+
         //Set the padding provided by scaffold
         modifier = Modifier.padding(paddingValues = padding)) {
 
@@ -162,8 +166,17 @@ fun AppNavigator(
             SearchScreen()
         }
 
+        composable("profile/{userId}",
+            arguments = listOf(navArgument("userId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            // Extract the NavArguments from the NavBackStackEntry
+            backStackEntry.arguments?.getInt("userId")?.let {
+                ProfileScreen(navController, it)
+            }
+        }
+
         composable(Screen.Profile.route) {
-            ProfileScreen()
+            ProfileScreen(navController)
         }
     }
 }
