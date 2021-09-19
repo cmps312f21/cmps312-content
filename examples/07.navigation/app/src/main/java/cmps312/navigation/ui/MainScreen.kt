@@ -49,7 +49,7 @@ fun MainScreen() {
         topBar = {
             TopBar(
                 //When menu is clicked open the drawer in coroutine scope
-                onMenuClicked = {
+                onDrawerIconClicked = {
                     coroutineScope.launch {
                         //to close use -> scaffoldState.drawerState.close()
                         scaffoldState.drawerState.open()
@@ -83,12 +83,10 @@ fun FloatingButton() {
 
 //A function which will receive a callback to trigger to opening the drawer
 @Composable
-fun TopBar(onMenuClicked: () -> Unit) {
-    //TopAppBar Composable
+fun TopBar(onDrawerIconClicked: () -> Unit) {
     TopAppBar(
-        //Provide Title
         title = {
-            Text(text = "Scaffold", color = Color.White)
+            Text(text = "Scaffold")
         },
         //Provide the navigation Icon ( Icon on the left to toggle drawer)
         navigationIcon = {
@@ -96,8 +94,8 @@ fun TopBar(onMenuClicked: () -> Unit) {
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Menu",
 
-                modifier = Modifier.clickable(onClick = onMenuClicked), //When clicked trigger onClick Callback to trigger drawer open
-                tint = Color.White
+                modifier = Modifier.clickable(onClick = onDrawerIconClicked), //When clicked trigger onClick Callback to trigger drawer open
+                //tint = Color.White
             )
         },
     )
