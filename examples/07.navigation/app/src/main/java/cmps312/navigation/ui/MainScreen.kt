@@ -47,14 +47,19 @@ fun MainScreen() {
         //pass the scaffold state
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar(
-                //When menu is clicked open the drawer in coroutine scope
-                onDrawerIconClicked = {
-                    coroutineScope.launch {
-                        //to close use -> scaffoldState.drawerState.close()
-                        scaffoldState.drawerState.open()
-                    }
-                })
+            val currentRoute = currentRoute(navController) ?: ""
+            displayMessage(LocalContext.current, currentRoute)
+            // Hide the TopBar for the Profile Screen
+            if (!currentRoute.startsWith(Screen.Profile.route)) {
+                TopBar(
+                    //When menu is clicked open the drawer in coroutine scope
+                    onDrawerIconClicked = {
+                        coroutineScope.launch {
+                            //to close use -> scaffoldState.drawerState.close()
+                            scaffoldState.drawerState.open()
+                        }
+                    })
+            }
         },
         bottomBar = { BottomNavBar(navController) },
         drawerContent = { NavDrawer() },
@@ -135,6 +140,12 @@ fun BottomNavBar(navController: NavHostController) {
     }
 }
 
+@Composable
+fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.destination?.route
+}
+
 /**
  * It receives navcontroller to navigate between screens,
  * padding values -> Since BottomNavigation has some heights,
@@ -177,7 +188,7 @@ fun AppNavigator(
         }
 
         composable(Screen.Apps.route) {
-            // Example screen that demonstrate how to start activities from other apps
+            // Example screen that demonstrates how to start activities from other apps
             ExternalAppScreen()
         }
     }
@@ -185,7 +196,6 @@ fun AppNavigator(
 
 @Composable
 fun NavDrawer() {
-    //Column Composable
     Column(Modifier.fillMaxSize()) {
         //Repeat is a loop which takes count as argument
         repeat(5) { item ->
