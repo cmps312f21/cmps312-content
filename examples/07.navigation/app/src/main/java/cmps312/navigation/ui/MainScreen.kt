@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -18,18 +17,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import cmps312.navigation.ui.viewmodel.ProfileViewModel
 import cmps312.navigation.ui.viewmodel.User
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 fun displayMessage(context: Context, message: String) {
@@ -54,15 +49,8 @@ fun MainScreen() {
             val currentRoute = currentRoute(navController) ?: ""
             displayMessage(LocalContext.current, currentRoute)
             // Hide the TopBar for the Profile Screen
-            if (!currentRoute.startsWith(Screen.Profile.route)) {
-                TopBar(
-                    //When menu is clicked open the drawer in coroutine scope
-                    onDrawerIconClicked = {
-                        coroutineScope.launch {
-                            //to close use -> scaffoldState.drawerState.close()
-                            scaffoldState.drawerState.open()
-                        }
-                    })
+            if (!currentRoute.startsWith(Screen.ProfileDetails.route)) {
+                TopBar(coroutineScope, scaffoldState)
             }
         },
         bottomBar = { BottomNavBar(navController) },
@@ -98,110 +86,31 @@ fun FloatingButton() {
 
 //A function which will receive a callback to trigger to opening the drawer
 @Composable
-fun TopBar(onDrawerIconClicked: () -> Unit) {
+fun TopBar(coroutineScope: CoroutineScope, scaffoldState: ScaffoldState) {
     TopAppBar(
         title = {
-            Text(text = "Scaffold")
+            Text(text = "Navigation")
         },
         //Provide the navigation Icon ( Icon on the left to toggle drawer)
         navigationIcon = {
             Icon(
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Menu",
-
-                modifier = Modifier.clickable(onClick = onDrawerIconClicked), //When clicked trigger onClick Callback to trigger drawer open
-                //tint = Color.White
-            )
-        },
-    )
-}
-
-/**
- * It receives navcontroller to navigate between screens,
- */
-@Composable
-fun BottomNavBar(navController: NavHostController) {
-    BottomNavigation {
-        //observe the backstack
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-        //observe current route to change the icon color,label color when navigated
-        val currentRoute = navBackStackEntry?.destination?.route
-
-        val navItems = listOf(Screen.Home, Screen.Search, Screen.Apps)
-
-        //Bottom nav items we declared
-        navItems.forEach { navItem ->
-            BottomNavigationItem(
-                //it currentRoute is equal then its selected route
-                selected = currentRoute == navItem.route,
-                onClick = {
-                    navController.navigate(navItem.route)
-                },
-                icon = {
-                    Icon(imageVector = navItem.icon, contentDescription = navItem.title)
-                },
-                label = {
-                    Text(text = navItem.title)
-                },
-                alwaysShowLabel = false
+                modifier = Modifier.clickable(onClick = {
+                    //When the icon is clicked open the drawer in coroutine scope
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                })
             )
         }
-    }
+    )
 }
 
 @Composable
 fun currentRoute(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.destination?.route
-}
-
-/**
- * It receives navcontroller to navigate between screens,
- * padding values -> Since BottomNavigation has some heights,
- * to avoid clipping of screen, we set padding provided by scaffold
- */
-@Composable
-fun AppNavigator(
-    navController: NavHostController,
-    padding: PaddingValues
-) {
-
-    NavHost(
-        navController = navController,
-        //set the start destination as home
-        startDestination = Screen.Home.route,
-
-        //Set the padding provided by scaffold
-        modifier = Modifier.padding(paddingValues = padding)) {
-
-        // Define the app Navigation Graph
-        // = possible routes a user can take through the app
-        composable(Screen.Home.route) {
-            HomeScreen(onNavigateToDetails = { userId ->
-                navController.navigate( "${Screen.Profile.route}/$userId")
-            })
-        }
-
-        composable(Screen.Search.route) {
-            SearchScreen()
-        }
-
-        composable("${Screen.Profile.route}/{userId}",
-            arguments = listOf(navArgument("userId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            // Extract the Nav arguments from the Nav BackStackEntry
-            backStackEntry.arguments?.getInt("userId")?.let { userId ->
-                ProfileScreen(userId = userId,
-                    onNavigateHome = { navController.navigate(Screen.Home.route) })
-            }
-        }
-
-        composable(Screen.Apps.route) {
-            // Example screen that demonstrates how to start activities from other apps
-            ExternalAppScreen()
-        }
-    }
 }
 
 @Composable
@@ -213,23 +122,3 @@ fun NavDrawer() {
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun ScaffoldExamplePreview() {
-    MainScreen()
-}
-*/
-
-/*
-@Composable
-fun MainScreen() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "Body Content")
-    }
-} */

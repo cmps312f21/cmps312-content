@@ -1,4 +1,4 @@
-package cmps312.navigation.ui
+package cmps312.navigation.ui.profile
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -13,11 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import cmps312.navigation.ui.viewmodel.ProfileViewModel
 
 @Composable
-fun ProfileScreen(userId: Int = 0, onNavigateHome: () -> Unit) {
+fun ProfileDetailsScreen(userId: Int = 0, onNavigateBack: () -> Unit) {
     /* Get an instance of the shared viewModel
        Make the activity the store owner of the viewModel
        to ensure that the same viewModel instance is used for all destinations
@@ -31,7 +30,7 @@ fun ProfileScreen(userId: Int = 0, onNavigateHome: () -> Unit) {
                 title = { Text("Profile") },
                 navigationIcon = {
                     IconButton(onClick = {
-                        onNavigateHome()
+                        onNavigateBack()
                     }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
