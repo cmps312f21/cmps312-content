@@ -159,7 +159,7 @@ fun AppNavigator(
         // Define the app Navigation Graph
         // = possible routes a user can take through the app
         composable(Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
 
         composable(Screen.Search.route) {
