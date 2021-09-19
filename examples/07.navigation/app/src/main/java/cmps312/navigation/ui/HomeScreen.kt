@@ -16,7 +16,7 @@ import cmps312.navigation.ui.components.Dropdown
 import cmps312.navigation.ui.viewmodel.ProfileViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(onNavigateToDetails: (Int) -> Unit) {
     // Get the profile details from the viewModel
     val profileViewModel : ProfileViewModel = viewModel()
 
@@ -59,7 +59,7 @@ fun HomeScreen(navController: NavController) {
         Spacer(modifier = Modifier.padding(8.dp))
 
         Button(onClick = {
-            navController.navigate("profile/$selectedUserId")
+            onNavigateToDetails(selectedUserId)
         }) {
             Text("Profile Details")
         }

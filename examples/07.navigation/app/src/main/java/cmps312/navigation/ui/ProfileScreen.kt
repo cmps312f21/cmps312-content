@@ -15,7 +15,7 @@ import androidx.navigation.NavController
 import cmps312.navigation.ui.viewmodel.ProfileViewModel
 
 @Composable
-fun ProfileScreen(navController: NavController, userId: Int = 0) {
+fun ProfileScreen(userId: Int = 0, onNavigateHome: () -> Unit) {
     // Get the profile details from the viewModel
     val profileViewModel: ProfileViewModel = viewModel()
     val profile = profileViewModel?.getUser(userId)
@@ -26,7 +26,7 @@ fun ProfileScreen(navController: NavController, userId: Int = 0) {
                 title = { Text("Profile") },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate("home")
+                        onNavigateHome()
                     }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,

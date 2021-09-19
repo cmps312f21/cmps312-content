@@ -115,7 +115,7 @@ fun BottomNavBar(navController: NavHostController) {
         //observe current route to change the icon color,label color when navigated
         val currentRoute = navBackStackEntry?.destination?.route
 
-        val navItems = listOf(Screen.Home, Screen.Search, Screen.Profile)
+        val navItems = listOf(Screen.Home, Screen.Search, Screen.Apps)
 
         //Bottom nav items we declared
         navItems.forEach { navItem ->
@@ -159,24 +159,28 @@ fun AppNavigator(
         // Define the app Navigation Graph
         // = possible routes a user can take through the app
         composable(Screen.Home.route) {
-            HomeScreen(navController)
+            HomeScreen(onNavigateToDetails = { userId ->
+                navController.navigate( "${Screen.Profile.route}/$userId")
+            })
         }
 
         composable(Screen.Search.route) {
             SearchScreen()
         }
 
-        composable("profile/{userId}",
+        composable("${Screen.Profile.route}/{userId}",
             arguments = listOf(navArgument("userId") { type = NavType.IntType })
         ) { backStackEntry ->
-            // Extract the NavArguments from the NavBackStackEntry
-            backStackEntry.arguments?.getInt("userId")?.let {
-                ProfileScreen(navController, it)
+            // Extract the Nav arguments from the Nav BackStackEntry
+            backStackEntry.arguments?.getInt("userId")?.let { userId ->
+                ProfileScreen(userId = userId,
+                    onNavigateHome = { navController.navigate(Screen.Home.route) })
             }
         }
 
-        composable(Screen.Profile.route) {
-            ProfileScreen(navController)
+        composable(Screen.Apps.route) {
+            // Example screen that demonstrate how to start activities from other apps
+            ExternalAppScreen()
         }
     }
 }
