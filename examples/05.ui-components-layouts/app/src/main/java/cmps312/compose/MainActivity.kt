@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.outlined.AttachMoney
 import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import cmps312.compose.components.*
 import cmps312.compose.layout.ResponsiveScreen
 import cmps312.compose.ui.theme.AppTheme
@@ -58,56 +58,57 @@ fun MainScreen() {
 
 @Composable
 fun AppNavigator(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.Button.route) {
-        composable(NavigationItem.TextField.route) {
+    val uri = "https://cmp312.qu.edu.qa"
+    NavHost(navController, startDestination = Screen.Button.route) {
+        composable(Screen.TextField.route) {
             TextFieldScreen()
         }
 
-        composable(NavigationItem.Button.route) {
+        composable(Screen.Button.route) {
            ButtonScreen()
         }
 
-        composable(NavigationItem.RadioButton.route) {
+        composable(Screen.RadioButton.route) {
             RadioButtonScreen()
         }
 
-        composable(NavigationItem.Switch.route) {
+        composable(Screen.Switch.route) {
             SwitchScreen()
         }
-        composable(NavigationItem.CheckBox.route) {
+        composable(Screen.CheckBox.route) {
             CheckBoxScreen()
         }
-        composable(NavigationItem.Dropdown.route) {
+        composable(Screen.Dropdown.route) {
             DropdownScreen()
         }
-        composable(NavigationItem.Slider.route) {
+        composable(Screen.Slider.route) {
             SliderScreen()
         }
 
-        composable(NavigationItem.Card.route) {
+        composable(Screen.Card.route) {
             ArtistCardScreen()
         }
 
-        composable(NavigationItem.Box.route) {
+        composable(Screen.Box.route) {
             BoxLayoutScreen()
         }
 
-        composable(NavigationItem.Responsive.route) {
+        composable(Screen.Responsive.route) {
             ResponsiveScreen()
         }
 
-        composable(NavigationItem.TipCalculator.route) {
+        composable(Screen.TipCalculator.route) {
             TipCalculator()
         }
     }
 }
 
 @Composable
-fun TopBar(onRouteChange: (NavigationItem) -> Unit, screenTitle: String = "Compose UI") {
+fun TopBar(onRouteChange: (Screen) -> Unit, screenTitle: String = "Compose UI") {
    TopAppBar(
         title = { Text(screenTitle)},
         actions = {
-            IconButton(onClick = { onRouteChange(NavigationItem.TipCalculator) }) {
+            IconButton(onClick = { onRouteChange(Screen.TipCalculator) }) {
                 Icon(imageVector = Icons.Outlined.Restaurant, contentDescription = "Tip Calculator")
             }
             TopBarMenu(onRouteChange)
@@ -116,23 +117,23 @@ fun TopBar(onRouteChange: (NavigationItem) -> Unit, screenTitle: String = "Compo
 }
 
 @Composable
-fun TopBarMenu(onRouteChange: (NavigationItem) -> Unit) {
+fun TopBarMenu(onRouteChange: (Screen) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
-        NavigationItem.TextField,
-        NavigationItem.Button,
-        NavigationItem.RadioButton,
-        NavigationItem.Switch,
-        NavigationItem.CheckBox,
-        NavigationItem.Dropdown,
-        NavigationItem.Slider,
-        NavigationItem.Divider,
-        NavigationItem.Card,
-        NavigationItem.Box,
-        NavigationItem.Responsive,
-        NavigationItem.Divider,
-        NavigationItem.TipCalculator
+        Screen.TextField,
+        Screen.Button,
+        Screen.RadioButton,
+        Screen.Switch,
+        Screen.CheckBox,
+        Screen.Dropdown,
+        Screen.Slider,
+        Screen.Divider,
+        Screen.Card,
+        Screen.Box,
+        Screen.Responsive,
+        Screen.Divider,
+        Screen.TipCalculator
     )
 
     Box(Modifier.wrapContentSize(Alignment.TopEnd)) {
