@@ -29,7 +29,7 @@ fun displayMessage(context: Context, message: String) {
 }
 
 @Composable
-fun ScaffoldExample() {
+fun MainScreen() {
     //create a scaffold state
     val scaffoldState = rememberScaffoldState()
 
@@ -112,8 +112,10 @@ fun BottomNavBar(navController: NavHostController) {
         //observe current route to change the icon color,label color when navigated
         val currentRoute = navBackStackEntry?.destination?.route
 
+        val navItems = listOf(Screen.Home, Screen.Search, Screen.Profile)
+
         //Bottom nav items we declared
-        Constants.BottomNavItems.forEach { navItem ->
+        navItems.forEach { navItem ->
             BottomNavigationItem(
                 //it currentRoute is equal then its selected route
                 selected = currentRoute == navItem.route,
@@ -121,10 +123,10 @@ fun BottomNavBar(navController: NavHostController) {
                     navController.navigate(navItem.route)
                 },
                 icon = {
-                    Icon(imageVector = navItem.icon, contentDescription = navItem.label)
+                    Icon(imageVector = navItem.icon, contentDescription = navItem.title)
                 },
                 label = {
-                    Text(text = navItem.label)
+                    Text(text = navItem.title)
                 },
                 alwaysShowLabel = false
             )
@@ -146,35 +148,23 @@ fun AppNavigator(
     NavHost(
         navController = navController,
         //set the start destination as home
-        startDestination = "home",
+        startDestination = Screen.Home.route,
         //Set the padding provided by scaffold
         modifier = Modifier.padding(paddingValues = padding)) {
 
-        //  route : Home
-        composable("home") {
+        // Define the app Navigation Graph
+        // = possible routes a user can take through the app
+        composable(Screen.Home.route) {
             HomeScreen()
         }
 
-        //  route : search
-        composable("search") {
+        composable(Screen.Search.route) {
             SearchScreen()
         }
 
-        //  route : profile
-        composable("profile") {
+        composable(Screen.Profile.route) {
             ProfileScreen()
         }
-    }
-}
-
-@Composable
-fun MainScreen() {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(text = "Body Content")
     }
 }
 
@@ -192,5 +182,17 @@ fun NavDrawer() {
 @Preview
 @Composable
 fun ScaffoldExamplePreview() {
-    ScaffoldExample()
+    MainScreen()
 }
+
+/*
+@Composable
+fun MainScreen() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Text(text = "Body Content")
+    }
+} */

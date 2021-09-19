@@ -21,13 +21,13 @@ fun SurahScreen() {
     }
 
     Scaffold(
-        topBar = { TopBar(
+        topBar = { TopAppBar(
             searchText = searchText,
             onSearchTextChange = { searchText = it },
             surahType,
             onSurahTypeChange = { surahType = it},
             onSortByChange = { sortBy = it  }
-        )},
+        )}
     ) {
         val surahs = SurahRepository.getSurahs(LocalContext.current)
         SurahList(surahs, surahType, searchText, sortBy)

@@ -8,9 +8,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TopBar(searchText: String, onSearchTextChange: (String)-> Unit,
-           surahType: String, onSurahTypeChange: (String) -> Unit,
-           onSortByChange: (SortBy) -> Unit
+fun TopAppBar(searchText: String, onSearchTextChange: (String)-> Unit,
+              surahType: String, onSurahTypeChange: (String) -> Unit,
+              onSortByChange: (SortBy) -> Unit
 ) {
     val surahTypes = listOf(
         "All",
