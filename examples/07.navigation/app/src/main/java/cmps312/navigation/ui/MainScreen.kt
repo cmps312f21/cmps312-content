@@ -2,6 +2,7 @@ package cmps312.navigation.ui
 
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,6 +28,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import cmps312.navigation.ui.viewmodel.ProfileViewModel
+import cmps312.navigation.ui.viewmodel.User
 import kotlinx.coroutines.launch
 
 fun displayMessage(context: Context, message: String) {
@@ -72,11 +76,17 @@ fun MainScreen() {
 
 @Composable
 fun FloatingButton() {
+    /* Get an instance of the shared viewModel
+       Make the activity the store owner of the viewModel
+       to ensure that the same viewModel instance is used for all destinations
+    */
+    val profileViewModel = viewModel<ProfileViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     val context = LocalContext.current
     FloatingActionButton(
         backgroundColor = MaterialTheme.colors.primarySurface,
         onClick = {
-            displayMessage(context, "FAB clicked")
+            profileViewModel.addUser(User(0, "FN", "Added by FAB", "test@test.com"))
+            displayMessage(context, "A new user added. Users count ${profileViewModel.usersCount}")
         }) {
         Icon(
             imageVector = Icons.Default.Add,
@@ -204,11 +214,13 @@ fun NavDrawer() {
     }
 }
 
+/*
 @Preview
 @Composable
 fun ScaffoldExamplePreview() {
     MainScreen()
 }
+*/
 
 /*
 @Composable
