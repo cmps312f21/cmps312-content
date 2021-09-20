@@ -1,4 +1,4 @@
-package cmps312.navigation.ui.profile
+package cmps312.navigation.ui.user
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -13,16 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import cmps312.navigation.ui.viewmodel.ProfileViewModel
+import cmps312.navigation.ui.viewmodel.UserViewModel
 
 @Composable
-fun ProfileDetailsScreen(userId: Int = 0, onNavigateBack: () -> Unit) {
+fun UserDetailsScreen(userId: Int = 0, onNavigateBack: () -> Unit) {
     /* Get an instance of the shared viewModel
        Make the activity the store owner of the viewModel
        to ensure that the same viewModel instance is used for all destinations
     */
-    val profileViewModel = viewModel<ProfileViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
-    val profile = profileViewModel.getUser(userId)
+    val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
+    val profile = userViewModel.getUser(userId)
 
     Scaffold(
         topBar = {
