@@ -2,8 +2,6 @@ package cmps312.navigation.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -16,15 +14,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.navigation.ui.components.Dropdown
-import cmps312.navigation.ui.viewmodel.User
-import cmps312.navigation.ui.viewmodel.UserViewModel
+import cmps312.navigation.ui.user.User
+import cmps312.navigation.ui.user.UserViewModel
 
 @Composable
 fun UsersScreen(onNavigateToDetails: (Int) -> Unit) {
     /* Get an instance of the shared viewModel
-       Make the activity the store owner of the viewModel
-       to ensure that the same viewModel instance is used for all destinations
-    */
+    Make the activity the store owner of the viewModel
+    to ensure that the same viewModel instance is used for all screens */
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
     var selectedUserId by remember {

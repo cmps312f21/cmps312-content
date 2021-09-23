@@ -13,14 +13,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import cmps312.navigation.ui.viewmodel.UserViewModel
+
+@Composable
+fun MyExample() {
+    val viewModel: ExampleViewModel = viewModel()
+    val dataExample = viewModel.exampleLiveData.observeAsState()
+
+    // Because the state is read here,
+    // MyExample recomposes whenever dataExample changes.
+    dataExample.value?.let {
+        ShowData(dataExample)
+    }
+}
 
 @Composable
 fun UserDetailsScreen(userId: Int = 0, onNavigateBack: () -> Unit) {
     /* Get an instance of the shared viewModel
-       Make the activity the store owner of the viewModel
-       to ensure that the same viewModel instance is used for all destinations
-    */
+    Make the activity the store owner of the viewModel
+    to ensure that the same viewModel instance is used for all screens */
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     val profile = userViewModel.getUser(userId)
 

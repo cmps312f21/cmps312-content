@@ -1,7 +1,6 @@
-package cmps312.navigation.ui.viewmodel
+package cmps312.navigation.ui.user
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 
 data class User(var userId: Int, val firstName: String,
