@@ -15,18 +15,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun MyExample() {
-    val viewModel: ExampleViewModel = viewModel()
-    val dataExample = viewModel.exampleLiveData.observeAsState()
-
-    // Because the state is read here,
-    // MyExample recomposes whenever dataExample changes.
-    dataExample.value?.let {
-        ShowData(dataExample)
-    }
-}
-
-@Composable
 fun UserDetailsScreen(userId: Int = 0, onNavigateBack: () -> Unit) {
     /* Get an instance of the shared viewModel
     Make the activity the store owner of the viewModel
