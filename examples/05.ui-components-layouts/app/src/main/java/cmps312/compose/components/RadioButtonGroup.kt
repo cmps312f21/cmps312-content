@@ -14,13 +14,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun RadioButtonGroup(
-    radioOptions: List<String> = listOf(),
+    options: List<String>,
     title: String = "",
     selectedOptionIndex: Int,
     onOptionSelected: (Int, String) -> Unit,
     cardBackgroundColor: Color = Color.LightGray
 ) {
-    if (radioOptions.isNotEmpty()) {
+    if (options.isNotEmpty()) {
         Card(
             backgroundColor = cardBackgroundColor,
             modifier = Modifier.fillMaxWidth(),
@@ -35,7 +35,7 @@ fun RadioButtonGroup(
                         modifier = Modifier.padding(5.dp),
                     )
 
-                radioOptions.forEachIndexed { optionIndex, optionText ->
+                options.forEachIndexed { optionIndex, optionText ->
                     Row(
                         Modifier
                             .fillMaxWidth()

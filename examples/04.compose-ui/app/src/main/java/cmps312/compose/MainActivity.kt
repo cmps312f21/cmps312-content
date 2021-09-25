@@ -55,24 +55,24 @@ fun MainScreen() {
 
 @Composable
 fun AppNavigator(navController: NavHostController) {
-    NavHost(navController, startDestination = NavigationItem.ComposeLogo.route) {
-        composable(NavigationItem.Hello.route) {
+    NavHost(navController, startDestination = Screen.ComposeLogo.route) {
+        composable(Screen.Hello.route) {
             HelloScreen()
         }
-        composable(NavigationItem.ClicksCounter.route) {
+        composable(Screen.ClicksCounter.route) {
             ClicksCounterScreen()
         }
-        composable(NavigationItem.ComposeLogo.route) {
+        composable(Screen.ComposeLogo.route) {
             ComposeLogoScreen()
         }
-        composable(NavigationItem.Welcome.route) {
+        composable(Screen.Welcome.route) {
             WelcomeScreen()
         }
-        composable(NavigationItem.Clickable.route) {
+        composable(Screen.Clickable.route) {
             ClickableTextScreen()
         }
 
-        composable(NavigationItem.Styling.route) {
+        composable(Screen.Styling.route) {
             StylingScreen()
         }
 
@@ -94,14 +94,14 @@ fun TopBarMenu(onRouteChange: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     val menuItems = listOf(
-        NavigationItem.Hello,
-        NavigationItem.ComposeLogo,
-        NavigationItem.Divider,
-        NavigationItem.ClicksCounter,
-        NavigationItem.Welcome,
-        NavigationItem.Divider,
-        NavigationItem.Styling,
-        NavigationItem.Clickable
+        Screen.Hello,
+        Screen.ComposeLogo,
+        Screen.Divider,
+        Screen.ClicksCounter,
+        Screen.Welcome,
+        Screen.Divider,
+        Screen.Styling,
+        Screen.Clickable
     )
 
     Box(Modifier.wrapContentSize(Alignment.TopEnd)) {

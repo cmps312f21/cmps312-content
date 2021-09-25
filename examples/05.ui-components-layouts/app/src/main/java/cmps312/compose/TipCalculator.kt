@@ -1,9 +1,7 @@
 package cmps312.compose
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -53,7 +51,7 @@ fun TipCalculator(){
 
         RadioButtonGroup(
             title = "How was the service?",
-            radioOptions = tipOptions.map { it.tipOption },
+            options = tipOptions.map { it.tipOption },
             selectedOptionIndex = selectedTipOption,
             onOptionSelected = { index, _ ->  selectedTipOption = index },
             cardBackgroundColor = Color(0xFFFFFAF0)
