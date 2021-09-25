@@ -49,7 +49,7 @@ class ScoreViewModel : ViewModel() {
 
     @SuppressLint("LongLogTag")
     override fun onCleared() {
-        Log.d(TAG, "☠️☠️ onCleared ☠️☠️")
+        Log.d(TAG, "☠️☠onCleared ☠☠")
         super.onCleared()
     }
 }

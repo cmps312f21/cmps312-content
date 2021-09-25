@@ -80,23 +80,17 @@ fun ScoreScreen() {
                     textAlign = TextAlign.Center,
                     text = "\uD83D\uDCE2 ${newsUpdate.value}"
                 )
-
-                LaunchedEffect(Unit) {
-                    Log.d("LifeCycle->Compose", "onActive with value: Red cards count: ${redCardsCount.value}. ${timeRemaining.value}. ${newsUpdate.value}.")
-                }
-                DisposableEffect(Unit) {
-                    onDispose {
-                        Log.d("LifeCycle->Compose", "onDispose  with value: Red cards count: ${redCardsCount.value}. ${timeRemaining.value}. ${newsUpdate.value}.")
-                    }
-                }
             }
         }
     }
 
+    // Watch the Composable Lifecycle
+    // This function is called when the Composable enters the Composition
     LaunchedEffect(Unit) {
         Log.d("LifeCycle->Compose", "onActive ScoreScreen.")
     }
     DisposableEffect(Unit) {
+        // onDispose() is called when the Composable leaves the composition
         onDispose {
             Log.d("LifeCycle->Compose", "onDispose ScoreScreen.")
         }
