@@ -1,5 +1,6 @@
 package cmps312.football.view
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -26,7 +27,6 @@ fun ScoreScreen() {
     var team2Score by remember {
         mutableStateOf(0)
     }*/
-
     val redCardsCount = scoreViewModel.redCardsCount.observeAsState()
     val newsUpdate = scoreViewModel.newsFlow.collectAsState(initial = "")
     val timeRemaining = scoreViewModel.timeRemainingFlow.collectAsState(initial = "")
@@ -72,7 +72,7 @@ fun ScoreScreen() {
                 // Recomposes whenever timeRemaining changes
                 Text(
                     textAlign = TextAlign.Center,
-                    text = timeRemaining.value
+                    text = timeRemaining.value,
                 )
                 // Recomposes whenever newsUpdate changes
                 Text(
@@ -80,7 +80,25 @@ fun ScoreScreen() {
                     textAlign = TextAlign.Center,
                     text = "\uD83D\uDCE2 ${newsUpdate.value}"
                 )
+
+                LaunchedEffect(Unit) {
+                    Log.d("LifeCycle->Compose", "onActive with value: Red cards count: ${redCardsCount.value}. ${timeRemaining.value}. ${newsUpdate.value}.")
+                }
+                DisposableEffect(Unit) {
+                    onDispose {
+                        Log.d("LifeCycle->Compose", "onDispose  with value: Red cards count: ${redCardsCount.value}. ${timeRemaining.value}. ${newsUpdate.value}.")
+                    }
+                }
             }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        Log.d("LifeCycle->Compose", "onActive ScoreScreen.")
+    }
+    DisposableEffect(Unit) {
+        onDispose {
+            Log.d("LifeCycle->Compose", "onDispose ScoreScreen.")
         }
     }
 }
