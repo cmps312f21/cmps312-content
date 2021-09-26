@@ -1,11 +1,12 @@
-package cmps312.navigation.ui
+package cmps312.football
 
-import androidx.compose.material.*
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavHostController
-import cmps312.navigation.ui.common.getCurrentRoute
+import cmps312.football.view.common.getCurrentRoute
 
 /**
  * It receives navcontroller to navigate between screens
@@ -15,7 +16,7 @@ fun BottomNavBar(navController: NavHostController) {
     BottomAppBar {
         //observe current route to change the icon color,label color when navigated
         val currentRoute = getCurrentRoute(navController)
-        val navItems = listOf(Screen.Quran, Screen.Search, Screen.Settings)
+        val navItems = listOf(Screen.Score, Screen.Users)
 
         navItems.forEach { navItem ->
             BottomNavigationItem(
@@ -29,9 +30,7 @@ fun BottomNavBar(navController: NavHostController) {
                     }
                 },
                 icon = {
-                    // For each screen either an icon or vector resource is provided
-                    val icon = navItem.icon ?: ImageVector.vectorResource(navItem.iconResourceId!!)
-                    Icon(imageVector = icon, contentDescription = navItem.title)
+                    Icon(imageVector = navItem.icon, contentDescription = navItem.title)
                 },
                 label = {
                     Text(text = navItem.title)

@@ -39,7 +39,7 @@ object DataRepository {
                 if (remainingMilliSeconds <= 0) break
                 remainingMilliSeconds -= step
                 delay(step)
-                val msg = "Remaining Time: ${convertToMmSs(remainingMilliSeconds)}"
+                val msg = convertToMmSs(remainingMilliSeconds)
                 emit(msg)
                 Log.d(TAG, msg)
             }

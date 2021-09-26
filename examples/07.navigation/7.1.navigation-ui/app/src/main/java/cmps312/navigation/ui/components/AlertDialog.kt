@@ -33,7 +33,7 @@ fun AlertDialog(isDialogOpen: Boolean,
             },
             dismissButton = {
                 Button(
-                    onClick = {  onDialogResult(true) }) {
+                    onClick = {  onDialogResult(false) }) {
                     Text("Cancel")
                 }
             }

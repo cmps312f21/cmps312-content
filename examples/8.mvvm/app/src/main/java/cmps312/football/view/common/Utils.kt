@@ -1,4 +1,4 @@
-package cmps312.navigation.ui.common
+package cmps312.football.view.common
 
 import android.content.Context
 import android.widget.Toast
@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 fun displayMessage(context: Context, message: String) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
 }
 
 @Composable

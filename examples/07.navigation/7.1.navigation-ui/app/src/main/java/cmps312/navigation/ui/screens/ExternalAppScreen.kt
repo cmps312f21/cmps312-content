@@ -1,4 +1,4 @@
-package cmps312.navigation.ui
+package cmps312.navigation.ui.screens
 
 import android.content.Context
 import android.content.Intent
@@ -17,67 +17,6 @@ import androidx.compose.ui.unit.dp
 // Other common intent examples available @ https://developer.android.com/guide/components/intents-common.html
 @Composable
 fun ExternalAppScreen() {
-    /*val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "profile") {
-        composable("profile") { Profile(/*...*/) }
-        composable("friendslist") { FriendsList(/*...*/) }
-
-        composable(
-            "profile?userId={userId}",
-            arguments = listOf(navArgument("userId") { defaultValue = "me" })
-        ) { backStackEntry ->
-            Profile(navController, backStackEntry.arguments?.getString("userId"))
-        }
-
-        /*...*/
-        val uri = "https://example.com"
-
-        composable(
-            "profile?id={id}",
-            deepLinks = listOf(navDeepLink { uriPattern = "$uri/{id}" })
-        ) { backStackEntry ->
-            Profile(navController, backStackEntry.arguments?.getString("id"))
-        }
-    }
-
-    @Composable
-    fun Profile(navController: NavController) {
-        /*...*/
-        Button(onClick = { navController.navigate("friends") }) {
-            Text(text = "Navigate next")
-        }
-        /*...*/
-
-        // Pop everything up to the "home" destination off the back stack before
-        // navigating to the "friends" destination
-        navController.navigate("friends") {
-            popUpTo("home")
-        }
-
-        // Pop everything up to and including the "home" destination off
-        // the back stack before navigating to the "friends" destination
-        navController.navigate("friends") {
-            popUpTo("home") { inclusive = true }
-        }
-
-        // Navigate to the "search” destination only if we’re not already on
-        // the "search" destination, avoiding multiple copies on the top of the
-        // back stack
-        navController.navigate("search") {
-            launchSingleTop = true
-        }
-
-        NavHost(startDestination = "profile/{userId}") {
-            //...
-            composable(
-                "profile/{userId}",
-                arguments = listOf(navArgument("userId") { type = NavType.IntType })
-            ) { backStackEntry ->
-                Profile(navController, backStackEntry.arguments?.getInt("userId"))
-        }
-    }*/
-
     val quLatitude = "25.3773"
     val quLongitude = "51.4912"
     val context = LocalContext.current

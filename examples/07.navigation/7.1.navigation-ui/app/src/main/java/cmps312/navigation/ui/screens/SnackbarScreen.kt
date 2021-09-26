@@ -1,4 +1,4 @@
-package cmps312.navigation.ui
+package cmps312.navigation.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -28,8 +28,8 @@ fun SnackbarScreen() {
         if (snackbarVisibleState) {
             Snackbar(
                 action = {
-                    Button(onClick = {}) {
-                        Text("MyAction")
+                    Button(onClick = { setSnackBarState (false)}) {
+                        Text("x")
                     }
                 },
                 modifier = Modifier.padding(8.dp)
