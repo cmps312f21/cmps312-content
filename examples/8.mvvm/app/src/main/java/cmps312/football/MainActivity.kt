@@ -18,9 +18,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             FootballMVVMTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    ScoreScreenLocalState()
+                    //ScoreScreenLocalState()
                     //ScoreScreen()
-                    //MainScreen()
+                    MainScreen()
                 }
             }
         }
