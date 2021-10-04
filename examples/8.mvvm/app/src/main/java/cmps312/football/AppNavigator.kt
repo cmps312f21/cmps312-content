@@ -18,14 +18,14 @@ import cmps312.football.view.UserScreen
 @Composable
 fun AppNavigator(
     navController: NavHostController,
-    padding: PaddingValues
+    paddingValues: PaddingValues
 ) {
     NavHost(
         navController = navController,
         //set the start destination as home
         startDestination = Screen.Score.route,
         //Set the padding provided by scaffold
-        modifier = Modifier.padding(paddingValues = padding)) {
+        modifier = Modifier.padding(paddingValues)) {
 
         /* Define the app Navigation Graph
            = possible routes a user can take through the app

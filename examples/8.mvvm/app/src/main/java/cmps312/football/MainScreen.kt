@@ -10,7 +10,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import cmps312.football.view.common.displayMessage
@@ -24,7 +23,7 @@ fun MainScreen() {
         topBar = { TopBar() },
         bottomBar = { BottomNavBar(navController) }
     ) {
-        paddingValues -> AppNavigator(navController = navController, padding = paddingValues)
+        paddingValues -> AppNavigator(navController = navController, paddingValues = paddingValues)
     }
 }
 

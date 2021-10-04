@@ -17,7 +17,7 @@ class ScoreViewModel : ViewModel() {
     private var _team1Score = mutableStateOf(0)
     private var _team2Score = mutableStateOf(0)
 
-    // Public State variables
+    // Public State read-only variables
     val team1Score : State<Int> = _team1Score
     val team2Score : State<Int> = _team2Score
 

@@ -82,7 +82,7 @@ fun ExternalAppScreen() {
 fun openMap(context: Context, latitude: String, longitude: String) {
     val intent = Intent(
         Intent.ACTION_VIEW,
-        Uri.parse("geo:$latitude, $longitude"),
+        Uri.parse("geo:$latitude, $longitude")
     )
     intent.setPackage("com.google.android.apps.maps")
     context.startActivity(intent)

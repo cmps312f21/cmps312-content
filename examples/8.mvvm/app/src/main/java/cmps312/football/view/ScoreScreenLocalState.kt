@@ -20,6 +20,7 @@ import cmps312.football.viewmodel.ScoreViewModel
 
 @Composable
 fun ScoreScreenLocalState() {
+    // Ticket from MVVM police => ViewModel (manage state)
     var team1Score = remember { mutableStateOf(0) }
     var team2Score = remember { mutableStateOf(0) }
 
