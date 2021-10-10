@@ -76,5 +76,6 @@ dependencies {
 
     //For Kotlin Serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
-    implementation "io.ktor:ktor-client-android:1.2.2"
+    //For Ktor client
+    implementation 'io.ktor:ktor-client-android:1.6.4'
 }
