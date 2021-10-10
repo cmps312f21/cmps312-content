@@ -1,6 +1,6 @@
 package cmps312.coroutines.console
 
-import cmps312.coroutines.api.getStockQuote
+import cmps312.coroutines.webapi.getStockQuote
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

@@ -1,4 +1,4 @@
-package cmps312.coroutines.api
+package cmps312.coroutines.webapi
 
 import io.ktor.client.*
 import io.ktor.client.request.*
