@@ -134,10 +134,11 @@ private fun nextProbablePrime(): BigInteger {
 }
 
 // Coroutine version
-private suspend fun getPrimeBigInt() = withContext(Dispatchers.Default) {
-    Log.i(TAG, "Running on ${Thread.currentThread().name} thread.")
-    return@withContext nextProbablePrime()
-}
+private suspend fun getPrimeBigInt() =
+    withContext(Dispatchers.Default) {
+        Log.i(TAG, "Running on ${Thread.currentThread().name} thread.")
+        nextProbablePrime()
+    }
 
 // Callback version
 private fun getPrimeBigInt(callBack: (BigInteger) -> Unit) {
@@ -147,6 +148,6 @@ private fun getPrimeBigInt(callBack: (BigInteger) -> Unit) {
 
         callBack(primeInt)
         // But trying to access the UI from this backgroud thread will cause an error
-        //result = result.toString()
+        //result = primeInt.toString()
     }
 }
