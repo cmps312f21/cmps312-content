@@ -1,15 +1,11 @@
 package cmps312.coroutines.console
 
 import cmps312.coroutines.viewmodel.MainViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
-fun main() = runBlocking<Unit> {
-
+suspend fun main() {
     val startTime = System.currentTimeMillis()
-    val parentJob = GlobalScope.launch {
+    val job = CoroutineScope(Dispatchers.IO).launch {
         val viewModel = MainViewModel()
         val deferred = async { viewModel.getStockQuote("Apple") }
         val deferred2 = async { viewModel.getStockQuote("Tesla") }
@@ -25,10 +21,10 @@ fun main() = runBlocking<Unit> {
         println(">> ${quote3.name} (${quote3.symbol}) = ${quote3.price}")
     }
 
-    parentJob.invokeOnCompletion {
+    job.invokeOnCompletion {
         val executionDuration = System.currentTimeMillis() - startTime
         println(">>> Job done. Total elapse time ${executionDuration/1000}s <<<")
     }
-    // Wait for the job to finish otherwise main will exit
-    parentJob.join()
+    // Wait for the job to finish otherwise the main will exit without the showing the results
+    job.join()
 }

@@ -8,10 +8,15 @@ suspend fun sum(n: Int): Int {
     return (0 until n).sum()
 }
 
-fun main() = runBlocking {
-    val first = async { sum(20) }
-    val second = async { sum(10) }
-    println("Waiting...")
-    println(">> First - sum(0..20) = ${ first.await() }")
-    println(">> Second - sum(0..10) = ${ second.await() }")
+suspend fun main() {
+    val job = CoroutineScope(Dispatchers.Default).launch {
+        val first = async { sum(20) }
+        val second = async { sum(10) }
+        println("Waiting...")
+        println(">> First - sum(0..20) = ${first.await()}")
+        println(">> Second - sum(0..10) = ${second.await()}")
+    }
+
+    // Wait for the job to finish otherwise the main will exit without the showing the results
+    job.join()
 }

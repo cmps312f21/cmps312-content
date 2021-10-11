@@ -1,11 +1,9 @@
 package cmps312.coroutines.console
 
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
-fun main() {
-    runBlocking {
+suspend fun main() {
+    val job = CoroutineScope(Dispatchers.Default).launch {
         launch {
             delay(1200)
             println("Hello")
@@ -19,4 +17,7 @@ fun main() {
             println("Beautiful")
         }
     }
+
+    // Wait for the job to finish otherwise the main will exit without the showing the results
+    job.join()
 }
