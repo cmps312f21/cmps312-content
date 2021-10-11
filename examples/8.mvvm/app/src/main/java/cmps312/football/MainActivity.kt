@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import cmps312.football.ui.theme.FootballMVVMTheme
 import cmps312.football.view.LifeCycleObserver
 import cmps312.football.view.ScoreScreen
+import cmps312.football.view.ScoreScreenLocalState
 import java.util.*
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             FootballMVVMTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    ScoreScreen()
+                    //ScoreScreenLocalState()
+                    //ScoreScreen()
+                    MainScreen()
                 }
             }
         }

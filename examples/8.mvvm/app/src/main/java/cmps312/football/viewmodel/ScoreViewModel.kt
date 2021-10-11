@@ -2,29 +2,31 @@ package cmps312.football.viewmodel
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import cmps312.football.repository.DataRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 
 @SuppressLint("LongLogTag")
 class ScoreViewModel : ViewModel() {
      private val TAG = "LifeCycle->ScoreViewModel ✔"
 
-    var team1Score = mutableStateOf(0)
-    var team2Score = mutableStateOf(0)
+    // Private mutable state variables
+    private var _team1Score = mutableStateOf(0)
+    private var _team2Score = mutableStateOf(0)
+
+    // Public State read-only variables
+    val team1Score : State<Int> = _team1Score
+    val team2Score : State<Int> = _team2Score
 
     fun onIncrementTeam1Score() {
-        team1Score.value++
+        _team1Score.value++
     }
 
     fun onIncrementTeam2Score() {
-        team2Score.value++
+        _team2Score.value++
     }
 
     val redCardsCount: LiveData<Int> = DataRepository.getRedCardsCount()
@@ -47,7 +49,7 @@ class ScoreViewModel : ViewModel() {
 
     @SuppressLint("LongLogTag")
     override fun onCleared() {
-        Log.d(TAG, "☠️☠️ onCleared ☠️☠️")
+        Log.d(TAG, "☠️☠onCleared ☠☠")
         super.onCleared()
     }
 }

@@ -1,46 +1,38 @@
 package cmps312.football.view
 
 import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 
 class LifeCycleObserver(
     private val lifecycle: Lifecycle,
     private val tag: String,
     private val language: String,
     private val screenOrientation: String
-) : LifecycleObserver {
+) : DefaultLifecycleObserver {
     private val TAG = "LifeCycle->$tag"
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
+    override fun onCreate(lifecycleOwner: LifecycleOwner) {
         val msg = "onCreate. Language = $language - Orientation = $screenOrientation - ${lifecycle.currentState}"
         Log.d(TAG, msg)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onStart() {
+    override fun onStart(lifecycleOwner: LifecycleOwner) {
         Log.d(TAG, "onStart - ${lifecycle.currentState}")
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
+    override fun onResume(lifecycleOwner: LifecycleOwner) {
         Log.d(TAG, "\uD83E\uDD29\uD83E\uDD29 onResume \uD83E\uDD29\uD83E\uDD29 - ${lifecycle.currentState}")
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
+    override fun onPause(lifecycleOwner: LifecycleOwner) {
         Log.d(TAG, "onPause")
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
+    override fun onStop(lifecycleOwner: LifecycleOwner) {
         Log.d(TAG, "onStop")
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
+    override fun onDestroy(lifecycleOwner: LifecycleOwner) {
         Log.d(TAG, "☠☠ onDestroy ☠☠ - ${lifecycle.currentState}")
     }
 

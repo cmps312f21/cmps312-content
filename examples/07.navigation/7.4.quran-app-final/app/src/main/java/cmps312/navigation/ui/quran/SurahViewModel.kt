@@ -2,6 +2,7 @@ package cmps312.navigation.ui.quran
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import cmps312.navigation.model.SurahRepository
 
 class SurahViewModel (appContext: Application) : AndroidViewModel(appContext) {
@@ -12,9 +13,9 @@ class SurahViewModel (appContext: Application) : AndroidViewModel(appContext) {
     subsequent calls simply return the remembered surahs.
     surahs is a lazy property!
     */
-    val surahs by lazy {
+    val surahs =
           SurahRepository.getSurahs(appContext)
-    }
+    //}
 
     fun getSurah(surahId: Int) = surahs.find { it.id == surahId }
 }

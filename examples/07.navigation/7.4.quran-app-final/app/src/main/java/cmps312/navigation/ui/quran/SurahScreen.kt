@@ -23,6 +23,7 @@ fun SurahScreen(onSelectSurah: (Int) -> Unit) {
        Make the activity the store owner of the viewModel
        to ensure that the same viewModel instance is used for all destinations
     */
+    //val surahViewModel = SurahViewModel(LocalContext.current)
     val surahViewModel = viewModel<SurahViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     val surahs = surahViewModel.surahs
 

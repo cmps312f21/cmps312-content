@@ -22,7 +22,11 @@ fun BottomNavBar(navController: NavHostController) {
                 //if currentRoute is equal to the nav item route then set selected to true
                 selected = currentRoute == navItem.route,
                 onClick = {
-                    navController.navigate(navItem.route)
+                    navController.navigate(navItem.route) {
+                        /* Navigate to the destination only if we’re not already on it,
+                        avoiding multiple copies of the destination screen on the back stack */
+                        launchSingleTop = true
+                    }
                 },
                 icon = {
                     // For each screen either an icon or vector resource is provided

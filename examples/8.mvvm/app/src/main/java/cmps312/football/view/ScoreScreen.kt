@@ -1,11 +1,15 @@
 package cmps312.football.view
 
+import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,7 +21,7 @@ import cmps312.football.viewmodel.ScoreViewModel
 @Composable
 fun ScoreScreen() {
     // Get an instance of the ScoreViewModel
-    val scoreViewModel = viewModel<ScoreViewModel>()
+    val scoreViewModel = viewModel<ScoreViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     /*
     var team1Score by remember {
         mutableStateOf(0)
@@ -26,7 +30,6 @@ fun ScoreScreen() {
     var team2Score by remember {
         mutableStateOf(0)
     }*/
-
     val redCardsCount = scoreViewModel.redCardsCount.observeAsState()
     val newsUpdate = scoreViewModel.newsFlow.collectAsState(initial = "")
     val timeRemaining = scoreViewModel.timeRemainingFlow.collectAsState(initial = "")
@@ -70,10 +73,16 @@ fun ScoreScreen() {
                     text = "Red cards count: ${redCardsCount.value}"
                 )
                 // Recomposes whenever timeRemaining changes
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = timeRemaining.value
-                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = stringResource(id = R.string.remaining_time),
+                    )
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = timeRemaining.value,
+                    )
+                }
                 // Recomposes whenever newsUpdate changes
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
@@ -81,6 +90,18 @@ fun ScoreScreen() {
                     text = "\uD83D\uDCE2 ${newsUpdate.value}"
                 )
             }
+        }
+    }
+
+    // Watch the Composable Lifecycle
+    // This function is called when the Composable enters the Composition
+    LaunchedEffect(Unit) {
+        Log.d("LifeCycle->Compose", "onActive ScoreScreen.")
+    }
+    DisposableEffect(Unit) {
+        // onDispose() is called when the Composable leaves the composition
+        onDispose {
+            Log.d("LifeCycle->Compose", "onDispose ScoreScreen.")
         }
     }
 }
