@@ -147,6 +147,6 @@ private fun getPrimeBigInt(callBack: (BigInteger) -> Unit) {
 
         callBack(primeInt)
         // But trying to access the UI from this backgroud thread will cause an error
-        //result = result.toString()
+        //result = primeInt.toString()
     }
 }
