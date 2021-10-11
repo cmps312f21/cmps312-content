@@ -7,19 +7,25 @@ import kotlinx.coroutines.flow.flow
 import cmps312.coroutines.viewmodel.MainViewModel
 
 
-fun main() = runBlocking {
+suspend fun main() {
     val JOB_TIMEOUT = 5000L
-    // Cancel the job after 5 seconds timeout
-    val job = withTimeoutOrNull(JOB_TIMEOUT) {
-        fibonacci().collect {
-            print("$it, ")
+
+    val job = CoroutineScope(Dispatchers.IO).launch {
+        // Cancel the job after 5 seconds timeout
+        withTimeout(JOB_TIMEOUT) {
+            fibonacci().collect {
+                print("$it, ")
+            }
         }
     }
 
-    if(job == null){
-        val cancelMessage = "\nJob cancelled...Job took longer than ${JOB_TIMEOUT/1000}s"
-        println(cancelMessage)
-    } else {
-        println("\n>>> Job done <<<")
+    job.invokeOnCompletion {
+        if (job.isCancelled)
+            println("\n>>> Job cancelled <<<")
+        else
+            println("\n>>> Job done <<<")
     }
+
+    // Wait for the job to finish otherwise main will exit
+    job.join()
 }

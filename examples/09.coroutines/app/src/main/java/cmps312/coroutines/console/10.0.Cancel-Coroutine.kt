@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.flow
 import cmps312.coroutines.viewmodel.MainViewModel
 
 
-fun main() = runBlocking {
-    val job = GlobalScope.launch {
+suspend fun main() {
+    val job = CoroutineScope(Dispatchers.Default).launch {
         fibonacci().collect {
             print("$it, ")
         }

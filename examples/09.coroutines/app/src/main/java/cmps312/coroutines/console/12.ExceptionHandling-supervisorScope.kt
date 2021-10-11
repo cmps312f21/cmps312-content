@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 import cmps312.coroutines.viewmodel.MainViewModel
 import java.lang.Exception
 
-fun main() = runBlocking {
+suspend fun main() {
     /* Because the supervisorScope is used
         If one child failed the whole job is NOT cancelled
      */
@@ -13,7 +13,8 @@ fun main() = runBlocking {
     }
 
     val startTime = System.currentTimeMillis()
-    val parentJob = GlobalScope.launch(exceptionHandler) {
+
+    val job = CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
         val viewModel = MainViewModel()
         supervisorScope {
             val deferred1 = async() { viewModel.getStockQuote("Tesla") }
@@ -42,8 +43,8 @@ fun main() = runBlocking {
         }
     }
 
-    parentJob.invokeOnCompletion {
-        if (parentJob.isCancelled) {
+    job.invokeOnCompletion {
+        if (job.isCancelled) {
             println(">>> Job cancelled <<<")
         }
         else {
@@ -52,5 +53,5 @@ fun main() = runBlocking {
         }
     }
     // Wait for the job to finish otherwise main will exit
-    parentJob.join()
+    job.join()
 }

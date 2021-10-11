@@ -18,9 +18,14 @@ val flowNews = flow {
     emit("Done")
 }.flowOn(Dispatchers.IO) // The above stream will run in io dispatcher
 
-fun main() = runBlocking {
-    println("Collecting coroutine running on $coroutineContext")
-    flowNews.collect {
-        println("Collecting -> $it")
+suspend fun main() {
+    val job = CoroutineScope(Dispatchers.Default).launch {
+        println("Collecting coroutine running on $coroutineContext")
+        flowNews.collect {
+            println("Collecting -> $it")
+        }
     }
+
+    // Wait for the job to finish otherwise main will exit
+    job.join()
 }
