@@ -18,6 +18,7 @@ suspend fun main() {
         }
     }
 
+
     // Wait for the job to finish otherwise the main will exit without the showing the results
     job.join()
 }

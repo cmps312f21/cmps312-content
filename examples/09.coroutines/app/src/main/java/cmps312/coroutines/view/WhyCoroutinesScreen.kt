@@ -95,11 +95,11 @@ fun WhyCoroutinesScreen() {
                 modifier = Modifier.weight(1F),
                 onClick = {
                     result = "Started long running task using Coroutine"
-                    val job = coroutineScope.launch {
+                    coroutineScope.launch {
+                        Log.i(TAG,"coroutineScope Running on ${Thread.currentThread().name} thread.")
                         val primeInt = getPrimeBigInt()
                         result = primeInt.toString()
                     }
-                    // job.cancel() can be used to cancel the job
                 }
             ) {
                 Text(text = "Long Running Task using Coroutine")

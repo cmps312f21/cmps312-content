@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coroutines" >
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Coroutines.NoActionBar" >
@@ -21,5 +21,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

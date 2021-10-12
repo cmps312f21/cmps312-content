@@ -12,7 +12,7 @@ const val API_KEY = "Jjtxe7HOP_ZjzWK3kwYQu2ovpzxTPEIp"
 
 object StockQuoteService {
     private val client = HttpClient() {
-        //This will auto-parse from/to json when sending and receiving data from Web API
+        //This will auto-parse from/to json when sending and receiving data from the Web API
         install(JsonFeature) {
             serializer = KotlinxSerializer(
                 json = kotlinx.serialization.json.Json {

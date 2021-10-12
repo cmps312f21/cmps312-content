@@ -1,4 +1,4 @@
-package cmps312.coroutines
+package cmps312.coroutines.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,8 @@ class MainActivity : ComponentActivity() {
             CoroutinesTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    WhyCoroutinesScreen()
+                    //WhyCoroutinesScreen()
+                    CancelCoroutineScreen()
                 }
             }
         }
