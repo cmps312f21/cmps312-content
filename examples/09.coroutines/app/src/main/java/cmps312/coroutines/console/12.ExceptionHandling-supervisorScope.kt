@@ -1,7 +1,7 @@
 package cmps312.coroutines.console
 
 import kotlinx.coroutines.*
-import cmps312.coroutines.viewmodel.MainViewModel
+import cmps312.coroutines.viewmodel.StockQuoteViewModel
 import java.lang.Exception
 
 suspend fun main() {
@@ -15,7 +15,7 @@ suspend fun main() {
     val startTime = System.currentTimeMillis()
 
     val job = CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
-        val viewModel = MainViewModel()
+        val viewModel = StockQuoteViewModel()
         supervisorScope {
             val deferred1 = async() { viewModel.getStockQuote("Tesla") }
             try {

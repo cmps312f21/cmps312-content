@@ -7,7 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import cmps312.navigation.ui.Screen
+import cmps312.coroutines.view.screens.CancelCoroutineScreen
+import cmps312.coroutines.view.screens.ParallelCoroutineScreen
+import cmps312.coroutines.view.screens.WhyCoroutinesScreen
 
 /**
  * It receives navController to navigate between screens,

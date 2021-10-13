@@ -16,3 +16,6 @@ fun getCurrentRoute(navController: NavController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.destination?.route
 }
+
+fun String.removeTrailingComma() =
+    this.replace("(?!^),+$".toRegex(), "")

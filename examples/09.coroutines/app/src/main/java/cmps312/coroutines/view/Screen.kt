@@ -1,4 +1,4 @@
-package cmps312.navigation.ui
+package cmps312.coroutines.view
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*

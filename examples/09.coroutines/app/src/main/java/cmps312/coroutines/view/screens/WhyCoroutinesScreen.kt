@@ -1,18 +1,16 @@
-package cmps312.coroutines.view
+package cmps312.coroutines.view.screens
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cmps312.coroutines.view.components.ClickCounter
-import cmps312.navigation.ui.Screen
+import cmps312.coroutines.view.components.TopBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,17 +26,8 @@ fun WhyCoroutinesScreen() {
     var result by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Why Coroutines",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            )
-        }) {
+        topBar = { TopBar("Why Coroutines") }
+    ) {
         Column(
             modifier = Modifier.padding(top = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),

@@ -1,10 +1,8 @@
 package cmps312.coroutines.console
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.NonCancellable.isActive
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import cmps312.coroutines.viewmodel.MainViewModel
 
 
 suspend fun main() {
@@ -36,7 +34,7 @@ fun fibonacci() = flow {
     var terms = Pair(0L, 1L)
     // this sequence is infinite
     while (true) {
-        yield()  // periodic check - if job cancelled exit the loop
+        yield()  // check - if job cancelled exit the loop
         emit(terms.first)
         terms = Pair(terms.second, terms.first + terms.second)
         // Suspend the function for 400ms

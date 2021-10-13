@@ -7,7 +7,7 @@ import java.math.BigInteger
 import java.util.*
 
 // flow .... emit .... collect
-suspend fun main() { //= runBlocking {
+suspend fun main() {
     println("Receiving primes")
     primesFlow().collect { // like observer
         println("Receiving $it")
