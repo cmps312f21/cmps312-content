@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import cmps312.coroutines.view.screens.CancelCoroutineScreen
 import cmps312.coroutines.view.screens.ParallelCoroutineScreen
+import cmps312.coroutines.view.screens.StockQuoteScreen
 import cmps312.coroutines.view.screens.WhyCoroutinesScreen
 
 /**
@@ -37,6 +38,10 @@ fun AppNavigator(
 
         composable(Screen.CancelCoroutine.route) {
             CancelCoroutineScreen()
+        }
+
+        composable(Screen.StockQuote.route) {
+            StockQuoteScreen()
         }
 
         composable(Screen.ParallelCoroutine.route) {

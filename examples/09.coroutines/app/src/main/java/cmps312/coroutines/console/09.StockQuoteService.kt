@@ -1,9 +1,10 @@
 package cmps312.coroutines.console
 
-import cmps312.coroutines.viewmodel.StockQuoteViewModel
 import cmps312.coroutines.webapi.SimulatedStockQuoteService
 import cmps312.coroutines.webapi.StockQuoteService
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 suspend fun main() {
     val startTime = System.currentTimeMillis()
