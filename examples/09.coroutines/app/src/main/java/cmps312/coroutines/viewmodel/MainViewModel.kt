@@ -1,9 +1,7 @@
 package cmps312.coroutines.viewmodel
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
@@ -12,19 +10,19 @@ private const val TAG = "ViewModel.Coroutines"
 data class StockQuote(val name: String, val symbol: String, val price: Int)
 
 class MainViewModel : ViewModel() {
-    var _nextValue = mutableStateOf(0L)
+    private var _nextValue = mutableStateOf(0L)
     val nextValue : State<Long> = _nextValue
 
-    var job : Job? = null
+    var  job : Job? = null
 
     fun startFibonacci() {
-        stopFibonacci()
+        cancelFibonacci()
         job = viewModelScope.launch {
             fibonacci()
         }
     }
 
-    fun stopFibonacci() {
+    fun cancelFibonacci() {
         job?.let {
             if (it.isActive)
                 it.cancel()
@@ -43,14 +41,16 @@ class MainViewModel : ViewModel() {
             var terms = Pair(0L, 1L)
             // this sequence is infinite
             while (true) {
-                //yield()  // periodic check - if job cancelled exit the loop
-                ensureActive()
-                //if (!isActive) return@withContext
-                //println("${terms.first}")
-                _nextValue.value = terms.first!!
+                _nextValue.value = terms.first
                 terms = Pair(terms.second, terms.first + terms.second)
-                // Suspend the function for 400ms
-                delay(1000)
+
+                ensureActive()  // check - if job cancelled exit the loop
+                //yield()  // check - if job cancelled exit the loop
+                //if (!isActive) return@withContext  // check - if job cancelled exit the loop
+                //println("${terms.first}")
+                
+                // Suspend the function for 600ms
+                delay(600)
             }
             println("Job done!")
         } catch (e: CancellationException) {
@@ -88,7 +88,7 @@ class MainViewModel : ViewModel() {
         StockQuote(name.trim(), symbol, price)
     }
 
-    val companies = mapOf(
+    private val companies = mapOf(
         "Apple" to "AAPL",
         "Amazon" to  "AMZN",
         "Alibaba" to "BABA",

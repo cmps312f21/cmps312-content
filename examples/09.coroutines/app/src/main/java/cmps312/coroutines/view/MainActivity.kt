@@ -13,10 +13,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CoroutinesTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    //WhyCoroutinesScreen()
-                    CancelCoroutineScreen()
+                    MainScreen()
                 }
             }
         }

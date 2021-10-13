@@ -3,11 +3,15 @@ package cmps312.coroutines.view
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cmps312.navigation.ui.Screen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,93 +25,109 @@ private val TAG = "WhyCoroutines"
 fun WhyCoroutinesScreen() {
     var result by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier.padding(top=8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-        ) {
-            ClickCounter(modifier = Modifier.weight(1F))
-            Text(
-                text = "Click to check that the UI is still responsive \uD83D\uDE03",
-                modifier = Modifier.weight(1F)
-            )
-        }
-
-        Text(text = result)
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-        ) {
-            Button(
-                modifier = Modifier.weight(1F),
-                onClick = {
-                    result = "Started long running task on Main Thread"
-                    Log.i(TAG, "Running on ${Thread.currentThread()} thread.")
-                    result = nextProbablePrime().toString()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Why Coroutines",
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
                 }
-            ) {
-                Text(text = "Long Running Task on Main Thread")
-            }
-            Text(
-                text = "\uD83D\uDC4E\uD83D\uDC4E\uD83D\uDC4E Long Running task that will block the main thread and freeze the App",
-                modifier = Modifier.weight(1F)
             )
-        }
-
-        // Callback version
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+        }) {
+        Column(
+            modifier = Modifier.padding(top = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(
-                modifier = Modifier.weight(1F),
-                onClick = {
-                    result = "Started long running task on Background Thread"
-                    getPrimeBigInt { primeInt ->
-                        Log.i(TAG, "Running on ${Thread.currentThread().name} thread.")
-                        result = primeInt.toString()
+
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+            ) {
+                ClickCounter(modifier = Modifier.weight(1F))
+                Text(
+                    text = "Click to check that the UI is still responsive \uD83D\uDE03",
+                    modifier = Modifier.weight(1F)
+                )
+            }
+
+            Text(text = result)
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+            ) {
+                Button(
+                    modifier = Modifier.weight(1F),
+                    onClick = {
+                        result = "Started long running task on Main Thread"
+                        Log.i(TAG, "Running on ${Thread.currentThread()} thread.")
+                        result = nextProbablePrime().toString()
                     }
-                    Log.i(TAG, "Running on ${Thread.currentThread()} thread.")
+                ) {
+                    Text(text = "Long Running Task on Main Thread")
                 }
-            ) {
-                Text(text = "Long Running Task On Background Thread")
+                Text(
+                    text = "\uD83D\uDC4E\uD83D\uDC4E\uD83D\uDC4E Long Running task that will block the main thread and freeze the App",
+                    modifier = Modifier.weight(1F)
+                )
             }
-            Text(
-                text = "\uD83D\uDC4E But thread is costly. UI can only be accessed from the Main thread. Callback required to update the UI.",
-                modifier = Modifier.weight(1F)
-            )
-        }
 
-        // Coroutine version
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-        ) {
-            val coroutineScope = rememberCoroutineScope()
-            Button(
-                modifier = Modifier.weight(1F),
-                onClick = {
-                    result = "Started long running task using Coroutine"
-                    coroutineScope.launch {
-                        Log.i(TAG,"coroutineScope Running on ${Thread.currentThread().name} thread.")
-                        val primeInt = getPrimeBigInt()
-                        result = primeInt.toString()
-                    }
-                }
+            // Callback version
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             ) {
-                Text(text = "Long Running Task using Coroutine")
+                Button(
+                    modifier = Modifier.weight(1F),
+                    onClick = {
+                        result = "Started long running task on Background Thread"
+                        getPrimeBigInt { primeInt ->
+                            Log.i(TAG, "Running on ${Thread.currentThread().name} thread.")
+                            result = primeInt.toString()
+                        }
+                        Log.i(TAG, "Running on ${Thread.currentThread()} thread.")
+                    }
+                ) {
+                    Text(text = "Long Running Task On Background Thread")
+                }
+                Text(
+                    text = "\uD83D\uDC4E But thread is costly. UI can only be accessed from the Main thread. Callback required to update the UI.",
+                    modifier = Modifier.weight(1F)
+                )
             }
-            Text(
-                text = "\uD83D\uDC4D Coroutine lightweight, easier alternative to use without callbacks.",
-                modifier = Modifier.weight(1F)
-            )
+
+            // Coroutine version
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+            ) {
+                val coroutineScope = rememberCoroutineScope()
+                Button(
+                    modifier = Modifier.weight(1F),
+                    onClick = {
+                        result = "Started long running task using Coroutine"
+                        coroutineScope.launch {
+                            Log.i(
+                                TAG,
+                                "coroutineScope Running on ${Thread.currentThread().name} thread."
+                            )
+                            val primeInt = getPrimeBigInt()
+                            result = primeInt.toString()
+                        }
+                    }
+                ) {
+                    Text(text = "Long Running Task using Coroutine")
+                }
+                Text(
+                    text = "\uD83D\uDC4D Coroutine lightweight, easier alternative to use without callbacks.",
+                    modifier = Modifier.weight(1F)
+                )
+            }
         }
     }
 }
