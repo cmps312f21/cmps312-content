@@ -38,18 +38,17 @@ class StockQuotesViewModel : ViewModel() {
         }
     }
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        _errorMessage.value = exception.message ?: "Request failed"
-        _jobStatusGetStockQuotes.value = JobState.ERROR
-        //displayMessage(LocalContext.current, msg)
-        println("Debug: ${_errorMessage.value}")
-    }
-
     private suspend fun getStockQuotesInParallel(companies: List<String>) =
         withContext(Dispatchers.IO) {
             companies.map { async { stockQuoteService.getStockQuote(it) } }
-                .map { it.await() }
+                     .map { it.await() }
         }
+
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
+        _errorMessage.value = exception.message ?: "Request failed."
+        _jobStatusGetStockQuotes.value = JobState.CANCELLED
+        println("Debug: ${_errorMessage.value}")
+    }
 
     fun onGetStockQuotes() {
         val startTime = System.currentTimeMillis()
@@ -70,9 +69,7 @@ class StockQuotesViewModel : ViewModel() {
             }
 
         job.invokeOnCompletion {
-            if (job.isCancelled) {
-                _jobStatusGetStockQuotes.value = JobState.CANCELLED
-            } else {
+            if (!job.isCancelled) {
                 _executionDuration.value = System.currentTimeMillis() - startTime
                 _jobStatusGetStockQuotes.value = JobState.SUCCESS
                 println(">>> Debug: Job done. Total execution time: ${_executionDuration.value / 1000}s")
