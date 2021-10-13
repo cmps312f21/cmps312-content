@@ -1,4 +1,4 @@
-package cmps312.coroutines.view
+package cmps312.coroutines.view.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

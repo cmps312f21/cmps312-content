@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cmps312.coroutines.view.components.ClickCounter
 import cmps312.navigation.ui.Screen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ private val TAG = "WhyCoroutines"
 
 @Composable
 fun WhyCoroutinesScreen() {
+    val coroutineScope = rememberCoroutineScope()
     var result by remember { mutableStateOf("") }
 
     Scaffold(
@@ -42,8 +44,6 @@ fun WhyCoroutinesScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
@@ -106,7 +106,6 @@ fun WhyCoroutinesScreen() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             ) {
-                val coroutineScope = rememberCoroutineScope()
                 Button(
                     modifier = Modifier.weight(1F),
                     onClick = {
@@ -129,17 +128,6 @@ fun WhyCoroutinesScreen() {
                 )
             }
         }
-    }
-}
-
-@Composable
-fun ClickCounter(modifier: Modifier = Modifier) {
-    var clicksCount by remember { mutableStateOf(0) }
-    Button(
-        modifier = modifier,
-        onClick = { clicksCount++ }
-    ) {
-        Text("Clicked $clicksCount times")
     }
 }
 
