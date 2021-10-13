@@ -9,15 +9,15 @@ suspend fun main() {
         val viewModel = MainViewModel()
         val deferred = async { viewModel.getStockQuote("Apple") }
         val quote = deferred.await()
-        println(">> ${quote.name} (${quote.symbol}) = ${quote.price}")
+        println(">> $quote")
 
         val deferred2 = async { viewModel.getStockQuote("Tesla") }
         val quote2 = deferred2.await()
-        println(">> ${quote2.name} (${quote2.symbol}) = ${quote2.price}")
+        println(">> $quote2")
 
         val deferred3 = async { viewModel.getStockQuote("Google") }
         val quote3 = deferred3.await()
-        println(">> ${quote3.name} (${quote3.symbol}) = ${quote3.price}")
+        println(">> $quote3")
     }
 
     job.invokeOnCompletion {

@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import cmps312.navigation.ui.Screen
 
 /**
- * It receives navcontroller to navigate between screens,
+ * It receives navController to navigate between screens,
  * padding values -> Since BottomNavigation has some heights,
  * to avoid clipping of screen, we set padding provided by scaffold
  */
@@ -35,6 +35,10 @@ fun AppNavigator(
 
         composable(Screen.CancelCoroutine.route) {
             CancelCoroutineScreen()
+        }
+
+        composable(Screen.ParallelCoroutine.route) {
+            ParallelCoroutineScreen()
         }
     }
 }

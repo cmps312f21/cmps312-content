@@ -7,7 +7,14 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
 private const val TAG = "ViewModel.Coroutines"
-data class StockQuote(val name: String, val symbol: String, val price: Int)
+data class StockQuote(val name: String = "", val symbol: String = "", val price: Int = 0) {
+    override fun toString(): String {
+        return if (name.isNotEmpty())
+            "$name ($symbol) = $price"
+        else
+            ""
+    }
+}
 
 class MainViewModel : ViewModel() {
     private var _nextValue = mutableStateOf(0L)
@@ -48,7 +55,7 @@ class MainViewModel : ViewModel() {
                 //yield()  // check - if job cancelled exit the loop
                 //if (!isActive) return@withContext  // check - if job cancelled exit the loop
                 //println("${terms.first}")
-                
+
                 // Suspend the function for 600ms
                 delay(600)
             }
@@ -88,7 +95,7 @@ class MainViewModel : ViewModel() {
         StockQuote(name.trim(), symbol, price)
     }
 
-    private val companies = mapOf(
+    val companies = mapOf(
         "Apple" to "AAPL",
         "Amazon" to  "AMZN",
         "Alibaba" to "BABA",
