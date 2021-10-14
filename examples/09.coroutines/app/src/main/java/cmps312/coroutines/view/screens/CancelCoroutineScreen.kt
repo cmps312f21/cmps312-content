@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,7 +17,6 @@ import cmps312.coroutines.viewmodel.FibonacciViewModel
 
 @Composable
 fun CancelCoroutineScreen() {
-    var result by remember { mutableStateOf("") }
     val viewModel = viewModel<FibonacciViewModel>()
 
     Scaffold(
@@ -28,22 +27,18 @@ fun CancelCoroutineScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = viewModel.nextValue.value.toString())
+            Text(text = viewModel.nextFibonacciValue.toString())
 
             Button(
                 onClick = {
-                    viewModel.startFibonacci()
+                    if (!viewModel.isJobRunning)
+                        viewModel.startFibonacci()
+                    else
+                        viewModel.cancelFibonacci()
                 }
             ) {
-                Text(text = "Fibonacci")
-            }
-
-            Button(
-                onClick = {
-                    viewModel.cancelFibonacci()
-                }
-            ) {
-                Text(text = "Cancel Fibonacci")
+                val buttonText = if (!viewModel.isJobRunning) "Start Fibonacci" else "Cancel Fibonacci"
+                Text(text = buttonText)
             }
         }
     }

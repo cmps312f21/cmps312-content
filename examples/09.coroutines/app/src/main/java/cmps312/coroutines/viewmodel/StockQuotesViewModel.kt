@@ -1,78 +1,90 @@
 package cmps312.coroutines.viewmodel
 
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cmps312.coroutines.model.StockQuote
 import cmps312.coroutines.view.removeTrailingComma
 import cmps312.coroutines.webapi.SimulatedStockQuoteService
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
-private const val TAG = "StockQuotesViewModel"
 class StockQuotesViewModel : ViewModel() {
     private val stockQuoteService = SimulatedStockQuoteService()
 
-    var selectedCompanies = mutableStateOf("Tesla, Apple, Microsoft, IBM,")
-
-    private var _errorMessage = mutableStateOf("")
-    val errorMessage: State<String> = _errorMessage
+    var selectedCompanies by mutableStateOf("Tesla, Apple, Microsoft, IBM,")
 
     var companyStockQuotes = mutableStateListOf<StockQuote>()
-    var runJobsInParallel = mutableStateOf(true)
+    var runJobsInParallel by mutableStateOf(true)
 
-    private var _jobStatusGetStockQuotes = mutableStateOf(JobState.SUCCESS)
-    val jobStatusGetStockQuotes: State<JobState> = _jobStatusGetStockQuotes
+    var jobStatusGetStockQuotes by mutableStateOf(JobState.SUCCESS)
+    var executionDuration by mutableStateOf(0L)
+    var errorMessage by mutableStateOf("")
 
-    private var _executionDuration = mutableStateOf(0L)
-    val executionDuration: State<Long> = _executionDuration
-
-    private suspend fun getStockQuotes(companies: List<String>) {
-        companies.forEach {
-            val quote = stockQuoteService.getStockQuote(it)
-            companyStockQuotes.add(quote)
-        }
+    private suspend fun getStockQuotesSequential(companies: List<String>) {
+            companies.forEach {
+                try {
+                    val quote = stockQuoteService.getStockQuote(it)
+                    companyStockQuotes.add(quote)
+                } catch (e: Exception) {
+                    val msg = e.message ?: "Request failed for $it"
+                    errorMessage = errorMessage + msg + "\n"
+                    println(">>> Debug: $e")
+                }
+            }
     }
 
     private suspend fun getStockQuotesInParallel(companies: List<String>) =
         withContext(Dispatchers.IO) {
-            companies.map { async { stockQuoteService.getStockQuote(it) } }
-                     .map { it.await() }
+            // Running the jobs in a supervisorScope is important so that if a child job fails
+            // other child jobs are not cancelled
+            supervisorScope {
+                companies.map { async { stockQuoteService.getStockQuote(it) } }
+                         .map {
+                            try {
+                                it.await()
+                            } catch (e: Exception) {
+                                val msg = e.message ?: "Request failed for $it"
+                                errorMessage = errorMessage + msg + "\n"
+                                println(">>> Debug: $e")
+                                StockQuote()
+                            }
+                         }
+            }
         }
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        _errorMessage.value = exception.message ?: "Request failed."
-        _jobStatusGetStockQuotes.value = JobState.CANCELLED
-        println("Debug: ${_errorMessage.value}")
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        errorMessage = exception.message ?: "Request failed."
+        jobStatusGetStockQuotes = JobState.CANCELLED
+        println(">>> Debug: $errorMessage")
     }
 
-    fun onGetStockQuotes() {
+    fun getStockQuotes() {
         val startTime = System.currentTimeMillis()
-        _jobStatusGetStockQuotes.value = JobState.RUNNING
-        _executionDuration.value = 0L
+        jobStatusGetStockQuotes = JobState.RUNNING
+        executionDuration = 0L
+        errorMessage = ""
         companyStockQuotes.clear()
 
-        val companiesList = selectedCompanies.value.trim().removeTrailingComma().split(",")
+        val companiesList = selectedCompanies.trim().removeTrailingComma().split(",")
 
         val job =
             viewModelScope.launch(exceptionHandler) {
-                if (runJobsInParallel.value) {
+                if (runJobsInParallel) {
                     val quotes = getStockQuotesInParallel(companiesList)
                     companyStockQuotes.addAll(quotes)
                 } else {
-                    getStockQuotes(companiesList)
+                    getStockQuotesSequential(companiesList)
                 }
             }
 
         job.invokeOnCompletion {
             if (!job.isCancelled) {
-                _executionDuration.value = System.currentTimeMillis() - startTime
-                _jobStatusGetStockQuotes.value = JobState.SUCCESS
-                println(">>> Debug: Job done. Total execution time: ${_executionDuration.value / 1000}s")
+                executionDuration = (System.currentTimeMillis() - startTime) / 1000
+                jobStatusGetStockQuotes = JobState.SUCCESS
+                println(">>> Debug: Job done. Total execution time: ${executionDuration}s")
             }
         }
     }

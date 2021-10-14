@@ -1,28 +1,32 @@
 package cmps312.coroutines.viewmodel
 
-import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
 class FibonacciViewModel : ViewModel() {
-    private var _nextValue = mutableStateOf(0L)
-    val nextValue: State<Long> = _nextValue
+    var nextFibonacciValue by mutableStateOf(0L)
+    var isJobRunning by mutableStateOf(false)
 
     var job: Job? = null
 
     fun startFibonacci() {
         cancelFibonacci()
         job = viewModelScope.launch {
+            isJobRunning = true
             fibonacci()
         }
     }
 
     fun cancelFibonacci() {
         job?.let {
-            if (it.isActive)
+            if (it.isActive) {
                 it.cancel()
+                isJobRunning = false
+            }
         }
     }
 
@@ -38,7 +42,7 @@ class FibonacciViewModel : ViewModel() {
             var terms = Pair(0L, 1L)
             // this sequence is infinite
             while (true) {
-                _nextValue.value = terms.first
+                nextFibonacciValue = terms.first
                 terms = Pair(terms.second, terms.first + terms.second)
 
                 ensureActive()  // check - if job cancelled exit the loop

@@ -1,6 +1,9 @@
 package cmps312.coroutines.viewmodel
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cmps312.coroutines.model.StockQuote
@@ -13,7 +16,6 @@ enum class JobState {
     CANCELLED
 }
 
-private const val TAG = "StockQuoteViewModel"
 class StockQuoteViewModel : ViewModel() {
     private val stockQuoteService = SimulatedStockQuoteService()
 
@@ -22,6 +24,7 @@ class StockQuoteViewModel : ViewModel() {
 
     var jobStatusGetStockQuote by mutableStateOf(JobState.SUCCESS)
     var stockQuote by mutableStateOf(StockQuote())
+    var errorMessage by mutableStateOf("")
 
     // Auto initialize the companies list
     init {
@@ -31,10 +34,15 @@ class StockQuoteViewModel : ViewModel() {
     }
 
     fun getStockQuote() {
-        this.jobStatusGetStockQuote = JobState.RUNNING
+       jobStatusGetStockQuote = JobState.RUNNING
         viewModelScope.launch {
-            stockQuote = stockQuoteService.getStockQuote(selectedCompany)
-            jobStatusGetStockQuote = JobState.SUCCESS
+            try {
+                stockQuote = stockQuoteService.getStockQuote(selectedCompany)
+                jobStatusGetStockQuote = JobState.SUCCESS
+            } catch (e: Exception) {
+                jobStatusGetStockQuote = JobState.CANCELLED
+                errorMessage = e.message ?: "Request failed"
+            }
         }
     }
 

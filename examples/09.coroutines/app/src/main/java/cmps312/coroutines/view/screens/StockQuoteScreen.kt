@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.coroutines.view.components.Dropdown
@@ -51,7 +52,10 @@ fun StockQuoteScreen() {
                     CircularProgressIndicator()
                 }
                 JobState.SUCCESS -> {
-                    Text(text = "${viewModel.stockQuote}")
+                    Text(text = viewModel.stockQuote.toString())
+                }
+                JobState.CANCELLED -> {
+                    Text(text = viewModel.errorMessage, color = Color.Red)
                 }
             }
         }
