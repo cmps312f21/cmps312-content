@@ -1,21 +1,23 @@
 package cmps312.coroutines.console
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import cmps312.coroutines.webapi.SimulatedStockQuoteService
 import cmps312.coroutines.webapi.StockQuoteService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 suspend fun main() {
     val startTime = System.currentTimeMillis()
     val job = CoroutineScope(Dispatchers.IO).launch {
         val company = "Apple"
-        val date = "2021-10-11"
 
         val stockQuoteService = SimulatedStockQuoteService()
         val symbol = stockQuoteService.getStockSymbol(company)
 
-        val quote = StockQuoteService.getStockQuote(symbol, date)
+        val quote = StockQuoteService.getStockQuote(symbol)
         println(">> $company (${quote.symbol}) = ${quote.price}")
         println(">> MarketStockQuote: $quote")
     }
