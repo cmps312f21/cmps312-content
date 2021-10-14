@@ -27,7 +27,7 @@ fun BottomNavBar(navController: NavHostController) {
         val navItems = listOf(Screen.WhyCoroutines,
             Screen.CancelCoroutine,
             Screen.StockQuote,
-            Screen.ParallelCoroutine)
+            Screen.StockQuotes)
 
         navItems.forEach { navItem ->
             BottomNavigationItem(

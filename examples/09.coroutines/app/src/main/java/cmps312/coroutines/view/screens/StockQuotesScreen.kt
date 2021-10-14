@@ -16,7 +16,7 @@ import cmps312.coroutines.viewmodel.JobState
 import cmps312.coroutines.viewmodel.StockQuotesViewModel
 
 @Composable
-fun ParallelCoroutineScreen() {
+fun StockQuotesScreen() {
     val viewModel = viewModel<StockQuotesViewModel>()
 
     Scaffold(
