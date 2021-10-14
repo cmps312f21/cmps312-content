@@ -1,40 +1,40 @@
 package cmps312.coroutines.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cmps312.coroutines.model.StockQuote
 import cmps312.coroutines.webapi.SimulatedStockQuoteService
 import kotlinx.coroutines.launch
 
-private const val TAG = "StockQuoteViewModel"
-
 enum class JobState {
     RUNNING,
     SUCCESS,
-    CANCELLED,
-    ERROR
+    CANCELLED
 }
 
+private const val TAG = "StockQuoteViewModel"
 class StockQuoteViewModel : ViewModel() {
     private val stockQuoteService = SimulatedStockQuoteService()
 
     var companyList = mutableStateListOf<String>()
-    var selectedCompany = mutableStateOf("")
+    var selectedCompany by mutableStateOf("")
 
-    private var _jobStatusGetStockQuote = mutableStateOf(JobState.SUCCESS)
-    val jobStatusGetStockQuote : State<JobState> = _jobStatusGetStockQuote
+    var jobStatusGetStockQuote by mutableStateOf(JobState.SUCCESS)
+    var stockQuote by mutableStateOf(StockQuote())
 
-    private var _stockQuote = mutableStateOf(StockQuote())
-    val stockQuote : State<StockQuote> = _stockQuote
+    // Auto initialize the companies list
+    init {
+        viewModelScope.launch {
+            getCompanies()
+        }
+    }
 
     fun getStockQuote() {
-        _jobStatusGetStockQuote.value = JobState.RUNNING
+        this.jobStatusGetStockQuote = JobState.RUNNING
         viewModelScope.launch {
-            _stockQuote.value = stockQuoteService.getStockQuote(selectedCompany.value)
-            _jobStatusGetStockQuote.value = JobState.SUCCESS
+            stockQuote = stockQuoteService.getStockQuote(selectedCompany)
+            jobStatusGetStockQuote = JobState.SUCCESS
         }
     }
 
