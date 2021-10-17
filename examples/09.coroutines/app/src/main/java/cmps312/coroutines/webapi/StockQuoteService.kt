@@ -20,9 +20,11 @@ object StockQuoteService {
             serializer = KotlinxSerializer(
                 json = kotlinx.serialization.json.Json {
                     ignoreUnknownKeys = true
+                    prettyPrint = true
                 }
             )
         }
+        //Log HTTP request/response details for debugging
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
