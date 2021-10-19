@@ -7,6 +7,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,14 +22,15 @@ import cmps312.coroutines.viewmodel.StockQuoteViewModel
 fun StockQuoteScreen() {
     val viewModel = viewModel<StockQuoteViewModel>()
 
-    /*
+
     // Best to use ViewModel.init
     // LaunchedEffect will be executed when the composable is first launched
-    // If ParallelCoroutineScreen recomposes, the companyList will not re-initialize again
+    // True argument means that if the screen recomposes, the coroutine will not re-executed
     LaunchedEffect(true) {
-        viewModel.getCompanies()
+        // Line commented as getCompanies() is already called in ViewModel.init
+        //viewModel.getCompanies()
     }
-    */
+
 
     Scaffold(
         topBar = { TopBar("Stock Quote") }
