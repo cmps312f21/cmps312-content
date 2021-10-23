@@ -83,4 +83,7 @@ dependencies {
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
     implementation "io.ktor:ktor-client-logging:$ktor_version"
     implementation "ch.qos.logback:logback-classic:1.3.0-alpha10"
+
+    // Kotlin Datetime
+    implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.3.0"
 }
