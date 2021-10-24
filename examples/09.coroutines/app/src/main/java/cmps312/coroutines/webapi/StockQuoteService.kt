@@ -10,10 +10,9 @@ import io.ktor.client.features.logging.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-const val BASE_URL = "https://api.polygon.io/v1/open-close"
-const val API_KEY = "Jjtxe7HOP_ZjzWK3kwYQu2ovpzxTPEIp"
-
 object StockQuoteService {
+    const val BASE_URL = "https://api.polygon.io/v1/open-close"
+    const val API_KEY = "Jjtxe7HOP_ZjzWK3kwYQu2ovpzxTPEIp"
     private val client = HttpClient() {
         //This will auto-parse from/to json when sending and receiving data from the Web API
         install(JsonFeature) {
@@ -25,10 +24,8 @@ object StockQuoteService {
             )
         }
         //Log HTTP request/response details for debugging
-        install(Logging) {
-            logger = Logger.DEFAULT
-            level = LogLevel.ALL
-        }
+        //Log HTTP request/response details for debugging
+        install(Logging) { level = LogLevel.ALL }
     }
 
     /* This method will be used to get a Stock Quote from
@@ -45,7 +42,7 @@ object StockQuoteService {
         return Json { ignoreUnknownKeys = true }.decodeFromString(response)*/
 
         // Set the date to current date - 1 day
-        var yesterday = LocalDateTime.now().minusDays(1)
+        var yesterday = LocalDateTime.now().minusDays(2)
         val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val date = yesterday.format(dateFormat)
 
