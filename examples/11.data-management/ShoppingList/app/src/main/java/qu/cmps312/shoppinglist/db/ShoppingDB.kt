@@ -5,12 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import kotlinx.coroutines.*
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import qu.cmps312.shoppinglist.entity.Category
-import qu.cmps312.shoppinglist.entity.ShoppingItem
 import qu.cmps312.shoppinglist.entity.Product
+import qu.cmps312.shoppinglist.entity.ShoppingItem
 import qu.cmps312.shoppinglist.entity.User
 import qu.cmps312.shoppinglist.repository.ShoppingRepository
 
@@ -18,7 +18,8 @@ import qu.cmps312.shoppinglist.repository.ShoppingRepository
    otherwise you will get an exception.
    When the version changes the DB will be dropped and recreated
  */
-@Database(entities = [Product::class, Category::class, ShoppingItem::class, User::class], version = 1, exportSchema = false)
+@Database(entities = [Product::class, Category::class, ShoppingItem::class, User::class],
+    version = 3)
 @TypeConverters(DateConverter::class)
 abstract class ShoppingDB : RoomDatabase() {
     abstract fun getShoppingItemDao(): ShoppingItemDao
@@ -26,11 +27,8 @@ abstract class ShoppingDB : RoomDatabase() {
 
     // Create a singleton dbInstance
     companion object {
-        @Volatile // meaning that writes to this field are immediately made visible to other threads
         private var dbInstance: ShoppingDB? = null
 
-        /* Protected from concurrent execution by multiple threads */
-        @Synchronized
         fun getInstance(context: Context): ShoppingDB {
             if (dbInstance == null) {
                 // Use Room.databaseBuilder to open( or create) the database

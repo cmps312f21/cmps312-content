@@ -23,10 +23,11 @@ class ShoppingRepository(private val context: Context) {
     }
 
     fun getItems() = shoppingItemDao.getAll()
+    suspend fun getItem(itemId: Long) = shoppingItemDao.getItem(itemId)
 
     // If item already exists just increase the quantity otherwise insert a new Item
     suspend fun addItem(item: ShoppingItem) : Long {
-        val dbItem = shoppingItemDao.getItem(item.productId)
+        val dbItem = shoppingItemDao.getItemByProductId(item.productId)
         return if (dbItem == null) {
             // Ensure that the productName is always null
             item.productName = null
@@ -41,10 +42,12 @@ class ShoppingRepository(private val context: Context) {
     suspend fun updateQuantity(id: Long, quantity: Int) = shoppingItemDao.updateQuantity(id,quantity)
     suspend fun updateItem(item: ShoppingItem) = shoppingItemDao.update(item)
     suspend fun deleteItem(item: ShoppingItem) = shoppingItemDao.delete(item)
+    fun getCount() = shoppingItemDao.getCount()
 
     suspend fun getProducts(categoryId: Long) = productDao.getProducts(categoryId)
     fun getCategories() = productDao.getCategories()
 
+    // Used for database initialization
     companion object {
         private fun readData(context: Context, fileName: String) =
                 context.assets.open(fileName)

@@ -1,8 +1,10 @@
 package qu.cmps312.shoppinglist.entity
 
 import androidx.room.*
-import java.time.LocalDateTime
-import java.util.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @Entity(foreignKeys = [ForeignKey(entity = Product::class,
     parentColumns = ["id"],
@@ -13,7 +15,7 @@ import java.util.*
 data class ShoppingItem(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val productId: Long,
+    var productId: Long,
     var quantity: Int,
     /*
     Unfortunate limitation in Room:
@@ -24,11 +26,13 @@ data class ShoppingItem(
     */
     //@Ignore // productName will NOT be stored in the database
     var productName: String? = null,
+    var categoryId: Long? = null,
 
     /* Need to add TypeConverter otherwise you get compile time error
         Cannot figure out how to read/save this field into database
      */
-     val updatedDate: Date = java.util.Calendar.getInstance().time
+     // More info about Kotlin DateTime @ https://androidrepo.com/repo/Kotlin-kotlinx-datetime-android-date-time
+     val updatedDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 ) {
     constructor(productId: Long, quantity: Int) : this(0, productId, quantity)
 }

@@ -14,14 +14,17 @@ interface ShoppingItemDao {
     */
     // suspend fun getAll() : List<Item>
     // p.name || ' ' || p.image : means concatenate name and image
-    @Query("select i.id, i.quantity, i.updatedDate, i.productId, (p.name || ' ' || p.image) as productName from ShoppingItem i join Product p on i.productId = p.id")
+    @Query("select i.id, i.quantity, i.updatedDate, i.productId, i.categoryId, (p.name || ' ' || p.image) as productName from ShoppingItem i join Product p on i.productId = p.id")
     fun getAll() : LiveData<List<ShoppingItem>>
 
+    @Query("select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, (p.name || ' ' || p.image) as productName from ShoppingItem i join Product p on i.productId = p.id where i.id = :itemId")
+    suspend fun getItem(itemId: Long) : ShoppingItem?
+
     @Query("select i.id, i.quantity, i.updatedDate, i.productId, (p.name || ' ' || p.image) as productName from ShoppingItem i join Product p on i.productId = p.id where i.productId = :productId")
-    suspend fun getItem(productId: Long) : ShoppingItem?
+    suspend fun getItemByProductId(productId: Long) : ShoppingItem?
 
     @Query("select count(*) from ShoppingItem")
-    suspend fun getCount() : Long
+    fun getCount() : LiveData<Long>
 
     @Query("update ShoppingItem set quantity = :quantity where id = :id")
     suspend fun updateQuantity(id: Long, quantity: Int)
