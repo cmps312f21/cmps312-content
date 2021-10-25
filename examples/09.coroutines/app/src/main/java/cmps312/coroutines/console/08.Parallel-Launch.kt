@@ -3,6 +3,17 @@ package cmps312.coroutines.console
 import kotlinx.coroutines.*
 
 suspend fun main() {
+    println("Sequential Execution:")
+    delay(1200)
+    println("Hello")
+
+    delay(600)
+    println("Big")
+
+    delay(300)
+    println("Beautiful")
+
+    println("\nParallel Execution:")
     val job = CoroutineScope(Dispatchers.Default).launch {
         launch {
             delay(1200)

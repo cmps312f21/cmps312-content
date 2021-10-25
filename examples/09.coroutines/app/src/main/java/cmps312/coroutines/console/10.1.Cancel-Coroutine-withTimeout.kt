@@ -1,10 +1,10 @@
 package cmps312.coroutines.console
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.NonCancellable.isActive
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import cmps312.coroutines.viewmodel.MainViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 
 
 suspend fun main() {
