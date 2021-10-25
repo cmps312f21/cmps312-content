@@ -1,7 +1,11 @@
 package qu.cmps312.shoppinglist.repository
 
 import android.content.Context
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import qu.cmps312.shoppinglist.db.ShoppingDB
+import qu.cmps312.shoppinglist.entity.Category
+import qu.cmps312.shoppinglist.entity.Product
 import qu.cmps312.shoppinglist.entity.ShoppingItem
 
 // Repository, abstracts access to multiple data sources
@@ -40,4 +44,44 @@ class ShoppingRepository(private val context: Context) {
 
     suspend fun getProducts(categoryId: Long) = productDao.getProducts(categoryId)
     fun getCategories() = productDao.getCategories()
+
+    companion object {
+        private fun readData(context: Context, fileName: String) =
+                context.assets.open(fileName)
+                       .bufferedReader().use { it.readText() }
+
+        suspend fun initDB(shoppingDB: ShoppingDB?, context: Context) {
+            if (shoppingDB == null) return
+
+            val productDao = shoppingDB.getProductDao()
+            val categoryCount = productDao.getCategoryCount()
+            // If categoryCount = 0 then means the DB is empty
+            if (categoryCount == 0) {
+                val json = Json {
+                    ignoreUnknownKeys = true
+                    coerceInputValues = true
+                }
+                // Read from json file and write to db
+                // 1. Insert categories
+                var data = readData( context,"product_categories.json")
+
+                val categories = json.decodeFromString<List<Category>>(data)
+                val categoryIds = productDao.insertCategories(categories)
+                println(">> Debug: categoryIds = productDao.insertCategories(categories) $categoryIds")
+
+                // 2. Insert products
+                data = readData( context,"products.json")
+                var products = json.decodeFromString<List<Product>>(data)
+                println(">> Debug: initDB products $products")
+
+                products = products.map {
+                    // Lookup the category id
+                    val category = productDao.getCategory(it.category!!)
+                    Product(it.name, it.image, category!!.id)
+                }
+                val productIds = productDao.insertProducts(products)
+                println(">> Debug: productIds = productDao.insertProducts(products) $productIds")
+            }
+        }
+    }
 }
