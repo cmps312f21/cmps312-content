@@ -40,13 +40,14 @@ abstract class ShoppingDB : RoomDatabase() {
             }
             // After the DB instance is created load the data from json files
             // into the Category and Product tables if the Category table is empty
-            GlobalScope.launch {
-                initDB(dbInstance!!, context)
+            CoroutineScope(Dispatchers.IO).launch {
+                 initDB(dbInstance, context)
             }
             return dbInstance as ShoppingDB
         }
 
-        private suspend fun initDB(shoppingDB: ShoppingDB, context: Context) {
+        private suspend fun initDB(shoppingDB: ShoppingDB?, context: Context) {
+            if (shoppingDB == null) return
             val productDao = shoppingDB.getProductDao()
             val categoryCount = productDao.getCategoryCount()
             // If categoryCount = 0 then means the DB is empty

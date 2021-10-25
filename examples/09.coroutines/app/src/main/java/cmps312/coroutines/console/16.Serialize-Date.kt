@@ -8,8 +8,9 @@ import kotlinx.serialization.json.Json
 data class Person(val name: String, val birthDate: LocalDate)
 
 fun main() {
-    val banksString = "[\"QNB\", \"Rayyan\"]"
-    val banks = Json.decodeFromString<List<String>>(banksString)
+    //val banksJson = readData(filename: "banks.json")
+    val banksJson = "[\"QNB\", \"Rayyan\"]"
+    val banks = Json.decodeFromString<List<String>>(banksJson)
     println(banks)
 
     val ali = Person("Ali", LocalDate(1990, 5, 18))

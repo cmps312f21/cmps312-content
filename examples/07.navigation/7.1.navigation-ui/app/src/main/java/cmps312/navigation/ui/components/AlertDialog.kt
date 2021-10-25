@@ -1,4 +1,4 @@
-package cmps312.navigation
+package cmps312.navigation.ui.components
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button

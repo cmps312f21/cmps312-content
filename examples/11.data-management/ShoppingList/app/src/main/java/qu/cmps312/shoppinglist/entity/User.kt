@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-data class Address(val houseNumber: String, val street: String, val city: String)
+data class Address(val buildingNo: String, val street: String, val city: String)
 
 @Entity
 data class User (

@@ -1,4 +1,4 @@
-package qu.cmps312.shoppinglist.components
+package qu.cmps312.shoppinglist.view.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text

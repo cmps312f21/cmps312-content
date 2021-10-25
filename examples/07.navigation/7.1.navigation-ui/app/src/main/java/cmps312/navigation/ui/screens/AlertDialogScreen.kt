@@ -27,7 +27,7 @@ fun AlertDialogScreen() {
             Text("Show Dialog Alert")
         }
 
-        cmps312.navigation.AlertDialog(isDialogOpen,
+        cmps312.navigation.ui.components.AlertDialog(isDialogOpen,
             onDialogOpenChange = { isDialogOpen = it },
             title = "Discard draft?",
             message = "This will permanently delete the current e-mail draft.",

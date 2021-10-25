@@ -1,4 +1,4 @@
-package qu.cmps312.shoppinglist.components
+package qu.cmps312.shoppinglist.view.components
 
 import android.content.Context
 import android.widget.Toast

@@ -32,3 +32,8 @@ data class ShoppingItem(
 ) {
     constructor(productId: Long, quantity: Int) : this(0, productId, quantity)
 }
+
+/*
+    insert into ShoppingItem(productId, quantity, updatedDate) values (1, 20, 46464)
+    insert into ShoppingItem(productId, quantity, updatedDate) values (2, 30, 66464)
+*/

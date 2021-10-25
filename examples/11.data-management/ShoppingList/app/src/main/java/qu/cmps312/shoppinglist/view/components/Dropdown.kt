@@ -1,4 +1,4 @@
-package qu.cmps312.shoppinglist.components
+package qu.cmps312.shoppinglist.view.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,9 +14,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
 
 @Composable
-fun Dropdown(label: String, options: List<String>,
-             selectedOption: String,
-             onSelectionChange: (String)-> Unit) {
+fun Dropdown(
+    label: String,
+    options: Map<Long, String>,
+    selectedOptionId: Long,
+    onSelectionChange: (Long)-> Unit) {
+
     var expanded by remember { mutableStateOf(false) }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
@@ -26,10 +29,11 @@ fun Dropdown(label: String, options: List<String>,
     else
         Icons.Filled.ArrowDropDown
 
+    val selectedOption = options[selectedOptionId] ?: ""
     Column {
         OutlinedTextField(
             value = selectedOption,
-            onValueChange = onSelectionChange,
+            onValueChange = {  },
             modifier = Modifier
                 .fillMaxWidth()
                 .onGloballyPositioned { coordinates ->
@@ -54,10 +58,10 @@ fun Dropdown(label: String, options: List<String>,
         ) {
             options.forEach { option ->
                 DropdownMenuItem(onClick = {
-                    onSelectionChange(option)
+                    onSelectionChange(option.key)
                     expanded = false
                 }) {
-                    Text(text = option)
+                    Text(text = option.value)
                 }
             }
         }
