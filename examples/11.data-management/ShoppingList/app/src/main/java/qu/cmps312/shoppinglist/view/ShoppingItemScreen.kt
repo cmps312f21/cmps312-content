@@ -15,9 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
-import qu.cmps312.shoppinglist.entity.Product
 import qu.cmps312.shoppinglist.entity.ShoppingItem
 import qu.cmps312.shoppinglist.view.components.Dropdown
 import qu.cmps312.shoppinglist.view.components.TopBar

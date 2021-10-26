@@ -10,7 +10,7 @@ import cmps312.coroutines.model.StockQuote
 import cmps312.coroutines.webapi.SimulatedStockQuoteService
 import kotlinx.coroutines.launch
 
-enum class JobState {
+enum class RequestState {
     RUNNING,
     SUCCESS,
     CANCELLED
@@ -22,7 +22,7 @@ class StockQuoteViewModel : ViewModel() {
     var companyList = mutableStateListOf<String>()
     var selectedCompany by mutableStateOf("")
 
-    var jobStatusGetStockQuote by mutableStateOf(JobState.SUCCESS)
+    var requestState by mutableStateOf(RequestState.SUCCESS)
     var stockQuote by mutableStateOf(StockQuote())
     var errorMessage by mutableStateOf("")
 
@@ -34,19 +34,19 @@ class StockQuoteViewModel : ViewModel() {
     }
 
     fun getStockQuote() {
-       jobStatusGetStockQuote = JobState.RUNNING
+       requestState = RequestState.RUNNING
         viewModelScope.launch {
             try {
                 stockQuote = stockQuoteService.getStockQuote(selectedCompany)
-                jobStatusGetStockQuote = JobState.SUCCESS
+                requestState = RequestState.SUCCESS
             } catch (e: Exception) {
-                jobStatusGetStockQuote = JobState.CANCELLED
+                requestState = RequestState.CANCELLED
                 errorMessage = e.message ?: "Request failed"
             }
         }
     }
 
-    suspend fun getCompanies() {
+    private suspend fun getCompanies() {
         companyList.clear()
         companyList.addAll(
             stockQuoteService.getCompanies()

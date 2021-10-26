@@ -15,11 +15,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import qu.cmps312.shoppinglist.entity.ShoppingItem
-import qu.cmps312.shoppinglist.viewmodel.ShoppingViewModel
 
 @Composable
-fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
-                     onEditItem: () -> Unit) {
+fun ShoppingListItem(shoppingItem: ShoppingItem,
+                     onEditItem: (item: ShoppingItem) -> Unit,
+                     onEditQuantity: (item: ShoppingItem) -> Unit,
+                     onDeleteItem: (item: ShoppingItem) -> Unit
+                    ) {
     var quantity by remember { mutableStateOf(0) }
     quantity = shoppingItem.quantity
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -37,7 +39,7 @@ fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
                 onClick = {
                     shoppingItem.quantity++
                     quantity = shoppingItem.quantity
-                    viewModel.updateQuantity(shoppingItem)
+                    onEditQuantity(shoppingItem)
                 }) {
                 Icon(
                     Icons.Outlined.KeyboardArrowUp,
@@ -52,7 +54,7 @@ fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
                 onClick = {
                     shoppingItem.quantity--
                     quantity = shoppingItem.quantity
-                    viewModel.updateQuantity(shoppingItem)
+                    onEditQuantity(shoppingItem)
                 }) {
                 Icon(
                     Icons.Outlined.KeyboardArrowDown,
@@ -62,8 +64,7 @@ fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
 
             IconButton(
                 onClick = {
-                    viewModel.selectedShoppingItem = shoppingItem
-                    onEditItem()
+                    onEditItem(shoppingItem)
                     //onEditItem(shoppingItem.id)
                 }) {
                 Icon(
@@ -74,7 +75,7 @@ fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
 
             IconButton(
                 onClick = {
-                    viewModel.deleteItem(shoppingItem)
+                    onDeleteItem(shoppingItem)
                 }) {
                 Icon(
                     Icons.Outlined.Delete,

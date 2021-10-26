@@ -19,7 +19,7 @@ class StockQuotesViewModel : ViewModel() {
     var companyStockQuotes = mutableStateListOf<StockQuote>()
     var runJobsInParallel by mutableStateOf(true)
 
-    var jobStatusGetStockQuotes by mutableStateOf(JobState.SUCCESS)
+    var requestState by mutableStateOf(RequestState.SUCCESS)
     var executionDuration by mutableStateOf(0L)
     var errorMessage by mutableStateOf("")
 
@@ -57,13 +57,13 @@ class StockQuotesViewModel : ViewModel() {
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         errorMessage = exception.message ?: "Request failed."
-        jobStatusGetStockQuotes = JobState.CANCELLED
+        requestState = RequestState.CANCELLED
         println(">>> Debug: $errorMessage")
     }
 
     fun getStockQuotes() {
         val startTime = System.currentTimeMillis()
-        jobStatusGetStockQuotes = JobState.RUNNING
+        requestState = RequestState.RUNNING
         executionDuration = 0L
         errorMessage = ""
         companyStockQuotes.clear()
@@ -83,7 +83,7 @@ class StockQuotesViewModel : ViewModel() {
         job.invokeOnCompletion {
             if (!job.isCancelled) {
                 executionDuration = (System.currentTimeMillis() - startTime) / 1000
-                jobStatusGetStockQuotes = JobState.SUCCESS
+                requestState = RequestState.SUCCESS
                 println(">>> Debug: Job done. Total execution time: ${executionDuration}s")
             }
         }

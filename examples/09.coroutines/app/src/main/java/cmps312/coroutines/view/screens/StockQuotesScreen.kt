@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.coroutines.view.components.ClickCounter
 import cmps312.coroutines.view.components.TopBar
-import cmps312.coroutines.viewmodel.JobState
+import cmps312.coroutines.viewmodel.RequestState
 import cmps312.coroutines.viewmodel.StockQuotesViewModel
 
 @Composable
@@ -62,12 +62,12 @@ fun StockQuotesScreen() {
                 }
             }
 
-            when (viewModel.jobStatusGetStockQuotes) {
-                JobState.RUNNING -> {
+            when (viewModel.requestState) {
+                RequestState.RUNNING -> {
                     CircularProgressIndicator()
                 }
 
-                JobState.SUCCESS -> {
+                RequestState.SUCCESS -> {
                     if (viewModel.executionDuration > 0) {
                         Text(
                             text = "Total execution time: ${viewModel.executionDuration}s",
@@ -79,7 +79,7 @@ fun StockQuotesScreen() {
                     }
                 }
 
-                JobState.CANCELLED -> {
+                RequestState.CANCELLED -> {
                     Text(text = viewModel.errorMessage, color = Color.Red)
                 }
             }

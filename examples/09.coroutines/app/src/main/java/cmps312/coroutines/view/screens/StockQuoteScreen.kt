@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.coroutines.view.components.Dropdown
 import cmps312.coroutines.view.components.TopBar
-import cmps312.coroutines.viewmodel.JobState
+import cmps312.coroutines.viewmodel.RequestState
 import cmps312.coroutines.viewmodel.StockQuoteViewModel
 
 @Composable
@@ -49,14 +49,14 @@ fun StockQuoteScreen() {
                 }
             )
 
-            when (viewModel.jobStatusGetStockQuote) {
-                JobState.RUNNING -> {
+            when (viewModel.requestState) {
+                RequestState.RUNNING -> {
                     CircularProgressIndicator()
                 }
-                JobState.SUCCESS -> {
+                RequestState.SUCCESS -> {
                     Text(text = viewModel.stockQuote.toString())
                 }
-                JobState.CANCELLED -> {
+                RequestState.CANCELLED -> {
                     Text(text = viewModel.errorMessage, color = Color.Red)
                 }
             }
