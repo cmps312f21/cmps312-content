@@ -51,7 +51,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
         }*/
 
         viewModel.getProducts(categoryId)
-        
+
         formMode = FormMode.EDIT
         screenTitle = "Edit Shopping Item"
         confirmButtonLabel = "Update"

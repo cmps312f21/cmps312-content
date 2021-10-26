@@ -5,12 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 
-@Entity(foreignKeys = [ForeignKey(entity = Category::class,
+@Entity
+ /*(foreignKeys = [ForeignKey(entity = Category::class,
     parentColumns = ["id"],
     childColumns = ["categoryId"],
     onDelete = ForeignKey.CASCADE)],
     // Create an index on the categoryId column to speed-up query execution
-    indices = [Index(value = ["categoryId"])])
+    indices = [Index(value = ["categoryId"])]) */
 data class Product(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
