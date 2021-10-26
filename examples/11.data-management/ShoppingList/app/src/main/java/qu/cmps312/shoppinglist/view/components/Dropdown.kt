@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.toSize
 @Composable
 fun Dropdown(
     label: String,
-    options: Map<Long, String>,
+    options: Map<Long, String>?,
     selectedOptionId: Long,
     onSelectionChange: (Long)-> Unit) {
 
@@ -29,7 +29,7 @@ fun Dropdown(
     else
         Icons.Filled.ArrowDropDown
 
-    val selectedOption = options[selectedOptionId] ?: ""
+    val selectedOption = options?.get(selectedOptionId) ?: ""
     Column {
         OutlinedTextField(
             value = selectedOption,
@@ -56,7 +56,7 @@ fun Dropdown(
             onDismissRequest = { expanded = false },
             modifier = Modifier.width(width)
         ) {
-            options.forEach { option ->
+            options?.forEach { option ->
                 DropdownMenuItem(onClick = {
                     onSelectionChange(option.key)
                     expanded = false

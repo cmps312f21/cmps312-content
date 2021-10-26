@@ -47,20 +47,26 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     }
 
     val categories = viewModel.categories.observeAsState()
-    var categoryOptions = mutableMapOf<Long, String>()
+    // Every time categories change ->
+    //      Convert a list to a map needed to fill the categories dropdown
+    val categoryOptions by remember {
+        derivedStateOf {
+            categories.value?.associate {
+                Pair(it.id, it.name)
+            }
+        }
+    }
 
-    // Converts a list to a map needed to fill the categories dropdown
-    categoryOptions.clear()
-    categories.value?.forEach {
-        categoryOptions[it.id] = it.name
-    } 
-    
-    var products = viewModel.getProducts(categoryId).observeAsState() 
-    val productOptions = mutableMapOf<Long, String>()
-    // Converts a list to a map needed to fill the products dropdown
-    productOptions.clear()
-    products.value?.forEach {
-        productOptions[it.id] = it.name
+    // Every time categoryId change get the products of the selected category
+    var products = viewModel.getProducts(categoryId).observeAsState()
+    // Every time products change ->
+    //      Convert a list to a map needed to fill the products dropdown
+    val productOptions by remember {
+        derivedStateOf {
+            products.value?.associate {
+                Pair(it.id, "${it.name} ${it.image}")
+            }
+        }
     }
 
     Scaffold(
@@ -76,7 +82,6 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                 selectedOptionId = categoryId,
                 onSelectionChange = {
                     categoryId = it
-                    //viewModel.getProducts(categoryId)
                 })
 
             Dropdown(
