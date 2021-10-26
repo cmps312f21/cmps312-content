@@ -6,13 +6,14 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-@Entity
 /*  (foreignKeys = [ForeignKey(entity = Product::class,
     parentColumns = ["id"],
     childColumns = ["productId"],
     onDelete = ForeignKey.CASCADE)],
     // Create an index on the productId column to speed-up query execution
     indices = [Index(value = ["productId"])]) */
+
+@Entity
 data class ShoppingItem(
     @PrimaryKey(autoGenerate = true)
     val id: Long,

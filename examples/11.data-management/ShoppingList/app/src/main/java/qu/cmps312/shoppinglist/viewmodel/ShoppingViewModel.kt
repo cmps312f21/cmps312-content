@@ -3,8 +3,10 @@ package qu.cmps312.shoppinglist.viewmodel
 import android.app.Application
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import qu.cmps312.shoppinglist.entity.Product
 import qu.cmps312.shoppinglist.entity.ShoppingItem
@@ -37,10 +39,13 @@ class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) 
     }
 
     val categories = shoppingRepository.getCategories()
-    val products = mutableStateListOf<Product>()
+    //val products = mutableStateListOf<Product>()
 
-    fun getProducts(categoryId: Long) = viewModelScope.launch(Dispatchers.IO) {
-        products.clear()
-        products.addAll(shoppingRepository.getProducts(categoryId))
+    fun getProducts(categoryId: Long) = liveData<List<Product>> {
+        emit ( shoppingRepository.getProducts(categoryId) )
     }
+        /*products.clear()
+        val deferredProducts = async { shoppingRepository.getProducts(categoryId) }
+        products.addAll( deferredProducts.await() )
+    }*/
 }

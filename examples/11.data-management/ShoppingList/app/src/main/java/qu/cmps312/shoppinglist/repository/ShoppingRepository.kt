@@ -29,8 +29,9 @@ class ShoppingRepository(private val context: Context) {
     suspend fun addItem(item: ShoppingItem) : Long {
         val dbItem = shoppingItemDao.getItemByProductId(item.productId)
         return if (dbItem == null) {
-            // Ensure that the productName is always null
+            // Ensure that the productName and categoryId are set to null
             item.productName = null
+            item.categoryId = null
             shoppingItemDao.insert(item)
         } else {
             val quantity = dbItem.quantity + item.quantity
@@ -40,7 +41,12 @@ class ShoppingRepository(private val context: Context) {
     }
 
     suspend fun updateQuantity(id: Long, quantity: Int) = shoppingItemDao.updateQuantity(id,quantity)
-    suspend fun updateItem(item: ShoppingItem) = shoppingItemDao.update(item)
+    suspend fun updateItem(item: ShoppingItem) {
+        // Ensure that the productName and categoryId are set to null
+        item.productName = null
+        item.categoryId = null
+        shoppingItemDao.update(item)
+    }
     suspend fun deleteItem(item: ShoppingItem) = shoppingItemDao.delete(item)
     fun getCount() = shoppingItemDao.getCount()
 

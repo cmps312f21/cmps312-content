@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.viewmodel.compose.viewModel
+import qu.cmps312.shoppinglist.entity.Product
 import qu.cmps312.shoppinglist.entity.ShoppingItem
 import qu.cmps312.shoppinglist.view.components.Dropdown
 import qu.cmps312.shoppinglist.view.components.TopBar
@@ -34,39 +35,32 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     val viewModel = viewModel<ShoppingViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     val shoppingItemsCount = viewModel.shoppingItemsCount.observeAsState()
 
-    var categoryId by remember { mutableStateOf( viewModel.selectedShoppingItem?.categoryId ?: 0L) }
-    var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: 0L) }
+    var categoryId by remember { mutableStateOf(viewModel.selectedShoppingItem?.categoryId ?: 0) }
+    var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: 0) }
     var quantity by remember { mutableStateOf( viewModel.selectedShoppingItem?.quantity ?:0) }
 
     // In case of Edit Mode get the Shopping Item to edit
     if (viewModel.selectedShoppingItem != null) {
-        /*LaunchedEffect(key1 = true) {
-            shoppingItem = viewModel.getShoppingItem(shoppingItemId)
-            shoppingItem?.let {
-                productId = it.productId ?: 0
-                quantity = it.quantity ?: 0
-                categoryId = it.categoryId ?: 0
-                viewModel.getProducts(categoryId)
-            }
-        }*/
-
-        viewModel.getProducts(categoryId)
-
         formMode = FormMode.EDIT
         screenTitle = "Edit Shopping Item"
         confirmButtonLabel = "Update"
     }
 
     val categories = viewModel.categories.observeAsState()
-    // .associate Converts a list to a map needed to fill the categories dropdown
-    val emptyMap = mapOf(0L to "")
-    val categoryOptions = categories.value?.let {
-        it.associate { category -> Pair(category.id, category.name) }
-    } ?: emptyMap
+    var categoryOptions = mutableMapOf<Long, String>()
 
-    // .associate Converts a list to a map needed to fill the products dropdown
-    val productOptions = viewModel.products.associate {
-           product -> Pair(product.id, "${product.name} ${product.image}")
+    // Converts a list to a map needed to fill the categories dropdown
+    categoryOptions.clear()
+    categories.value?.forEach {
+        categoryOptions[it.id] = it.name
+    } 
+    
+    var products = viewModel.getProducts(categoryId).observeAsState() 
+    val productOptions = mutableMapOf<Long, String>()
+    // Converts a list to a map needed to fill the products dropdown
+    productOptions.clear()
+    products.value?.forEach {
+        productOptions[it.id] = it.name
     }
 
     Scaffold(
@@ -82,7 +76,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                 selectedOptionId = categoryId,
                 onSelectionChange = {
                     categoryId = it
-                    viewModel.getProducts(categoryId)
+                    //viewModel.getProducts(categoryId)
                 })
 
             Dropdown(
