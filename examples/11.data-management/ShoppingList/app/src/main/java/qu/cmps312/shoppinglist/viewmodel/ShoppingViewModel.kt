@@ -20,8 +20,6 @@ class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) 
     val shoppingList = shoppingRepository.getItems()
     val shoppingItemsCount = shoppingRepository.getCount()
 
-    suspend fun getShoppingItem(itemId: Long) = shoppingRepository.getItem(itemId)
-
     fun addItem(item: ShoppingItem) = viewModelScope.launch(Dispatchers.IO) {
         shoppingRepository.addItem(item)
     }
@@ -39,13 +37,8 @@ class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) 
     }
 
     val categories = shoppingRepository.getCategories()
-    //val products = mutableStateListOf<Product>()
 
-    fun getProducts(categoryId: Long) = liveData<List<Product>> {
+    fun getProducts(categoryId: Long) = liveData {
         emit ( shoppingRepository.getProducts(categoryId) )
     }
-        /*products.clear()
-        val deferredProducts = async { shoppingRepository.getProducts(categoryId) }
-        products.addAll( deferredProducts.await() )
-    }*/
 }

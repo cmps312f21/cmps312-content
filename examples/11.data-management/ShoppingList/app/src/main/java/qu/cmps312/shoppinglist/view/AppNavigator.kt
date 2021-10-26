@@ -2,15 +2,11 @@ package qu.cmps312.shoppinglist.view
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 
-/**
- * It receives navController to navigate between screens,
- * padding values -> Since BottomNavigation has some heights,
- * to avoid clipping of screen, we set padding provided by scaffold
+/**╗
+ * It receives navController to navigate between screens
  */
 @Composable
 fun AppNavigator(
@@ -26,8 +22,8 @@ fun AppNavigator(
            = possible routes a user can take through the app
         */
         composable(Screen.ShoppingList.route) {
-            /* Load the ShoppingListScreen and when edit item is clicked
-            then navigate to the ShoppingItem screen and pass the select itemId as a parameter */
+            /* Load the ShoppingListScreen and when add/edit item is clicked
+            then navigate to the ShoppingItem screen */
             ShoppingListScreen(
                 onAddItem = {
                     navController.navigate(Screen.ShoppingItem.route)
@@ -35,9 +31,6 @@ fun AppNavigator(
                 onEditItem = {
                     navController.navigate(Screen.ShoppingItem.route)
                 }
-                /*onEditItem = { itemId ->
-                    navController.navigate("${Screen.ShoppingItem.route}?itemId=$itemId")
-                }*/
             )
         }
 
@@ -48,6 +41,13 @@ fun AppNavigator(
         }
     }
 }
+
+
+
+// and pass the select itemId as a parameter
+/*onEditItem = { itemId ->
+    navController.navigate("${Screen.ShoppingItem.route}?itemId=$itemId")
+}*/
 
 /*val argumentDefinitions = listOf(
     navArgument("itemId") {
