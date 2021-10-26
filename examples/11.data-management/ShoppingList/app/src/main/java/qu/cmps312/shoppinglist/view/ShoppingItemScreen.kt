@@ -1,5 +1,6 @@
 package qu.cmps312.shoppinglist.view
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
@@ -23,25 +25,22 @@ import qu.cmps312.shoppinglist.viewmodel.ShoppingViewModel
 enum class FormMode { ADD, EDIT }
 
 @Composable
-fun ShoppingItemScreen(shoppingItemId: Long? = null, onNavigateBack: () -> Unit) {
+//fun ShoppingItemScreen(shoppingItemId: Long? = null, onNavigateBack: () -> Unit) {
+fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     var formMode = FormMode.ADD
     var screenTitle = "Add Shopping Item"
     var confirmButtonLabel = "Add"
 
-    val viewModel = viewModel<ShoppingViewModel>()
-    var shoppingItem by remember {
-        mutableStateOf<ShoppingItem?>(null)
-    }
-
+    val viewModel = viewModel<ShoppingViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     val shoppingItemsCount = viewModel.shoppingItemsCount.observeAsState()
 
-    var categoryId by remember { mutableStateOf(0L) }
-    var productId by remember { mutableStateOf(0L) }
-    var quantity by remember { mutableStateOf(0) }
+    var categoryId by remember { mutableStateOf( viewModel.selectedShoppingItem?.categoryId ?: 0L) }
+    var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: 0L) }
+    var quantity by remember { mutableStateOf( viewModel.selectedShoppingItem?.quantity ?:0) }
 
     // In case of Edit Mode get the Shopping Item to edit
-    if (shoppingItemId != null) {
-        LaunchedEffect(key1 = true) {
+    if (viewModel.selectedShoppingItem != null) {
+        /*LaunchedEffect(key1 = true) {
             shoppingItem = viewModel.getShoppingItem(shoppingItemId)
             shoppingItem?.let {
                 productId = it.productId ?: 0
@@ -49,8 +48,10 @@ fun ShoppingItemScreen(shoppingItemId: Long? = null, onNavigateBack: () -> Unit)
                 categoryId = it.categoryId ?: 0
                 viewModel.getProducts(categoryId)
             }
-        }
+        }*/
 
+        viewModel.getProducts(categoryId)
+        
         formMode = FormMode.EDIT
         screenTitle = "Edit Shopping Item"
         confirmButtonLabel = "Update"
@@ -111,7 +112,7 @@ fun ShoppingItemScreen(shoppingItemId: Long? = null, onNavigateBack: () -> Unit)
                         productId = 0L
                         quantity = 0
                     } else {
-                        shoppingItem?.let {
+                        viewModel.selectedShoppingItem?.let {
                             it.productId = productId
                             it.quantity = quantity
                             viewModel.updateItem(it)

@@ -32,28 +32,38 @@ fun AppNavigator(
                 onAddItem = {
                     navController.navigate(Screen.ShoppingItem.route)
                 },
-                onEditItem = { itemId ->
-                    navController.navigate("${Screen.ShoppingItem.route}?itemId=$itemId")
+                onEditItem = {
+                    navController.navigate(Screen.ShoppingItem.route)
                 }
+                /*onEditItem = { itemId ->
+                    navController.navigate("${Screen.ShoppingItem.route}?itemId=$itemId")
+                }*/
             )
         }
 
-        val argumentDefinitions = listOf(
-            navArgument("itemId") {
-                type = NavType.StringType
-                nullable = true
-            }
-        )
-
-        val route = "${Screen.ShoppingItem.route}?itemId={itemId}"
-        // verses route receives the itemId as a parameter
-        composable(route,
-            arguments = argumentDefinitions
-        ) { backStackEntry ->
-            // Extract the Nav arguments from the Nav BackStackEntry
-            val itemId = backStackEntry.arguments?.getString("itemId")?.toLongOrNull()
-            ShoppingItemScreen(shoppingItemId = itemId,
-                onNavigateBack = { navController.navigateUp() })
+        composable(Screen.ShoppingItem.route) {
+            /* Load the ShoppingListScreen and when edit item is clicked
+            then navigate to the ShoppingItem screen and pass the select itemId as a parameter */
+            ShoppingItemScreen(onNavigateBack = { navController.navigateUp() })
         }
     }
 }
+
+/*val argumentDefinitions = listOf(
+    navArgument("itemId") {
+        type = NavType.StringType
+        nullable = true
+    }
+)
+
+val route = "${Screen.ShoppingItem.route}?itemId={itemId}"
+// verses route receives the itemId as a parameter
+composable(route,
+    arguments = argumentDefinitions
+) { backStackEntry ->
+    // Extract the Nav arguments from the Nav BackStackEntry
+    val itemId = backStackEntry.arguments?.getString("itemId")?.toLongOrNull()
+    ShoppingItemScreen(shoppingItemId = itemId,
+        onNavigateBack = { navController.navigateUp() })
+}
+}*/

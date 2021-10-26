@@ -19,7 +19,7 @@ import qu.cmps312.shoppinglist.viewmodel.ShoppingViewModel
 
 @Composable
 fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
-                     onEditItem: (Long) -> Unit) {
+                     onEditItem: () -> Unit) {
     var quantity by remember { mutableStateOf(0) }
     quantity = shoppingItem.quantity
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -62,7 +62,9 @@ fun ShoppingListItem(shoppingItem: ShoppingItem, viewModel: ShoppingViewModel,
 
             IconButton(
                 onClick = {
-                    onEditItem(shoppingItem.id)
+                    viewModel.selectedShoppingItem = shoppingItem
+                    onEditItem()
+                    //onEditItem(shoppingItem.id)
                 }) {
                 Icon(
                     Icons.Outlined.Edit,

@@ -13,6 +13,8 @@ import qu.cmps312.shoppinglist.repository.ShoppingRepository
 class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) {
     private val shoppingRepository = ShoppingRepository(appContext)
 
+    var selectedShoppingItem : ShoppingItem? = null
+
     val shoppingList = shoppingRepository.getItems()
     val shoppingItemsCount = shoppingRepository.getCount()
 
