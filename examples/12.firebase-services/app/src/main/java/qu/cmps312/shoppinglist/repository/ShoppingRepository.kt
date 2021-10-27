@@ -27,7 +27,7 @@ class ShoppingRepository(private val context: Context) {
 
     // If item already exists just increase the quantity otherwise insert a new Item
     suspend fun addItem(item: ShoppingItem) : Long {
-        val dbItem = shoppingItemDao.getItemByProductId(item.productId)
+        val dbItem = shoppingItemDao.getItemByProductId(item.productId.toLong())
         return if (dbItem == null) {
             // Ensure that the productName and categoryId are set to null
             item.productName = null
@@ -35,8 +35,8 @@ class ShoppingRepository(private val context: Context) {
             shoppingItemDao.insert(item)
         } else {
             val quantity = dbItem.quantity + item.quantity
-            shoppingItemDao.updateQuantity(dbItem.id, quantity)
-            dbItem.id
+            shoppingItemDao.updateQuantity(dbItem.id.toLong(), quantity)
+            dbItem.id.toLong()
         }
     }
 

@@ -1,14 +1,11 @@
 package qu.cmps312.shoppinglist.viewmodel
 
 import android.app.Application
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import qu.cmps312.shoppinglist.entity.Product
 import qu.cmps312.shoppinglist.entity.ShoppingItem
 import qu.cmps312.shoppinglist.repository.ShoppingRepository
 

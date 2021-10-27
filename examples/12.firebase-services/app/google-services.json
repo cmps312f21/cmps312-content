@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "506392952826",
+    "firebase_url": "https://cmp312-fall2020.firebaseio.com",
+    "project_id": "cmp312-fall2020",
+    "storage_bucket": "cmp312-fall2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506392952826:android:742a52883df627be432e43",
+        "android_client_info": {
+          "package_name": "qu.cmps312.shoppinglist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506392952826-6liu10rts25brdmmgaao5cqgffm2kakt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "qu.cmps312.shoppinglist",
+            "certificate_hash": "7d46b7e6b339b56b911859750cd65fa23cc7f426"
+          }
+        },
+        {
+          "client_id": "506392952826-t12sje9ck9p52c96lqqmt8s1b880ctlv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJidOOwcGu_1WUkP7n38y3-btTvmfwnRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506392952826-t12sje9ck9p52c96lqqmt8s1b880ctlv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

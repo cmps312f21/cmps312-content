@@ -12,7 +12,7 @@ interface ShoppingItemDao {
        No need for suspend function as LiveData is already asynchronous
     */
     // suspend fun getAll() : List<Item>
-    // p.name || ' ' || p.image : means concatenate name and image
+    // p.name || ' ' || p.icon : means concatenate name and icon
     @Query("select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, (p.name || ' ' || p.icon) as productName from ShoppingItem i join Product p on i.productId = p.id")
     fun getAll() : LiveData<List<ShoppingItem>>
 

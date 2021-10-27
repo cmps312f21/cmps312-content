@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -16,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import qu.cmps312.shoppinglist.entity.ShoppingItem
 import qu.cmps312.shoppinglist.view.components.Dropdown
 import qu.cmps312.shoppinglist.view.components.TopBar
@@ -31,11 +29,12 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     var confirmButtonLabel = "Add"
 
     val viewModel = viewModel<ShoppingViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
-    val shoppingItemsCount = viewModel.shoppingItemsCount.observeAsState()
+    //val shoppingItemsCount = viewModel.shoppingItemsCount.observeAsState()
 
-    var categoryId by remember { mutableStateOf(viewModel.selectedShoppingItem?.categoryId ?: 0) }
-    var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: 0) }
+    var categoryId by remember { mutableStateOf(viewModel.selectedShoppingItem?.categoryId ?: "") }
+    var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: "") }
     var quantity by remember { mutableStateOf( viewModel.selectedShoppingItem?.quantity ?:0) }
+    var productName = viewModel.selectedShoppingItem?.productName ?: ""
 
     // In case of Edit Mode get the Shopping Item to edit
     if (viewModel.selectedShoppingItem != null) {
@@ -62,12 +61,19 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     val productOptions by remember {
         derivedStateOf {
             products.value?.associate {
-                Pair(it.id, "${it.name} ${it.icon}")
+                if (it != null) {
+                    Pair(it.id, "${it.name} ${it.icon}")
+                }
+                else Pair ("", "")
             }
         }
     }
 
+    val scope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = { TopBar( title = screenTitle, onNavigateBack) }
     ) {
         Column(
@@ -78,15 +84,18 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                 label = "Select a Category",
                 options = categoryOptions,
                 selectedOptionId = categoryId,
-                onSelectionChange = {
-                    categoryId = it
+                onSelectionChange = { selectedCategoryId, _ ->
+                        categoryId = selectedCategoryId
                 })
 
             Dropdown(
                 label = "Select a Product",
                 options = productOptions,
                 selectedOptionId = productId,
-                onSelectionChange = { productId = it.toLong() })
+                onSelectionChange = { selectedProductId, selectedProductName ->
+                    productId = selectedProductId
+                    productName = selectedProductName
+                })
 
             OutlinedTextField(
                 value = if (quantity > 0) quantity.toString() else "",
@@ -102,25 +111,34 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                     if (formMode == FormMode.ADD) {
                         val item = ShoppingItem(
                             productId = productId,
-                            quantity = quantity
+                            productName = productName,
+                            quantity = quantity,
+                            categoryId = categoryId
                         )
                         viewModel.addItem(item)
                         // Reset the productId and quantity to enter them again
-                        productId = 0L
+                        productId = ""
                         quantity = 0
                     } else {
                         viewModel.selectedShoppingItem?.let {
                             it.productId = productId
+                            it.productName = productName
                             it.quantity = quantity
+                            it.categoryId = categoryId
                             viewModel.updateItem(it)
                             onNavigateBack()
                         }
+                    }
+
+                    scope.launch {
+                        val confirmationMsg = "$productName " + (if (formMode == FormMode.ADD) "added" else "updated")
+                        scaffoldState.snackbarHostState.showSnackbar( message = confirmationMsg )
                     }
                 }) {
                 Text(text = confirmButtonLabel)
             }
 
-            Text(text = "You have ${shoppingItemsCount.value} in your Shopping Card")
+            //Text(text = "You have ${shoppingItemsCount.value} in your Shopping Card")
         }
     }
 }

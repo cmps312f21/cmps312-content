@@ -19,8 +19,8 @@ import qu.cmps312.shoppinglist.repository.ShoppingRepository
    When the version changes the DB will be dropped and recreated
  */
 @Database(entities = [Product::class, Category::class, ShoppingItem::class, User::class],
-    version = 3, exportSchema = false)
-@TypeConverters(DateConverter::class)
+    version = 3)
+@TypeConverters(DateTimeConverter::class, DateConverter::class)
 abstract class ShoppingDB : RoomDatabase() {
     abstract fun getShoppingItemDao(): ShoppingItemDao
     abstract fun getProductDao(): ProductDao
