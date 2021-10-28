@@ -16,7 +16,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import qu.cmps312.shoppinglist.entity.ShoppingItem
+import qu.cmps312.shoppinglist.view.components.Datepicker
 import qu.cmps312.shoppinglist.view.components.Dropdown
 import qu.cmps312.shoppinglist.view.components.TopBar
 import qu.cmps312.shoppinglist.viewmodel.ShoppingViewModel
@@ -36,6 +40,10 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     var categoryId by remember { mutableStateOf(viewModel.selectedShoppingItem?.categoryId ?: 0) }
     var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: 0) }
     var quantity by remember { mutableStateOf( viewModel.selectedShoppingItem?.quantity ?:0) }
+
+    val context = LocalContext.current
+    val toDay = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    var updatedDate by remember { mutableStateOf( viewModel.selectedShoppingItem?.updatedDate ?: toDay) }
 
     // In case of Edit Mode get the Shopping Item to edit
     if (viewModel.selectedShoppingItem != null) {
@@ -97,12 +105,18 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
+
+            Datepicker(context, "Select Updated Date", initialDate = updatedDate,
+                onDateSelected = {  updatedDate = it }
+            )
+
             Button(
                 onClick = {
                     if (formMode == FormMode.ADD) {
                         val item = ShoppingItem(
                             productId = productId,
-                            quantity = quantity
+                            quantity = quantity,
+                            updatedDate = updatedDate
                         )
                         viewModel.addItem(item)
                         // Reset the productId and quantity to enter them again
@@ -112,6 +126,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                         viewModel.selectedShoppingItem?.let {
                             it.productId = productId
                             it.quantity = quantity
+                            it.updatedDate = updatedDate
                             viewModel.updateItem(it)
                             onNavigateBack()
                         }

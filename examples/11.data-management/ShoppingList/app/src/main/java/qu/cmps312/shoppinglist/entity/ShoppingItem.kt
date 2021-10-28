@@ -1,8 +1,9 @@
 package qu.cmps312.shoppinglist.entity
 
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
@@ -34,9 +35,10 @@ data class ShoppingItem(
         Cannot figure out how to read/save this field into database
      */
      // More info about Kotlin DateTime @ https://androidrepo.com/repo/Kotlin-kotlinx-datetime-android-date-time
-     val updatedDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+     var updatedDate: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 ) {
     constructor(productId: Long, quantity: Int) : this(0, productId, quantity)
+    constructor(productId: Long, quantity: Int, updatedDate: LocalDate) : this(0, productId, quantity, updatedDate = updatedDate)
 }
 
 /*
