@@ -23,10 +23,11 @@ fun Datepicker(context: Context, dateLabel: String, initialDate: LocalDate,
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            selectedDate.value = "$dayOfMonth/$month/$year"
-            onDateSelected( LocalDate(year, month, dayOfMonth) )
+            // Month is 0 based so add 1
+            selectedDate.value = "$dayOfMonth/${month+1}/$year"
+            onDateSelected( LocalDate(year, month+1, dayOfMonth) )
         },
-        initialDate.year, initialDate.monthNumber, initialDate.dayOfMonth
+        initialDate.year, initialDate.monthNumber-1, initialDate.dayOfMonth
     )
 
     Row(
