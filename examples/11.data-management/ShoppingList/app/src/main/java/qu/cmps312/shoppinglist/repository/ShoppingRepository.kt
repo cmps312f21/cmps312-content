@@ -51,7 +51,14 @@ class ShoppingRepository(private val context: Context) {
     fun getCount() = shoppingItemDao.getCount()
 
     suspend fun getProducts(categoryId: Long) = productDao.getProducts(categoryId)
+    suspend fun getProductsMap(categoryId: Long) = productDao.getProductsMap(categoryId)
+
     fun getCategories() = productDao.getCategories()
+    fun getCategoriesMap() = productDao.getCategoriesMap()
+
+    suspend fun getCategoriesAndProductCounts() = productDao.getCategoriesAndProductCounts()
+    suspend fun getCategoriesAndProducts() = productDao.getCategoriesAndProducts()
+    suspend fun getCategoryNamesAndProductCounts() = productDao.getCategoryNamesAndProductCounts()
 
     // Used for database initialization
     companion object {

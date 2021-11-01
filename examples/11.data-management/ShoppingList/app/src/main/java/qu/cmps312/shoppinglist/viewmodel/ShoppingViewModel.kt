@@ -34,8 +34,17 @@ class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) 
     }
 
     val categories = shoppingRepository.getCategories()
+    val categoriesMap = shoppingRepository.getCategoriesMap()
 
     fun getProducts(categoryId: Long) = liveData {
         emit ( shoppingRepository.getProducts(categoryId) )
     }
+
+    fun getProductsMap(categoryId: Long) = liveData {
+        emit ( shoppingRepository.getProductsMap(categoryId) )
+    }
+
+    suspend fun getCategoriesAndProductCounts() = shoppingRepository.getCategoriesAndProductCounts()
+    suspend fun getCategoriesAndProducts() = shoppingRepository.getCategoriesAndProducts()
+    suspend fun getCategoryNamesAndProductCounts() = shoppingRepository.getCategoryNamesAndProductCounts()
 }

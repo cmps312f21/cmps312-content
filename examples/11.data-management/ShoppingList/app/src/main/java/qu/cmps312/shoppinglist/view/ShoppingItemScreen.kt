@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -42,6 +43,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     var quantity by remember { mutableStateOf( viewModel.selectedShoppingItem?.quantity ?:0) }
 
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val toDay = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
     var updatedDate by remember { mutableStateOf( viewModel.selectedShoppingItem?.updatedDate ?: toDay) }
 
@@ -52,28 +54,28 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
         confirmButtonLabel = "Update"
     }
 
-    val categories = viewModel.categories.observeAsState()
+    val categories = viewModel.categoriesMap.observeAsState().value
     // Every time categories change ->
     //      Convert a list to a map needed to fill the categories dropdown
-    val categoryOptions by remember {
+    /*val categoryOptions by remember {
         derivedStateOf {
             categories.value?.associate {
                 Pair(it.id, it.name)
             }
         }
-    }
+    }*/
 
     // Every time categoryId change get the products of the selected category
-    var products = viewModel.getProducts(categoryId).observeAsState()
+    var products = viewModel.getProductsMap(categoryId).observeAsState().value
     // Every time products change ->
     //      Convert a list to a map needed to fill the products dropdown
-    val productOptions by remember {
+    /*val productOptions by remember {
         derivedStateOf {
             products.value?.associate {
                 Pair(it.id, "${it.name} ${it.icon}")
             }
         }
-    }
+    }*/
 
     Scaffold(
         topBar = { TopBar( title = screenTitle, onNavigateBack) }
@@ -84,7 +86,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
         ) {
             Dropdown(
                 label = "Select a Category",
-                options = categoryOptions,
+                options = categories,
                 selectedOptionId = categoryId,
                 onSelectionChange = {
                     categoryId = it
@@ -92,7 +94,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
 
             Dropdown(
                 label = "Select a Product",
-                options = productOptions,
+                options = products,
                 selectedOptionId = productId,
                 onSelectionChange = { productId = it.toLong() })
 
@@ -136,6 +138,46 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
             }
 
             Text(text = "You have ${shoppingItemsCount.value} in your Shopping Card")
+
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        val categories = viewModel.getCategoriesAndProductCounts()
+                        categories.entries.forEach {
+                            println("${it.key.name} -> ${it.value}")
+                        }
+                    }
+
+                }) {
+                Text(text = "Get Categories - Product Count")
+            }
+
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        val categories = viewModel.getCategoryNamesAndProductCounts()
+                        categories.entries.forEach {
+                            println("${it.key} -> ${it.value}")
+                        }
+                    }
+
+                }) {
+                Text(text = "Get Category names - Product Count")
+            }
+
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        val categories = viewModel.getCategoriesAndProducts()
+                        categories.entries.forEach {
+                            println("${it.key.name} -> ${it.value}")
+                        }
+                    }
+
+                }) {
+                Text(text = "Get Categories - Products")
+            }
+
         }
     }
 }

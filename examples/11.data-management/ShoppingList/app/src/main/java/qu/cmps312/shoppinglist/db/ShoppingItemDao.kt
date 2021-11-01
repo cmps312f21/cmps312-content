@@ -13,13 +13,27 @@ interface ShoppingItemDao {
     */
     // suspend fun getAll() : List<Item>
     // p.name || ' ' || p.image : means concatenate name and image
-    @Query("select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, (p.name || ' ' || p.icon) as productName from ShoppingItem i join Product p on i.productId = p.id")
+    @Query("""
+        Select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, 
+            (p.name || ' ' || p.icon) as productName 
+        From ShoppingItem i join Product p on i.productId = p.id
+        """)
     fun getAll() : LiveData<List<ShoppingItem>>
 
-    @Query("select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, (p.name || ' ' || p.icon) as productName from ShoppingItem i join Product p on i.productId = p.id where i.id = :itemId")
+    @Query("""
+        Select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, 
+            (p.name || ' ' || p.icon) as productName 
+        From ShoppingItem i join Product p on i.productId = p.id 
+        Where i.id = :itemId
+        """)
     suspend fun getItem(itemId: Long) : ShoppingItem?
 
-    @Query("select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, (p.name || ' ' || p.icon) as productName from ShoppingItem i join Product p on i.productId = p.id where i.productId = :productId")
+    @Query("""
+        Select i.id, i.quantity, i.updatedDate, i.productId, p.categoryId, 
+            (p.name || ' ' || p.icon) as productName 
+        From ShoppingItem i join Product p on i.productId = p.id 
+        Where i.productId = :productId
+        """)
     suspend fun getItemByProductId(productId: Long) : ShoppingItem?
 
     @Query("select count(*) from ShoppingItem")

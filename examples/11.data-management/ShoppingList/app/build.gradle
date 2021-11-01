@@ -82,7 +82,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.3.0"
 
     // Room
-    def room_version = "2.3.0"
+    def room_version = "2.4.0-beta01"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     // Kotlin Extensions and Coroutines support for Room

@@ -3,10 +3,8 @@ package qu.cmps312.shoppinglist.entity
 import androidx.room.*
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
-import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.*
 import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import java.util.*
 
 /*  (foreignKeys = [ForeignKey(entity = Product::class,
@@ -41,7 +39,7 @@ data class ShoppingItem(
     // More info about Kotlin DateTime @ https://androidrepo.com/repo/Kotlin-kotlinx-datetime-android-date-time
     @ServerTimestamp
     val updatedDate: Date = java.util.Calendar.getInstance().time,
-    //val updatedDate: LocalDateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+    //val updatedDate: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
 
     var uid : String? = null) {
     // Required by Firebase deserializer otherwise you get exception 'does not define a no-argument constructor'
