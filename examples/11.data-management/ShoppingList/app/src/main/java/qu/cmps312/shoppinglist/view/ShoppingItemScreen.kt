@@ -3,6 +3,7 @@ package qu.cmps312.shoppinglist.view
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -112,6 +113,8 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                 onDateSelected = {  updatedDate = it }
             )
 
+            Spacer(modifier = Modifier.padding(8.dp))
+
             Button(
                 onClick = {
                     if (formMode == FormMode.ADD) {
@@ -177,7 +180,6 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                 }) {
                 Text(text = "Get Categories - Products")
             }
-
         }
     }
 }

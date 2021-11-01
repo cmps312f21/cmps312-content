@@ -12,8 +12,8 @@ import qu.cmps312.shoppinglist.entity.Product
 interface ProductDao {
     // Product related methods
     @Query("""
-        Select p.id, p.name, p.icon, p.categoryId, c.name category 
-        From Product p join Category c on p.categoryId = c.id 
+        Select p.id, p.name, p.icon, p.categoryId, c.categoryName category 
+        From Product p join Category c on p.categoryId = c.categoryId 
         Where p.categoryId = :categoryId order by p.name 
         """)
     suspend fun getProducts(categoryId: Long): List<Product>
@@ -30,15 +30,15 @@ interface ProductDao {
     suspend fun insertProducts(products: List<Product>) : List<Long>
 
     // Category related methods
-    @Query("select * from Category order by name")
+    @Query("select * from Category order by categoryName")
     fun getCategories() : LiveData<List<Category>>
 
     // Returns a map needed to fill a Categories Dropdown
-    @MapInfo(keyColumn = "id", valueColumn = "name")
-    @Query("select c.id, c.name from Category c order by name")
+    @MapInfo(keyColumn = "categoryId", valueColumn = "categoryName")
+    @Query("select c.categoryId, c.categoryName from Category c order by categoryName")
     fun getCategoriesMap() : LiveData<Map<Long, String>>
 
-    @Query("select * from Category where name = :name")
+    @Query("select * from Category where categoryName = :name")
     suspend fun getCategory(name: String) : Category?
 
     @Query("select count(*) from Category")
@@ -49,23 +49,23 @@ interface ProductDao {
 
     @Query("""
        Select c.*, p.*
-       From Category c join Product p on c.id = p.categoryId
+       From Category c join Product p on c.categoryId = p.categoryId
        """)
     suspend fun getCategoriesAndProducts(): Map<Category, List<Product>>
 
     @MapInfo(valueColumn = "productCount")
     @Query("""
        Select c.*, count(p.id) as productCount
-       From Category c join Product p on c.id = p.categoryId
-       Group by c.id
+       From Category c join Product p on c.categoryId = p.categoryId
+       Group by c.categoryId
        """)
-    suspend fun getCategoriesAndProductCounts(): Map<Category, Integer>
+    suspend fun getCategoriesAndProductCounts(): Map<Category, Int>
 
     @MapInfo(keyColumn = "categoryName", valueColumn = "productCount")
     @Query("""
-       Select c.name categoryName, count(p.id) as productCount
-       From Category c join Product p on c.id = p.categoryId
-       Group by c.id
+       Select c.categoryName, count(p.id) as productCount
+       From Category c join Product p on c.categoryId = p.categoryId
+       Group by c.categoryName
        """)
-    suspend fun getCategoryNamesAndProductCounts(): Map<String, Integer>
+    suspend fun getCategoryNamesAndProductCounts(): Map<String, Int>
 }
