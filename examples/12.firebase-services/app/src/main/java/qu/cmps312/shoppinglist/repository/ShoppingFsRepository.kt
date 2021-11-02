@@ -93,7 +93,9 @@ class ShoppingFsRepository(private val context: Context) {
     suspend fun getProducts(categoryId: String) : List<Product?> {
         if (categoryId.isEmpty()) return emptyList()
         println("categoryId -> $categoryId")
-        val queryResult = categoryCollectionRef.document(categoryId).collection("products").orderBy("name").get().await()
+        val queryResult = categoryCollectionRef.document(categoryId)
+                            .collection("products")
+                            .orderBy("name").get().await()
         return queryResult.toObjects(Product::class.java)
     }
 

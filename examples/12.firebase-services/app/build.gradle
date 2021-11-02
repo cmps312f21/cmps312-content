@@ -90,7 +90,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:0.3.0"
 
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:26.0.0')
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
 
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -104,4 +104,7 @@ dependencies {
 
     // Firebase storage
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
+
+    // Used to display images
+    implementation "io.coil-kt:coil-compose:1.4.0"
 }

@@ -29,9 +29,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authViewModel.errorMessage.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        //authViewModel.errorMessage.observe(this) {
+        if (authViewModel.errorMessage != null) {
+            Toast.makeText(this, authViewModel.errorMessage, Toast.LENGTH_LONG).show()
         }
+            //}
 
         // Get further details from Firestore about current user
         authViewModel.setCurrentUser()

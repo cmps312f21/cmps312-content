@@ -1,6 +1,9 @@
 package qu.cmps312.shoppinglist.view
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,12 +13,15 @@ import androidx.navigation.compose.composable
  */
 @Composable
 fun AppNavigator(
-    navController: NavHostController
+    navController: NavHostController,
+    padding: PaddingValues
 ) {
     NavHost(
         navController = navController,
         //set the start destination as home
-        startDestination = Screen.ShoppingList.route
+        startDestination = Screen.ShoppingList.route,
+        //Set the padding provided by scaffold
+        modifier = Modifier.padding(paddingValues = padding)
     ) {
 
         /* Define the app Navigation Graph
@@ -38,6 +44,14 @@ fun AppNavigator(
             /* Load the ShoppingListScreen and when edit item is clicked
             then navigate to the ShoppingItem screen and pass the select itemId as a parameter */
             ShoppingItemScreen(onNavigateBack = { navController.navigateUp() })
+        }
+
+        composable(Screen.CloudStorage.route) {
+            StorageScreen()
+        }
+
+        composable(Screen.Login.route) {
+            LoginScreen()
         }
     }
 }

@@ -1,5 +1,8 @@
 package qu.cmps312.shoppinglist.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -10,30 +13,26 @@ import qu.cmps312.shoppinglist.repository.AuthRepository
 
 class AuthViewModel : ViewModel() {
     private val authRepository = AuthRepository()
-
-    private val _currentUser = MutableLiveData<User?>()
-    val currentUser = _currentUser as LiveData<User?>
-
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage = _errorMessage as LiveData<String>
+    var currentUser by mutableStateOf<User?>(null)
+    var errorMessage by mutableStateOf("")
 
     private val exceptionHandler = CoroutineExceptionHandler { context, exception ->
-        _errorMessage.value = exception.message
+        this.errorMessage = exception.message ?: "Request failed"
         println(">> Debug: Exception thrown: $exception.")
     }
 
     fun signUp(user: User) = viewModelScope.launch(exceptionHandler) {
-        _currentUser.value = authRepository.signUp(user)
+        currentUser = authRepository.signUp(user)
     }
 
     fun signIn(email: String, password: String) = viewModelScope.launch(exceptionHandler) {
-        _currentUser.value = authRepository.signIn(email, password)
+        currentUser = authRepository.signIn(email, password)
     }
 
     fun setCurrentUser() = viewModelScope.launch(exceptionHandler) {
         val uid = Firebase.auth.currentUser?.uid
         if (uid == null)
-            _currentUser.value = null
+            currentUser = null
         else {
             // Get further user details from Firestore
             var user = authRepository.getUser(uid)
@@ -44,12 +43,12 @@ class AuthViewModel : ViewModel() {
                 val email = Firebase.auth.currentUser?.email ?: ""
                 user = User(uid, displayName, email)
             }
-            _currentUser.value = user
+            currentUser = user
         }
     }
 
     fun signOut() {
         Firebase.auth.signOut()
-        _currentUser.value = null
+        this.currentUser = null
     }
 }
