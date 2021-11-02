@@ -1,9 +1,7 @@
 package cmps312.coroutines.webapi
 
 import cmps312.coroutines.model.StockQuote
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class SimulatedStockQuoteService {
     private val companies = mapOf(
@@ -16,29 +14,23 @@ class SimulatedStockQuoteService {
         "IBM" to "IBM",
         "Johnson & Johnson" to "JNJ",
         "Microsoft" to "MSFT",
-        "Tesla" to "TSLA"
-    )
+        "Tesla" to "TSLA")
 
     suspend fun getStockSymbol(name: String): String {
-        println("getStockSymbol($name) started...")
-        //Suspend for 1500ms to simulate fetching stock symbol from a Web API
         delay(1500)
         val symbol = companies[name.trim()]
-        println("~~getStockSymbol($name) result: $symbol")
         return symbol!!
     }
 
     suspend fun getPrice(symbol: String): Int {
-        println("getPrice($symbol) started...")
-        //Suspend for 1000ms to simulate fetching stock price from a Web API
         delay(1000)
         val price = (50..500).random()
-        println("~~getPrice($symbol) result: $price")
         return price
     }
 
     suspend fun getStockQuote(name: String) = withContext(Dispatchers.IO) {
-        if (!companies.containsKey(name.trim())) throw Exception("Getting stock quote failed. '$name' does not exit.")
+        if (!companies.containsKey(name.trim()))
+            throw Exception("Getting stock quote failed. '$name' does not exit.")
         val symbol = getStockSymbol(name)
         val price = getPrice(symbol)
         StockQuote(name.trim(), symbol, price)
@@ -46,8 +38,34 @@ class SimulatedStockQuoteService {
 
     suspend fun getCompanies(): List<String> {
         println("getCompanies started...")
-        //Suspend for 400ms to simulate fetching companies from a Web API
         delay(400)
         return companies.keys.toList()
     }
+}
+
+
+fun main() = runBlocking { // this: CoroutineScope
+    launch { doWorld() }
+    println("Hello")
+}
+
+// this is your first suspending function
+suspend fun doWorld() = withContext(Dispatchers.IO){
+
+    val job = launch {
+        delay(400L)
+        println("World 1!")
+    }
+//    launch {
+//        delay(200L)
+//        println("World! 2")
+//    }
+//    launch {
+//        delay(500L)
+//        println("World! 3")
+//    }
+
+    job.join()
+    println("Done")
+
 }
