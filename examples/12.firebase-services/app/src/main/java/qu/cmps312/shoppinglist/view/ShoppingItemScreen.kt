@@ -28,22 +28,22 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     var screenTitle = "Add Shopping Item"
     var confirmButtonLabel = "Add"
 
-    val viewModel = viewModel<ShoppingViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
+    val shoppingViewModel = viewModel<ShoppingViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
     //val shoppingItemsCount = viewModel.shoppingItemsCount.observeAsState()
 
-    var categoryId by remember { mutableStateOf(viewModel.selectedShoppingItem?.categoryId ?: "") }
-    var productId by remember { mutableStateOf(viewModel.selectedShoppingItem?.productId ?: "") }
-    var quantity by remember { mutableStateOf( viewModel.selectedShoppingItem?.quantity ?:0) }
-    var productName = viewModel.selectedShoppingItem?.productName ?: ""
+    var categoryId by remember { mutableStateOf(shoppingViewModel.selectedShoppingItem?.categoryId ?: "") }
+    var productId by remember { mutableStateOf(shoppingViewModel.selectedShoppingItem?.productId ?: "") }
+    var quantity by remember { mutableStateOf( shoppingViewModel.selectedShoppingItem?.quantity ?:0) }
+    var productName = shoppingViewModel.selectedShoppingItem?.productName ?: ""
 
     // In case of Edit Mode get the Shopping Item to edit
-    if (viewModel.selectedShoppingItem != null) {
+    if (shoppingViewModel.selectedShoppingItem != null) {
         formMode = FormMode.EDIT
         screenTitle = "Edit Shopping Item"
         confirmButtonLabel = "Update"
     }
 
-    val categories = viewModel.categories.observeAsState()
+    val categories = shoppingViewModel.categories.observeAsState()
     // Every time categories change ->
     //      Convert a list to a map needed to fill the categories dropdown
     val categoryOptions by remember {
@@ -55,7 +55,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
     }
 
     // Every time categoryId change get the products of the selected category
-    var products = viewModel.getProducts(categoryId).observeAsState()
+    var products = shoppingViewModel.getProducts(categoryId).observeAsState()
     // Every time products change ->
     //      Convert a list to a map needed to fill the products dropdown
     val productOptions by remember {
@@ -115,17 +115,17 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                             quantity = quantity,
                             categoryId = categoryId
                         )
-                        viewModel.addItem(item)
+                        shoppingViewModel.addItem(item)
                         // Reset the productId and quantity to enter them again
                         productId = ""
                         quantity = 0
                     } else {
-                        viewModel.selectedShoppingItem?.let {
+                        shoppingViewModel.selectedShoppingItem?.let {
                             it.productId = productId
                             it.productName = productName
                             it.quantity = quantity
                             it.categoryId = categoryId
-                            viewModel.updateItem(it)
+                            shoppingViewModel.updateItem(it)
                             onNavigateBack()
                         }
                     }

@@ -26,6 +26,8 @@ class AuthViewModel : ViewModel() {
     }
 
     fun signIn(email: String, password: String) = viewModelScope.launch(exceptionHandler) {
+        errorMessage =  ""
+        currentUser = null
         currentUser = authRepository.signIn(email, password)
     }
 

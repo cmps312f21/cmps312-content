@@ -38,9 +38,8 @@ class AuthRepository {
             user.uid = it.uid
             println(">> Debug: signUp.user.uid : ${user.uid}")
             addUser(user)
-            return@withContext user
+            user
         }
-        return@withContext null
     }
 
     private suspend fun addUser(user: User) {
@@ -58,11 +57,11 @@ class AuthRepository {
             user = getUser(uid)
         }
         println(">> Debug: signIn.user : $user")
-        return@withContext user
+        user
     }
 
     suspend fun getUser(uid: String) = withContext(Dispatchers.IO) {
-        return@withContext userCollectionRef.document(uid)
-                                            .get().await().toObject(User::class.java)
+        userCollectionRef.document(uid)
+                     .get().await().toObject(User::class.java)
     }
 }

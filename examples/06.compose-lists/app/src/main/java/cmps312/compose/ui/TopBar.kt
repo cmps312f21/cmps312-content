@@ -40,16 +40,6 @@ fun TopBarMenu(onSortByChange: (SortBy) -> Unit,
                modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
 
-    val sortOptions = mapOf(
-        "Sort by Surah number" to SortBy.SURAH_NUMBER,
-        "Sort by Surah number - descending" to SortBy.SURAH_NUMBER_DESC,
-        "Sort by Surah name" to SortBy.SURAH_NAME,
-        "Sort by Surah name - descending" to SortBy.SURAH_NAME_DESC,
-        "Sort by aya count" to SortBy.AYA_COUNT,
-        "Sort by by aya count - descending" to SortBy.AYA_COUNT_DESC
-    )
-
-    //Box(Modifier.wrapContentSize(Alignment.TopEnd)) {
     Box(modifier = modifier) {
         IconButton(onClick = {
             expanded = true
@@ -65,12 +55,12 @@ fun TopBarMenu(onSortByChange: (SortBy) -> Unit,
             onDismissRequest = { expanded = false },
         ) {
 
-            sortOptions.forEach { option ->
+            SortBy.values().forEach { option ->
                 DropdownMenuItem(onClick = {
                     expanded = false
-                    onSortByChange(option.value)
+                    onSortByChange(option)
                 }) {
-                    Text(option.key)
+                    Text(option.label)
                 }
             }
         }

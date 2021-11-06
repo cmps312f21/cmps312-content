@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "qu.cmps312.shoppinglist"
-        minSdk 21
+        minSdk 24
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -41,6 +41,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion '1.5.21'
     }
     packagingOptions {
         resources {
@@ -50,6 +51,7 @@ android {
 }
 
 dependencies {
+
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
@@ -96,7 +98,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2'
 
     // FirebaseUI authentication
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'

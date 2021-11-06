@@ -7,7 +7,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import cmps312.compose.model.SurahRepository
 import cmps312.compose.ui.theme.ComposeListsTheme
 
-enum class SortBy { SURAH_NUMBER, SURAH_NUMBER_DESC, SURAH_NAME, SURAH_NAME_DESC, AYA_COUNT, AYA_COUNT_DESC }
+enum class SortBy(val label: String) {
+    SURAH_NUMBER("Sort by Surah number"),
+    SURAH_NUMBER_DESC("Sort by Surah number - descending"),
+    SURAH_NAME("Sort by Surah name"),
+    SURAH_NAME_DESC("Sort by Surah name - descending"),
+    AYA_COUNT("Sort by aya count"),
+    AYA_COUNT_DESC("Sort by by aya count - descending")
+}
 
 @Composable
 fun SurahScreen() {

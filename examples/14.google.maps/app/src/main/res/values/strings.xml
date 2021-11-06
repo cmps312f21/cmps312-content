@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Google Maps</string>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+    # Further details: https://developers.google.com/maps/documentation/android-sdk/get-api-key
+    google_maps_key: Get-key-from-MS-Teams-or-create-yours
+    -->
+    <string name="google_maps_key" translatable="false">AIzaSyDvFR2aavCszsfigmdHOJBoHBErAaV7alQ</string>
+</resources>

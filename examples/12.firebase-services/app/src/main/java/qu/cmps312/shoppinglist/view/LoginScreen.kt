@@ -1,8 +1,10 @@
 package qu.cmps312.shoppinglist.view
 
-import androidx.compose.foundation.background
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
@@ -14,22 +16,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import qu.cmps312.shoppinglist.view.components.displayMessage
+import qu.cmps312.shoppinglist.viewmodel.AuthViewModel
 
 @Composable
-fun LoginScreen() {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginScreen(onLoginSuccess: ()-> Unit) {
+    val authViewModel =
+        viewModel<AuthViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-            Icon(imageVector = Icons.Outlined.Login, contentDescription = "login")
-        }
+    // LaunchedEffect will be executed when the composable is first launched
+    // If the screen recomposes, the coroutine will NOT be re-executed
+    LaunchedEffect(true) {
+        authViewModel.currentUser = null
+    }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+    var email by remember { mutableStateOf("erradi@live.com") }
+    var password by remember { mutableStateOf("pass123") }
 
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
@@ -44,17 +56,14 @@ fun LoginScreen() {
                         topStart = 30.dp,
                     ),
                 )
-                .background(
-                    Color.White,
-                )
-                .padding(10.dp)
         ) {
-            Text(
-                text = "Sign In",
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(imageVector = Icons.Outlined.Login, contentDescription = "login")
+                Text(
+                    text = "Sign In",
+                    style = TextStyle(fontWeight = FontWeight.Bold)
                 )
-            )
+            }
         }
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -77,11 +86,9 @@ fun LoginScreen() {
                 value = password,
                 onValueChange = { password = it },
                 placeholder = { Text(text = "Password") },
-                label = {
-                    Text(
-                        text = "Password"
-                    )
-                },
+                label = { Text("Password") },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
             )
@@ -89,17 +96,32 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.padding(10.dp))
 
             Button(
-                onClick = { }, modifier = Modifier
+                onClick = {
+                    authViewModel.signIn(email, password)
+                },
+                modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .height(50.dp)
             ) {
                 Text(text = "Login")
             }
-            Spacer(modifier = Modifier.padding(10.dp))
-            Text(text = "Create an Account")
-            Spacer(modifier = Modifier.padding(20.dp))
+
+            if (authViewModel.currentUser != null)
+                onLoginSuccess()
+
+            if (authViewModel.errorMessage.isNotEmpty()) {
+                Spacer(modifier = Modifier.padding(8.dp))
+                Text(text = authViewModel.errorMessage, style = TextStyle(color = Color.Red))
+                displayMessage(message = authViewModel.errorMessage)
+            }
+
+            Spacer(modifier = Modifier.padding(8.dp))
+            Text(text = "Signup",
+                style = TextStyle(color = Color.Blue, textDecoration = TextDecoration.Underline),
+                modifier = Modifier.clickable {
+
+                }
+            )
         }
     }
 }
-
-

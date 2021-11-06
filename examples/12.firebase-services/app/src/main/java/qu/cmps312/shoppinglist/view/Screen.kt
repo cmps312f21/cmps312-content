@@ -9,4 +9,6 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object ShoppingItem : Screen(route = "shopping-item", title = "Shopping Item", icon = Icons.Outlined.ShoppingBag)
     object CloudStorage : Screen(route = "storage", title = "Storage", icon = Icons.Outlined.CloudUpload)
     object Login : Screen(route = "login", title = "Login", icon = Icons.Outlined.Login)
+    object Logout : Screen(route = "", title = "Logout", icon = Icons.Outlined.Logout)
+    object Divider : Screen(route = "", title = "Divider", icon = Icons.Outlined.Minimize)
 }

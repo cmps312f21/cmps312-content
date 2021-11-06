@@ -1,5 +1,8 @@
 package qu.cmps312.shoppinglist.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -8,18 +11,21 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
-/**╗
+/**
  * It receives navController to navigate between screens
  */
+@ExperimentalFoundationApi
+@RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun AppNavigator(
     navController: NavHostController,
-    padding: PaddingValues
+    padding: PaddingValues,
+    startDestination: String
 ) {
     NavHost(
         navController = navController,
         //set the start destination as home
-        startDestination = Screen.ShoppingList.route,
+        startDestination = startDestination,
         //Set the padding provided by scaffold
         modifier = Modifier.padding(paddingValues = padding)
     ) {
@@ -51,7 +57,9 @@ fun AppNavigator(
         }
 
         composable(Screen.Login.route) {
-            LoginScreen()
+            LoginScreen(onLoginSuccess = {
+                navController.navigate(Screen.ShoppingList.route)
+            })
         }
     }
 }
