@@ -32,12 +32,6 @@ fun LoginScreen(onLoginSuccess: ()-> Unit) {
     val authViewModel =
         viewModel<AuthViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
-    // LaunchedEffect will be executed when the composable is first launched
-    // If the screen recomposes, the coroutine will NOT be re-executed
-    LaunchedEffect(true) {
-        authViewModel.currentUser = null
-    }
-
     var email by remember { mutableStateOf("erradi@live.com") }
     var password by remember { mutableStateOf("pass123") }
 
@@ -48,14 +42,6 @@ fun LoginScreen(onLoginSuccess: ()-> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.60f)
-                .clip(
-                    RoundedCornerShape(
-                        bottomEnd = 30.dp,
-                        bottomStart = 30.dp,
-                        topEnd = 30.dp,
-                        topStart = 30.dp,
-                    ),
-                )
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Icon(imageVector = Icons.Outlined.Login, contentDescription = "login")
@@ -65,23 +51,20 @@ fun LoginScreen(onLoginSuccess: ()-> Unit) {
                 )
             }
         }
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
+        Spacer(modifier = Modifier.padding(8.dp))
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = {
-                    Text(
-                        text = "Email"
-                    )
-                },
+                label = { Text( text = "Email" ) },
                 placeholder = { Text(text = "Email") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
             )
-            Spacer(modifier = Modifier.padding(10.dp))
+
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -92,16 +75,9 @@ fun LoginScreen(onLoginSuccess: ()-> Unit) {
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.8f),
             )
-
-            Spacer(modifier = Modifier.padding(10.dp))
-
             Button(
-                onClick = {
-                    authViewModel.signIn(email, password)
-                },
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .height(50.dp)
+                onClick = { authViewModel.signIn(email, password) },
+                modifier = Modifier.fillMaxWidth(0.8f).height(50.dp)
             ) {
                 Text(text = "Login")
             }

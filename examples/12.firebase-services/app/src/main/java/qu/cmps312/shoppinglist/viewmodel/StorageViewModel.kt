@@ -24,12 +24,12 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
     private val imagesStorageRef = storageRef.child(imagesPath)
 
     //var bitmap by mutableStateOf<Bitmap?>(null)
-    var imageUri by mutableStateOf<Uri?>(null)
-    val imageURIs = mutableStateListOf<Uri>()
+    var imageUrl by mutableStateOf<Uri?>(null)
+    val imageURLs = mutableStateListOf<Uri>()
     var errorMessage by mutableStateOf("")
 
     init {
-        getImageURIs()
+        getImageURLs()
     }
 
     // Can download the file as Bitmap
@@ -44,23 +44,23 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
         }
     }*/
 
-     fun getImageURI(filename: String) = viewModelScope.launch(Dispatchers.IO) {
+     fun getImageUrl(filename: String) = viewModelScope.launch(Dispatchers.IO) {
          try {
-             imageUri = imagesStorageRef.child(filename).downloadUrl.await()
+             imageUrl = imagesStorageRef.child(filename).downloadUrl.await()
          } catch (e: Exception) {
              errorMessage = e.message ?: "Get image URI failed"
              println(">> Debug: $errorMessage")
          }
     }
 
-    fun getImageURIs() = viewModelScope.launch(Dispatchers.IO) {
+    fun getImageURLs() = viewModelScope.launch(Dispatchers.IO) {
         try {
             val images = imagesStorageRef.listAll().await()
-            imageUri = null
-            imageURIs.clear()
+            imageUrl = null
+            imageURLs.clear()
             for (image in images.items) {
-                val uri = image.downloadUrl.await()
-                imageURIs.add(uri)
+                val url = image.downloadUrl.await()
+                imageURLs.add(url)
             }
         } catch (e: Exception) {
             errorMessage = e.message ?: "Get images failed"
@@ -74,7 +74,7 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
             val filename = filePath.lastPathSegment!!
             storageRef.child(filename).delete().await()
             // Remove the image from the list of image URIs
-            imageURIs.removeIf { it == filePath }
+            imageURLs.removeIf { it == filePath }
             println(">> Debug: Image $filename successfully deleted")
         } catch (e: Exception) {
             errorMessage = e.message ?: "Delete failed"
@@ -90,8 +90,8 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
                     else filename
 
                 imagesStorageRef.child(filename).putFile(imageUri).await()
-                val downloadUri = imagesStorageRef.child(filename).downloadUrl.await()
-                imageURIs.add(0, downloadUri)
+                val downloadUrl = imagesStorageRef.child(filename).downloadUrl.await()
+                imageURLs.add(0, downloadUrl)
                 println(">> Debug: Image $filename successfully uploaded")
             } catch (e: Exception) {
                 errorMessage = e.message ?: "Upload failed"
@@ -107,8 +107,8 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
                 else filename
 
             imagesStorageRef.child(filename).putBytes(imageToBitmap(bitmap)).await()
-            val downloadUri = imagesStorageRef.child(filename).downloadUrl.await()
-            imageURIs.add(0, downloadUri)
+            val downloadUrl = imagesStorageRef.child(filename).downloadUrl.await()
+            imageURLs.add(0, downloadUrl)
         } catch (e: Exception) {
             errorMessage = e.message ?: "Upload failed"
             println(">> Debug: $errorMessage")

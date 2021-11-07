@@ -55,7 +55,7 @@ fun StorageScreen() {
             StorageToolBar(
                 onUploadPhotoFromGallery = { imagePicker.launch("image/*") },
                 onTakePicture = { takePicture.launch() },
-                onRefresh = { storageViewModel.getImageURIs() }
+                onRefresh = { storageViewModel.getImageURLs() }
             )
         },
     ) {
@@ -82,7 +82,7 @@ fun StorageScreen() {
                 // Download a Photo
                 IconButton(onClick = {
                     if (imageToDownload.isNotEmpty())
-                        storageViewModel.getImageURI(imageToDownload)
+                        storageViewModel.getImageUrl(imageToDownload)
                     else
                         displayMessage( context,"Enter the name of the image of download", Toast.LENGTH_SHORT)
                 }) {
@@ -98,9 +98,9 @@ fun StorageScreen() {
                 )
             }*/
 
-            if (storageViewModel.imageUri != null) {
+            if (storageViewModel.imageUrl != null) {
                 Image(
-                    painter = rememberImagePainter(storageViewModel.imageUri),
+                    painter = rememberImagePainter(storageViewModel.imageUrl),
                     contentDescription = null,
                     modifier = Modifier
                         .size(200.dp)
@@ -113,21 +113,21 @@ fun StorageScreen() {
                     Text("Long click an image to delete it")
                 }
 
-                items(storageViewModel.imageURIs) { imageUri ->
+                items(storageViewModel.imageURLs) { imageUrl ->
                     //val imageUri = "https://firebasestorage.googleapis.com/v0/b/cmp312-fall2020.appspot.com/o/images%2FFirebase-Cloud-Storage.png?alt=media&token=9ee1d523-c459-4e73-b7f4-8ef70ca57d49"
                     Column() {
                         Image(
-                            painter = rememberImagePainter(imageUri),
+                            painter = rememberImagePainter(imageUrl),
                             contentDescription = null,
                             modifier = Modifier.size(200.dp)
                                 .combinedClickable(
                                     onClick = { },
                                     onLongClick = {
-                                        storageViewModel.deleteImage(imageUri)
+                                        storageViewModel.deleteImage(imageUrl)
                                     }
                                 )
                         )
-                        Text(text = imageUri.lastPathSegment ?: "")
+                        Text(text = imageUrl.lastPathSegment ?: "")
                     }
                 }
             }
