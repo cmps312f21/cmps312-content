@@ -100,13 +100,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2'
 
-    // FirebaseUI authentication
-    implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
+    // Firebase Authentication
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
     // Firebase storage
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.0'
 
-    // Used to display images
+    // Used to display images from Web Urls
     implementation "io.coil-kt:coil-compose:1.4.0"
 }
