@@ -5,5 +5,5 @@
     # Further details: https://developers.google.com/maps/documentation/android-sdk/get-api-key
     google_maps_key: Get-key-from-MS-Teams-or-create-yours
     -->
-    <string name="google_maps_key" translatable="false">AIzaSyDvFR2aavCszsfigmdHOJBoHBErAaV7alQ</string>
+    <string name="google_maps_key" translatable="false">Get-key-from-MS-Teams-or-create-yours</string>
 </resources>

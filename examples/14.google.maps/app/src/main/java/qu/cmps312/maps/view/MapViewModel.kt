@@ -165,7 +165,7 @@ class MapViewModel(private val appContext: Application) : AndroidViewModel(appCo
     fun onMenuItemClick(menuOption: MenuOption) = when (menuOption) {
         // Change the map type based on the user's selection.
         MenuOption.MAP_NORMAL -> {
-            googleMap?.mapType = GoogleMap.MAP_TYPE_SATELLITE
+            googleMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
         }
         MenuOption.MAP_HYBRID -> {
             googleMap?.mapType = GoogleMap.MAP_TYPE_HYBRID
@@ -227,7 +227,7 @@ class MapViewModel(private val appContext: Application) : AndroidViewModel(appCo
                 if (deviceLocation != LatLng(it.latitude, it.longitude)) {
                     deviceLocation = LatLng(it.latitude, it.longitude)
                     println(">> Debug: Lat: ${it.latitude} & Long: ${it.longitude}")
-                    zoomToLocation(Location(latitude = it.latitude, longitude = it.longitude))
+                    //zoomToLocation(Location(latitude = it.latitude, longitude = it.longitude))
                 }
             }
         }
