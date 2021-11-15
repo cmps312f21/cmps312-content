@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -64,7 +66,6 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
 
             Button(
                 onClick = {
-                    //ToDo - Complete the report
                     cheques.clear()
                     cheques.addAll(reportViewModel.getCheques(chequeStatus, fromDate, toDate))
                 },
@@ -74,7 +75,22 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
             ) {
                 Text(text = "Submit")
             }
-            // ToDo: Add Lazy Column
+            if (cheques.isEmpty()) {
+                Text("No cheques Found.")
+            } else {
+                val chequesCount = cheques.size
+                val chequesTotal = cheques.sumOf { it.amount }
+
+                LazyColumn {
+                    items(cheques) { cheque ->
+                        ChequeReportCard(cheque)
+                    }
+                    item()
+                    {
+                        ChequeReportFooter(chequesCount, totalAmount = chequesTotal)
+                    }
+                }
+            }
         }
     }
 }

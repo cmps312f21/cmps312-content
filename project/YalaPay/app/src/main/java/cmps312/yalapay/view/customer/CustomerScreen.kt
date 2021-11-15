@@ -18,7 +18,7 @@ import cmps312.yalapay.view.components.displayMessage
 import cmps312.yalapay.viewmodel.CustomerViewModel
 
 @Composable
-fun CustomerDetails(onNavigateBack: ()->Unit) {
+fun CustomerScreen(onNavigateBack: ()->Unit) {
     val customerViewModel =
         viewModel<CustomerViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 

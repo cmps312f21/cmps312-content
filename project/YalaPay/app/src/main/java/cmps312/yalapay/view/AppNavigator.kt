@@ -1,6 +1,5 @@
 package cmps312.yalapay.view
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -11,7 +10,7 @@ import androidx.navigation.compose.composable
 import cmps312.yalapay.view.auth.LoginScreen
 import cmps312.yalapay.view.chequedeposit.ChequeDepositScreen
 import cmps312.yalapay.view.chequedeposit.ChequeDepositsList
-import cmps312.yalapay.view.customer.CustomerDetails
+import cmps312.yalapay.view.customer.CustomerScreen
 import cmps312.yalapay.view.customer.CustomersList
 import cmps312.yalapay.view.invoice.InvoicePayments
 import cmps312.yalapay.view.invoice.InvoiceScreen
@@ -38,16 +37,16 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
         composable(route = Screen.Customers.route) {
             CustomersList(
                 onAddCustomer = {
-                    navController.navigate(Screen.CustomerDetails.route)
+                    navController.navigate(Screen.CustomerScreen.route)
                 },
                 onCustomerEdit = {
-                    navController.navigate(Screen.CustomerDetails.route)
+                    navController.navigate(Screen.CustomerScreen.route)
                 }
             )
         }
 
-        composable(route = Screen.CustomerDetails.route) {
-            CustomerDetails {
+        composable(route = Screen.CustomerScreen.route) {
+            CustomerScreen {
                 navController.navigateUp()
             }
         }

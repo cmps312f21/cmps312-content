@@ -7,11 +7,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import cmps312.yalapay.entity.Invoice
 import cmps312.yalapay.entity.InvoicesSummary
+import cmps312.yalapay.entity.status
 import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class InvoiceRepository (private val context: Context) {
+    val paymentRepository = PaymentRepository(context)
+
     companion object {
         var invoices = mutableListOf<Invoice>()
     }
@@ -63,9 +66,11 @@ class InvoiceRepository (private val context: Context) {
 
     fun getInvoices(invoiceStatus: String,
                     fromDate: LocalDate, toDate: LocalDate): List<Invoice> {
-        // ToDo: Implement Invoices Report
         val invoices = getInvoices()
-        return invoices
-    }
+        val filteredInvoices = invoices.filter { (it.dueDate in fromDate..toDate) }
+        for(invoice in filteredInvoices)
+            invoice.totalPayments = paymentRepository.getTotalPayments(invoice.invoiceNo)
 
+        return  filteredInvoices.filter { it.status == invoiceStatus || invoiceStatus == "All" }
+    }
 }

@@ -1,11 +1,12 @@
 package cmps312.yalapay.view.report
 
-import android.text.format.DateUtils
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -67,7 +68,6 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
 
             Button(
                 onClick = {
-                    //ToDo - Complete the report
                     invoices.clear()
                     invoices.addAll(reportViewModel.getInvoices(invoiceStatus, fromDate, toDate))
                 },
@@ -77,15 +77,30 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
             ) {
                 Text(text = "Submit")
             }
-            // ToDo: Add Lazy Column
+            if (invoices.isEmpty()) {
+                Text("No invoices Found.")
+            } else {
+                val invoicesCount = invoices.size
+                val invoicesTotal = invoices.sumOf { it.amount }
+
+                LazyColumn() {
+                    items(invoices) { invoice ->
+                        InvoiceReportCard(invoice)
+                    }
+                    item()
+                    {
+                        ReportFooter(invoicesCount, invoicesTotal)
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun ReportFooter(invoicesCount: Int, totalAmount: Double) {
+fun ReportFooter(invoicesCount: Int, invoicesTotal: Double) {
     Text(
-        text = "Invoices Count: $invoicesCount - Total Amount: $totalAmount ",
+        text = "Invoices Count: $invoicesCount - Total Amount: $invoicesTotal ",
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(

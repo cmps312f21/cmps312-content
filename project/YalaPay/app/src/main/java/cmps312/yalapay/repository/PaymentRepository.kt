@@ -118,11 +118,11 @@ class PaymentRepository (private val context: Context) {
     }
 
     fun getCheques(chequeStatus: String,
-                    fromDate: LocalDate, toDate: LocalDate
+                  fromDate: LocalDate, toDate: LocalDate
     ): List<Cheque> {
-        // ToDo: Implement Cheques Report
         val cheques = getCheques()
-        return cheques
+        return cheques.filter { (it.receivedDate in fromDate..toDate) &&
+                    (it.status == chequeStatus || chequeStatus == "All") }
     }
     
     /// ChequeDeposits

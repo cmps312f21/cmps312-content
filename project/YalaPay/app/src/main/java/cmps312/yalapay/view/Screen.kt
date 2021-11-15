@@ -19,8 +19,8 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.Dashboard
     )
 
-    object CustomerDetails : Screen(
-        route = "CustomerDetails", title = "Customer",
+    object CustomerScreen : Screen(
+        route = "CustomerScreen", title = "Customer",
         icon = Icons.Outlined.Details
     )
 
