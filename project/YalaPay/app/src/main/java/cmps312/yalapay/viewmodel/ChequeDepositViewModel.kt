@@ -1,14 +1,12 @@
 package cmps312.yalapay.viewmodel
 
 import android.app.Application
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.AndroidViewModel
-import cmps312.yalapay.entity.BankAccount
-import cmps312.yalapay.entity.Cheque
 import cmps312.yalapay.entity.ChequeDeposit
+import cmps312.yalapay.entity.ChequeStatus
+import cmps312.yalapay.entity.FormMode
 import cmps312.yalapay.repository.PaymentRepository
 
 class ChequeDepositViewModel (appContext: Application) : AndroidViewModel(appContext) {
@@ -16,16 +14,24 @@ class ChequeDepositViewModel (appContext: Application) : AndroidViewModel(appCon
 
     val chequeDeposits = mutableStateListOf<ChequeDeposit>()
     var selectedChequeDeposit: ChequeDeposit? = null
-    var selectedCheques = mutableSetOf<Cheque>()
-    var selectedAccount: BankAccount? by mutableStateOf(null)
+    var chequeDepositScreenMode : FormMode = FormMode.UPDATE
 
-    val accounts = mutableStateListOf(*paymentRepository.getAccounts().toTypedArray())
-    val returnReasons = mutableStateListOf(*paymentRepository.getReturnReasons().toTypedArray())
+    val bankAccounts = mutableStateMapOf<String, String>()
+    val returnReasons = mutableStateListOf<String>()
 
     fun getCheques() = paymentRepository.getCheques()
 
     init {
         getChequeDeposits()
+        getBankAccounts()
+        getRetunReasons()
+    }
+
+    private fun getBankAccounts() {
+        bankAccounts.putAll(paymentRepository.getBankAccounts())
+    }
+    private fun getRetunReasons() {
+        returnReasons.addAll(paymentRepository.getReturnReasons())
     }
 
     fun getChequeDeposits() {
@@ -34,9 +40,6 @@ class ChequeDepositViewModel (appContext: Application) : AndroidViewModel(appCon
     }
 
     fun addChequeDeposit(chequeDeposit: ChequeDeposit) {
-        var chequesToDeposit = mutableListOf<Int>()
-        selectedCheques.forEach { chequesToDeposit.add(it.chequeNo) }
-        chequeDeposit.chequeNos = chequesToDeposit
         paymentRepository.addChequeDeposit(chequeDeposit)
         chequeDeposits += chequeDeposit
     }
@@ -54,4 +57,5 @@ class ChequeDepositViewModel (appContext: Application) : AndroidViewModel(appCon
     }
 
     fun getCheques(chequeNos: List<Int>) = paymentRepository.getCheques(chequeNos)
+    fun getCheques(status: ChequeStatus = ChequeStatus.AWAITING) = paymentRepository.getCheques(status)
 }

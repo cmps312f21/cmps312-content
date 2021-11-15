@@ -26,7 +26,10 @@ class PaymentRepository (private val context: Context) {
     fun getCheques(chequeNos: List<Int>) =
         getCheques().filter { chequeNos.contains(it.chequeNo) }
 
-    fun getCheques(searchText: String) =
+    fun getCheques(status: ChequeStatus = ChequeStatus.AWAITING) =
+        getCheques().filter { it.status == status.label }
+
+/*    fun getCheques(searchText: String) =
         if (searchText.isEmpty())
             getCheques()
         else
@@ -34,7 +37,7 @@ class PaymentRepository (private val context: Context) {
                 it.chequeNo.toString().contains(searchText) ||
                         it.amount.toString().contains(searchText) ||
                         it.drawer.contains(searchText)
-            }
+            }*/
 
     fun addCheque(cheque: Cheque) {
         cheques += cheque
@@ -83,16 +86,6 @@ class PaymentRepository (private val context: Context) {
 
     fun getPayments(paymentIds: List<Int>) =
         getPayments().filter { paymentIds.contains(it.paymentId) }
-
-/*    fun getPayments(searchText: String) =
-        if (searchText.isEmpty())
-            getPayments()
-        else
-            getPayments().filter {
-                it.paymentId.toString().contains(searchText) ||
-                        it.amount.toString().contains(searchText) ||
-                        it.invoiceNo.toString().contains(searchText)
-            }*/
 
     fun getPayments(invoiceNo: Int) : List<Payment> {
         val payments = getPayments().filter { it.invoiceNo == invoiceNo }
@@ -162,6 +155,10 @@ class PaymentRepository (private val context: Context) {
     fun getReturnReasons()=
         Json.decodeFromString<List<String>>(readData(context, "return-reasons.json"))
 
-    fun getAccounts() =
-        Json.decodeFromString<List<BankAccount>>(readData(context, "bank-accounts.json"))
+    fun getBankAccounts(): Map<String, String> {
+        val accounts = Json.decodeFromString<List<BankAccount>>(readData(context, "bank-accounts.json"))
+        return accounts.associate {
+            Pair(it.accountNo, it.toString())
+        }
+    }
 }

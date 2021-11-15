@@ -39,7 +39,7 @@ fun PaymentScreen(onNavigateBack: () -> Unit) {
     var screenTitle = "Add Payment"
 
     if (selectedPayment != null) {
-        formMode = FormMode.EDIT
+        formMode = FormMode.UPDATE
         screenTitle = "Invoice #$invoiceNo - Edit Payment (#${selectedPayment.paymentId})"
     }
 
@@ -110,7 +110,7 @@ fun PaymentScreen(onNavigateBack: () -> Unit) {
         ) {
 
             // To keep it simpler do not allow changing the Payment Mode
-            if (formMode == FormMode.EDIT) {
+            if (formMode == FormMode.UPDATE) {
                 Text(text = "Payment Mode: $paymentMode" )
             } else {
                 Dropdown(
@@ -142,7 +142,7 @@ fun PaymentScreen(onNavigateBack: () -> Unit) {
                     onValueChange = { chequeNo = it },
                     label = { Text("chequeNo") },
                     modifier = Modifier.fillMaxWidth(),
-                    readOnly = formMode == FormMode.EDIT
+                    readOnly = formMode == FormMode.UPDATE
                 )
 
                 OutlinedTextField(

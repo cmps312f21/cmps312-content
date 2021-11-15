@@ -28,7 +28,7 @@ fun InvoiceScreen(onNavigateBack: () -> Unit) {
     var screenTitle = "Add Invoice"
 
     if (selectedInvoice != null) {
-        formMode = FormMode.EDIT
+        formMode = FormMode.UPDATE
         screenTitle = "Edit Invoice (#${selectedInvoice.invoiceNo})"
     }
 

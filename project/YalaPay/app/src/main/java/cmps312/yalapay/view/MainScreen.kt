@@ -36,11 +36,10 @@ fun MainScreen() {
 fun AppBottomBar(navController: NavController, currentRoute: String?) {
     if (currentRoute != Screen.LoginScreen.route) {
         val bottomNavItems = listOf(
-            Screen.DashboardScreen,
-            Screen.CustomersList,
-            Screen.InvoicesList,
-            Screen.ChequeList,
-            Screen.ChequeDepositList
+            Screen.Dashboard,
+            Screen.Customers,
+            Screen.Invoices,
+            Screen.ChequeDeposits
         )
         BottomNavigation() {
             bottomNavItems.forEach { navItem ->

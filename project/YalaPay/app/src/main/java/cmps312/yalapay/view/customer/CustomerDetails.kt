@@ -29,7 +29,7 @@ fun CustomerDetails(onNavigateBack: ()->Unit) {
     var screenTitle = "Add Customer"
 
     if (selectedCustomer != null) {
-        formMode = FormMode.EDIT
+        formMode = FormMode.UPDATE
         screenTitle = "Edit Customer (#${selectedCustomer.customerId})"
     }
 

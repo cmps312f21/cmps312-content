@@ -14,7 +14,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
 
 @Composable
-fun Dropdown(label: String, options: List<String>,
+fun Dropdown(label: String,
+             options: List<String>,
              selectedOption: String,
              onSelectionChange: (String)-> Unit) {
     var expanded by remember { mutableStateOf(false) }

@@ -14,8 +14,8 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.Login
     )
 
-    object DashboardScreen : Screen(
-        route = "DashboardScreen", title = "Dashboard",
+    object Dashboard : Screen(
+        route = "Dashboard", title = "Dashboard",
         icon = Icons.Outlined.Dashboard
     )
 
@@ -24,12 +24,12 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.Details
     )
 
-    object CustomersList : Screen(
+    object Customers : Screen(
         route = "Customers", title = "Customers",
         icon = Icons.Outlined.ManageAccounts
     )
 
-    object InvoicesList : Screen(
+    object Invoices : Screen(
         route = "Invoices", title = "Invoices",
         icon = Icons.Outlined.Money
     )
@@ -59,40 +59,19 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.Money
     )
 
-    //////////////////////////////////////////////////////
-    object ChequeList : Screen(
-        route = "ChequeList", title = "Cheques",
-        icon = Icons.Outlined.Note
+    object ChequeDeposits : Screen(
+        route = "ChequeDeposits", title = "Deposits",
+        icon = Icons.Outlined.AccountBalanceWallet
     )
 
-    object SortedCheques : Screen(
-        route = "SortedCheques", title = "Sorted Cheques",
-        icon = Icons.Outlined.Money
-    )
-
-    object SelectAccount : Screen(
-        route = "SelectAccount", title = "Select Account",
-        icon = Icons.Outlined.AccountBox
-    )
-
-    object ChequeDepositList : Screen(
-        route = "ChequeDeposits", title = "Cheque Deposits",
-        icon = Icons.Outlined.EventNote
+    object ChequeDepositScreen: Screen(
+        route = "ChequeDeposit", title = "Cheque Deposit",
+        icon = Icons.Outlined.AccountBalanceWallet
     )
 
     object ChequeReport : Screen(
         route = "ChequeReport", title = "Cheque Report",
         icon = Icons.Default.BarChart
-    )
-
-    object SetChequesStatus : Screen(
-        route = "SetChequesStatus", title = "Set Cheques Status",
-        icon = Icons.Outlined.Update
-    )
-
-    object SetReturnReason : Screen(
-        route = "SetReturnReason", title = "Set Return Reason",
-        icon = Icons.Outlined.Warning
     )
 
     object MainScreen : Screen(

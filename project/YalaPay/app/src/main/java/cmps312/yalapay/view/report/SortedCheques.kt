@@ -47,7 +47,7 @@ fun SortedCheques(
             item { ListHeader() }
 
             items(filteredCheques) {
-                chequeCard(it)
+                //chequeCard(it)
             }
 
             item { ListFooter(chequesCount, totalAmount) }

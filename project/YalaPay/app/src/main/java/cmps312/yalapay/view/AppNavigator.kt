@@ -8,11 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import cmps312.yalapay.view.auth.LoginScreen
-import cmps312.yalapay.view.cheque.*
+import cmps312.yalapay.view.chequedeposit.ChequeDepositScreen
+import cmps312.yalapay.view.chequedeposit.ChequeDepositsList
 import cmps312.yalapay.view.customer.CustomerDetails
 import cmps312.yalapay.view.customer.CustomersList
-import cmps312.yalapay.view.dashboard.DashboardScreen
+import cmps312.yalapay.view.report.DashboardScreen
 import cmps312.yalapay.view.invoice.*
+import cmps312.yalapay.view.report.ChequeReport
+import cmps312.yalapay.view.report.InvoiceReport
 
 @Composable
 fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues) {
@@ -22,11 +25,11 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
     ) {
         composable(route = Screen.LoginScreen.route) {
            LoginScreen {
-                navController.navigate(Screen.DashboardScreen.route)
+                navController.navigate(Screen.Dashboard.route)
             }
         }
 
-        composable(route = Screen.DashboardScreen.route) {
+        composable(route = Screen.Dashboard.route) {
             DashboardScreen()
         }
 
@@ -34,9 +37,8 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
             MainScreen()
         }
 
-        ///////////////////////////////////////customer/////////////////////////////////////////////
-
-        composable(route = Screen.CustomersList.route) {
+        /// Customer
+        composable(route = Screen.Customers.route) {
             CustomersList(
                 onAddCustomer = {
                     navController.navigate(Screen.CustomerDetails.route)
@@ -53,8 +55,8 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
             }
         }
 
-        ////////////////////////////////////////invoice/////////////////////////////////////////////
-        composable(route = Screen.InvoicesList.route) {
+        /// Invoice
+        composable(route = Screen.Invoices.route) {
             InvoicesList(
                 onAddInvoice = {
                     navController.navigate(Screen.InvoiceScreen.route)
@@ -86,7 +88,7 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
         composable(route = Screen.InvoicePayments.route) {
             InvoicePayments(
                 onNavigateBack = {
-                    navController.navigate(Screen.InvoicesList.route)
+                    navController.navigate(Screen.Invoices.route)
             }, onUpdatePayment = {
                     navController.navigate(Screen.PaymentScreen.route)
             })
@@ -97,51 +99,29 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
                 navController.navigateUp()
             }
         }
-        /////////////////////////////////////cheque/////////////////////////////////////////////////
 
-        composable(route = Screen.ChequeList.route) {
-            ChequeList(onChequesSelected = {
-                navController.navigate(Screen.SelectAccount.route)
-            })
+        /// ChequeDeposit
+        composable(route = Screen.ChequeDepositScreen.route) {
+            ChequeDepositScreen{
+                navController.navigateUp()
+            }
         }
 
-        composable(route = Screen.SelectAccount.route) {
-            SelectAccount(
-                onDepositClick = {
-                    navController.navigate(Screen.ChequeList.route)
-                }
-            )
-        }
-
-        composable(Screen.ChequeDepositList.route) {
-            ChequeDepositList(
-                onReturnedSelected = {
-                    navController.navigate(Screen.SetReturnReason.route)
+        composable(Screen.ChequeDeposits.route) {
+            ChequeDepositsList(
+                onAddChequeDeposit = {
+                    navController.navigate(Screen.ChequeDepositScreen.route)
                 },
-                onSelectSet = {
-                    navController.navigate(Screen.SetChequesStatus.route)
-                }
+                onViewChequeDeposit = {
+                    navController.navigate(Screen.ChequeDepositScreen.route)
+                },
+                onUpdateChequeDeposit = {
+                    navController.navigate(Screen.ChequeDepositScreen.route)
+                },
             )
         }
 
-        composable(Screen.SetReturnReason.route) {
-            SetReturnReason(
-                onSetSelected = {
-                    navController.navigateUp()
-                }
-            )
-        }
-
-        composable(Screen.SetChequesStatus.route) {
-            SetChequesStatus(
-                onSetSelected = {
-                    navController.navigateUp()
-                }
-            )
-        }
-
-        /////////////////////////////////////////report/////////////////////////////////////////////
-
+        /// Reports
         composable(Screen.ChequeReport.route) {
             ChequeReport(
                 onNavigateBack = {

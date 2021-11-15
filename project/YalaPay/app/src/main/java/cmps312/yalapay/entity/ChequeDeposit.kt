@@ -9,9 +9,9 @@ import java.security.SecureRandom
 
 @Serializable
 data class ChequeDeposit(
-    val depositId: Int = SecureRandom().nextInt(1000),
+    var depositId: Int = SecureRandom().nextInt(1000),
     val bankAccountNo: String,
     val depositDate: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
-    var status: String = ChequeDepositStatus.DEPOSITED.label,
+    var depositStatus: String = ChequeDepositStatus.DEPOSITED.label,
     var chequeNos: List<Int>
 )

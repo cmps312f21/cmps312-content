@@ -1,5 +1,12 @@
 package cmps312.yalapay.entity
 
+enum class InvoiceStatus(val label: String) {
+    ALL("All"),
+    PENDING("Pending"),
+    PARTIALLY_PAID("Partially Paid"),
+    PAID("Paid")
+}
+
 enum class ChequeStatus(val label: String) {
     AWAITING("Awaiting"),
     DEPOSITED("Deposited"),
@@ -20,10 +27,11 @@ enum class PaymentMode(val label: String) {
     CHEQUE ("Cheque")
 }
 
+fun getInvoiceStatus() = InvoiceStatus.values().map { it.label }
 fun getPaymentModes() = PaymentMode.values().map { it.label }
 fun getChequeDepositStatus() = ChequeDepositStatus.values().map { it.label }
 fun getChequeStatus() = ChequeStatus.values()
                             .filter { it == ChequeStatus.CASHED || it == ChequeStatus.RETURNED  }
                             .map { it.label }
 
-enum class FormMode { ADD, EDIT }
+enum class FormMode { ADD, UPDATE, VIEW }

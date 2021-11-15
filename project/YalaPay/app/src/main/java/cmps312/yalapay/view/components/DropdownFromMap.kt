@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
 
 @Composable
-fun Dropdown(
+fun DropdownForMap(
     label: String,
     options: Map<String, String>,
     selectedOptionId: String,
