@@ -10,30 +10,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
     object LoginScreen : Screen(
-        route = "LoginScreen", title = "Login Screen",
+        route = "LoginScreen", title = "Login",
         icon = Icons.Outlined.Login
     )
 
-    /////////////////////////////////////////////////////
     object DashboardScreen : Screen(
-        route = "DashboardScreen", title = "Dashboard Screen",
+        route = "DashboardScreen", title = "Dashboard",
         icon = Icons.Outlined.Dashboard
     )
 
-    ////////////////////////////////////////////////////
     object CustomerDetails : Screen(
-        route = "CustomerDetails", title = "Customer Details",
+        route = "CustomerDetails", title = "Customer",
         icon = Icons.Outlined.Details
     )
 
     object CustomersList : Screen(
-        route = "CustomersList", title = "Customer List",
+        route = "Customers", title = "Customers",
         icon = Icons.Outlined.ManageAccounts
     )
 
-    /////////////////////////////////////////////////////
     object InvoicesList : Screen(
-        route = "InvoicesList", title = "Invoices List",
+        route = "Invoices", title = "Invoices",
         icon = Icons.Outlined.Money
     )
 
@@ -64,7 +61,7 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
 
     //////////////////////////////////////////////////////
     object ChequeList : Screen(
-        route = "ChequeList", title = "Cheque List",
+        route = "ChequeList", title = "Cheques",
         icon = Icons.Outlined.Note
     )
 
@@ -79,7 +76,7 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     )
 
     object ChequeDepositList : Screen(
-        route = "ChequeDepositList", title = "Cheque Deposit List",
+        route = "ChequeDeposits", title = "Cheque Deposits",
         icon = Icons.Outlined.EventNote
     )
 
