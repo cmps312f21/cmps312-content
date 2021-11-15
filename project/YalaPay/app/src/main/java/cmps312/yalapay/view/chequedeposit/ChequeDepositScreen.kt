@@ -1,11 +1,9 @@
 package cmps312.yalapay.view.chequedeposit
 
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -31,7 +29,8 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
 
     val isAddMode = (depositViewModel.chequeDepositScreenMode == FormMode.ADD)
     val isViewMode = (depositViewModel.chequeDepositScreenMode == FormMode.VIEW)
-    val isEditMode = (depositViewModel.chequeDepositScreenMode != FormMode.VIEW)
+    val isUpdateMode = (depositViewModel.chequeDepositScreenMode == FormMode.UPDATE)
+    val isAddOrUpdateMode = (depositViewModel.chequeDepositScreenMode != FormMode.VIEW)
 
     val screenTitle = if (selectedDeposit != null)
             "Cheques Deposit (#${selectedDeposit.depositId})"
@@ -39,8 +38,12 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
             "Add Cheques Deposit"
 
     var includedCheques = remember { mutableStateListOf<Int>() }
-    if (selectedDeposit != null)
+    val returnedCheques = remember { mutableStateMapOf<Int, String>() }
+
+    if (selectedDeposit != null) {
+        includedCheques.clear()
         includedCheques.addAll(selectedDeposit.chequeNos)
+    }
 
     val cheques = if (isAddMode)
         depositViewModel.getCheques(ChequeStatus.AWAITING)
@@ -48,6 +51,9 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
         selectedDeposit?.chequeNos?.let {
             depositViewModel.getCheques(it)
         } ?: emptyList()
+
+    if (cheques.isEmpty())
+        displayMessage(message = "No more cheques available.")
 
     var bankAccountNo by remember {
         mutableStateOf(
@@ -80,14 +86,14 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
             depositViewModel.addChequeDeposit(chequeDeposit)
         } else {
             chequeDeposit.depositId = selectedDeposit?.depositId!!
-            depositViewModel.updateChequeDeposit(chequeDeposit)
+            depositViewModel.updateChequeDeposit(chequeDeposit, returnedCheques)
         }
         onNavigateBack()
     }
 
     Scaffold(
         topBar = {
-            if (isViewMode)
+            if (isViewMode || cheques.isEmpty())
                 TopBarWithNavigateBack(title = screenTitle,
                     onNavigateBack = onNavigateBack)
            else
@@ -122,15 +128,28 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
             LazyRow {
                 items(cheques) { cheque ->
                     val isIncluded = cheque.chequeNo in includedCheques
-                    ChequeCard(cheque,
+                    val isReturned = cheque.chequeNo in returnedCheques.keys
+                    val isReturnedSwitchVisible =
+                        (isUpdateMode && depositStatus == ChequeDepositStatus.CASHED_WITH_RETURNS.label)
+                    ChequeCard(
+                        cheque,
                         isIncluded = isIncluded,
-                        isEnabled = isAddMode,
-                        onChequeIncludeChange = { isIncluded ->
-                            if (isIncluded)
+                        isIncludeSwitchEnabled = isAddMode,
+                        onChequeIncludedChange = { included ->
+                            includedCheques.remove(cheque.chequeNo)
+                            if (included)
                                 includedCheques += cheque.chequeNo
-                            else
-                                includedCheques -= cheque.chequeNo
-                        })
+                        },
+
+                        returnReasons = depositViewModel.returnReasons,
+                        isReturned = isReturned,
+                        onChequeReturnedChange = { returned, returnReason ->
+                            returnedCheques.remove(cheque.chequeNo)
+                            if (returned)
+                                returnedCheques += Pair(cheque.chequeNo, returnReason)
+                        },
+                        isReturnedSwitchVisible = isReturnedSwitchVisible
+                    )
                 }
             }
         }

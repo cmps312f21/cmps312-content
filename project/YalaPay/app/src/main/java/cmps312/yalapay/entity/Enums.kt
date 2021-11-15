@@ -17,8 +17,7 @@ enum class ChequeStatus(val label: String) {
 enum class ChequeDepositStatus(val label: String) {
     DEPOSITED("Deposited"),
     CASHED("Cashed"),
-    CASHED_WITH_RETURNS("Cashed with Returns"),
-    RETURNED("Returned")
+    CASHED_WITH_RETURNS("Cashed with Returns")
 }
 
 enum class PaymentMode(val label: String) {

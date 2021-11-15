@@ -49,8 +49,11 @@ class ChequeDepositViewModel (appContext: Application) : AndroidViewModel(appCon
         chequeDeposits -= chequeDeposit
     }
 
-    fun updateChequeDeposit(chequeDeposit: ChequeDeposit) {
-        paymentRepository.updateChequeDeposit(chequeDeposit)
+    fun updateChequeDeposit(
+        chequeDeposit: ChequeDeposit,
+        returnedCheques: Map<Int, String>
+    ) {
+        paymentRepository.updateChequeDeposit(chequeDeposit, returnedCheques)
         val index = chequeDeposits.indexOfFirst { chequeDeposit.depositId == it.depositId }
         if (index >= 0)
             chequeDeposits[index] = chequeDeposit

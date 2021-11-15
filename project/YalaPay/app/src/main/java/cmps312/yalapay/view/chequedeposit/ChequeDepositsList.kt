@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.ChequeDeposit
+import cmps312.yalapay.entity.ChequeDepositStatus
 import cmps312.yalapay.entity.FormMode
 import cmps312.yalapay.viewmodel.ChequeDepositViewModel
 
@@ -103,20 +104,13 @@ fun ChequeDepositCard(chequeDeposit: ChequeDeposit,
         Row {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.padding(4.dp).weight(1f)
             ) {
-                Text(text = "Deposit Id: ${chequeDeposit.depositId}")
-                Text(text = "Deposit Date: ${chequeDeposit.depositDate} ")
+                Text(text = "Deposit #${chequeDeposit.depositId} on ${chequeDeposit.depositDate}")
+                Text(text = "Status: ${chequeDeposit.depositStatus} ")
                 Text(text = "Cheques Count: ${chequeDeposit.chequeNos.count()}")
             }
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Edit",
-                    modifier = Modifier
-                        .clickable { onUpdateChequeDeposit() }
-                        .size(18.dp)
-                )
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Icon(
                     imageVector = Icons.Outlined.Visibility,
                     contentDescription = "View",
@@ -124,13 +118,23 @@ fun ChequeDepositCard(chequeDeposit: ChequeDeposit,
                         .clickable { onViewChequeDeposit() }
                         .size(18.dp)
                 )
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
-                    modifier = Modifier
-                        .clickable { onDeleteChequeDeposit() }
-                        .size(18.dp)
-                )
+                // Only deposits with status Deposited can be changed or deleted
+                if (chequeDeposit.depositStatus == ChequeDepositStatus.DEPOSITED.label) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit",
+                        modifier = Modifier
+                            .clickable { onUpdateChequeDeposit() }
+                            .size(18.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        modifier = Modifier
+                            .clickable { onDeleteChequeDeposit() }
+                            .size(18.dp)
+                    )
+                }
             }
         }
     }

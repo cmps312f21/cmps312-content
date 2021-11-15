@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cmps312.yalapay.entity.Cheque
+import cmps312.yalapay.view.components.Dropdown
 import kotlinx.datetime.*
 
 
@@ -19,18 +20,22 @@ import kotlinx.datetime.*
 fun ChequeCard(
     cheque: Cheque,
     isIncluded: Boolean,
-    onChequeIncludeChange: (Boolean) -> Unit,
-    isEnabled: Boolean = true
+    onChequeIncludedChange: (Boolean) -> Unit,
+    isIncludeSwitchEnabled: Boolean = true,
+    returnReasons: List<String>,
+    isReturned: Boolean,
+    onChequeReturnedChange: (Boolean, String) -> Unit,
+    isReturnedSwitchVisible: Boolean = true
 ) {
-    var included by remember {
-        mutableStateOf(isIncluded)
-    }
+    var isIncluded by remember {  mutableStateOf(isIncluded) }
+    var isReturned by remember {  mutableStateOf(isReturned) }
+    var returnReason by remember {  mutableStateOf(returnReasons[0]) }
+
     Card(
         elevation = 16.dp,
-        backgroundColor = if (!included) Color.LightGray else Color.Yellow,
+        backgroundColor = if (!isIncluded) Color.LightGray else Color.Yellow,
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 8.dp)
-            //.aspectRatio(1.0f)
             .border(
                 width = 2.dp, color = Color.DarkGray,
                 shape = RoundedCornerShape(16.dp)
@@ -46,7 +51,7 @@ fun ChequeCard(
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
-            modifier = Modifier.padding(8.dp).width(220.dp),
+            modifier = Modifier.padding(8.dp).width(250.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text("Cheque No: ${cheque.chequeNo}")
@@ -63,14 +68,42 @@ fun ChequeCard(
                     modifier = Modifier.padding(10.dp).align(Alignment.CenterVertically)
                 )
                 Switch(
-                    checked = included,
+                    checked = isIncluded,
                     onCheckedChange = {
-                        included = it
-                        onChequeIncludeChange(it)
+                        isIncluded = it
+                        onChequeIncludedChange(it)
                     },
-                    enabled = isEnabled,
+                    enabled = isIncludeSwitchEnabled,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
+            }
+
+            if (isReturnedSwitchVisible) {
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        text = "Is returned: ",
+                        modifier = Modifier.padding(10.dp).align(Alignment.CenterVertically)
+                    )
+                    Switch(
+                        checked = isReturned,
+                        onCheckedChange = {
+                            isReturned = it
+                            onChequeReturnedChange(it, returnReason)
+                        },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
+
+                if (isReturned) {
+                    Dropdown(label = "Return Reason",
+                        options = returnReasons,
+                        selectedOption = returnReason,
+                        onSelectionChange = {
+                            returnReason = it
+                            onChequeReturnedChange(isReturned, returnReason)
+                        }
+                    )
+                }
             }
         }
     }

@@ -2,7 +2,10 @@ package cmps312.yalapay.repository
 
 import android.content.Context
 import cmps312.yalapay.entity.*
+import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.todayAt
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -145,21 +148,43 @@ class PaymentRepository (private val context: Context) {
         chequeDeposits -= chequeDeposit
     }
 
-    fun updateChequeDeposit(chequeDeposit: ChequeDeposit, status: ChequeStatus = ChequeStatus.DEPOSITED) {
-        // Set the status of the included Cheques to Deposited
-        updateChequesStatus(chequeDeposit.chequeNos, status)
+    fun updateChequeDeposit(chequeDeposit: ChequeDeposit,
+                            returnedCheques: Map<Int, String>) {
+
+        var chequeStatus = ChequeStatus.DEPOSITED
+        if (chequeDeposit.depositStatus in listOf(ChequeDepositStatus.CASHED.label,
+                ChequeDepositStatus.CASHED_WITH_RETURNS.label))
+            chequeStatus = ChequeStatus.CASHED
+
+        // Set the status of the included Cheques to Deposited or Cashed
+        updateChequesStatus(chequeDeposit.chequeNos, chequeStatus, returnedCheques)
+
         val index = chequeDeposits.indexOfFirst { chequeDeposit.depositId == it.depositId }
         if (index >= 0)
             chequeDeposits[index] = chequeDeposit
     }
 
-    fun updateChequesStatus(chequeNos: List<Int>, status: ChequeStatus) {
-        for (cheque in cheques)
-            if (cheque.chequeNo in chequeNos) {
-                cheque.status = status.label
-                updateCheque(cheque)
-                println(">> Debug ${cheque.toString()}")
+    private fun updateChequesStatus(chequeNos: List<Int>,
+                                    chequeStatus: ChequeStatus,
+                                    returnedCheques: Map<Int, String> = emptyMap()) {
+        val today = Clock.System.todayAt(TimeZone.currentSystemDefault())
+
+        for (cheque in cheques) {
+            // Only update the cheques included in the Deposit
+            if (cheque.chequeNo !in chequeNos) continue
+
+            if (cheque.chequeNo in returnedCheques.keys) {
+                cheque.status = ChequeStatus.RETURNED.label
+                cheque.returnedDate = today
+            } else {
+                cheque.status = chequeStatus.label
+                if (chequeStatus == ChequeStatus.CASHED)
+                    cheque.cashedDate = today
             }
+
+            updateCheque(cheque)
+            println(">> Debug ${cheque.toString()}")
+        }
     }
 
     //// Others
