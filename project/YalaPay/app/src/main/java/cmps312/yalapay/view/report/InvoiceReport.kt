@@ -38,7 +38,7 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
     val context = LocalContext.current
     val toDay = Clock.System.todayAt(TimeZone.currentSystemDefault())
 
-    var invoiceStatus by remember { mutableStateOf("") }
+    var invoiceStatus by remember { mutableStateOf("All") }
     var fromDate by remember { mutableStateOf(toDay.minus(3, DateTimeUnit.MONTH)) }
     var toDate by remember { mutableStateOf(toDay) }
 
