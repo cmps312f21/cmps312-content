@@ -1,5 +1,6 @@
 package cmps312.yalapay.view.report
 
+import android.text.format.DateUtils
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,9 +26,7 @@ import cmps312.yalapay.view.components.Datepicker
 import cmps312.yalapay.view.components.Dropdown
 import cmps312.yalapay.view.components.TopBarWithNavigateBack
 import cmps312.yalapay.viewmodel.ReportViewModel
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayAt
+import kotlinx.datetime.*
 
 @Composable
 fun InvoiceReport(onNavigateBack: () -> Unit) {
@@ -40,12 +39,12 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
     val toDay = Clock.System.todayAt(TimeZone.currentSystemDefault())
 
     var invoiceStatus by remember { mutableStateOf("") }
-    var fromDate by remember { mutableStateOf(toDay) }
+    var fromDate by remember { mutableStateOf(toDay.minus(3, DateTimeUnit.MONTH)) }
     var toDate by remember { mutableStateOf(toDay) }
 
     Scaffold(
         topBar = {
-            TopBarWithNavigateBack (title = "Invoices Report", onNavigateBack)
+            TopBarWithNavigateBack (title = "Invoice Report", onNavigateBack)
         }
     ) {
         Column(

@@ -1,17 +1,21 @@
 package cmps312.yalapay.view.report
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,7 +23,7 @@ import cmps312.yalapay.R
 import cmps312.yalapay.viewmodel.ReportViewModel
 
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(onInvoiceReport: ()->Unit, onChequeReport: ()->Unit) {
     val reportViewModel = viewModel<ReportViewModel>()
     val invoicesSummary = reportViewModel.getInvoicesSummary()
     val chequesSummary = reportViewModel.getChequesSummary()
@@ -103,6 +107,15 @@ fun DashboardScreen() {
             }
         }
 
+        Spacer(modifier = Modifier.padding(8.dp))
+        Text(text = "Invoice Report...",
+            style = TextStyle(color = Color.Blue, textDecoration = TextDecoration.Underline),
+            modifier = Modifier.align(CenterHorizontally)
+                               .clickable {
+                                   onInvoiceReport()
+                               }
+        )
+
         Card(
             elevation = 10.dp, modifier = Modifier
                 .fillMaxWidth()
@@ -176,5 +189,13 @@ fun DashboardScreen() {
                 }
             }
         }
+
+        Spacer(modifier = Modifier.padding(8.dp))
+        Text(text = "Cheque Report...",
+            style = TextStyle(color = Color.Blue, textDecoration = TextDecoration.Underline),
+            modifier = Modifier.align(CenterHorizontally).clickable {
+                onChequeReport()
+            }
+        )
     }
 }

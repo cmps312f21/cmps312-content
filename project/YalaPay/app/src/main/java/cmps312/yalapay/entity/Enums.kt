@@ -8,6 +8,7 @@ enum class InvoiceStatus(val label: String) {
 }
 
 enum class ChequeStatus(val label: String) {
+    ALL("All"),
     AWAITING("Awaiting"),
     DEPOSITED("Deposited"),
     CASHED("Cashed"),
@@ -30,7 +31,7 @@ fun getInvoiceStatus() = InvoiceStatus.values().map { it.label }
 fun getPaymentModes() = PaymentMode.values().map { it.label }
 fun getChequeDepositStatus() = ChequeDepositStatus.values().map { it.label }
 fun getChequeStatus() = ChequeStatus.values()
-                            .filter { it == ChequeStatus.CASHED || it == ChequeStatus.RETURNED  }
+                            //.filter { it == ChequeStatus.CASHED || it == ChequeStatus.RETURNED  }
                             .map { it.label }
 
 enum class FormMode { ADD, UPDATE, VIEW }

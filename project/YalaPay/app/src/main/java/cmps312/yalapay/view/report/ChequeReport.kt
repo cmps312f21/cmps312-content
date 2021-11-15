@@ -25,9 +25,7 @@ import cmps312.yalapay.view.components.Datepicker
 import cmps312.yalapay.view.components.Dropdown
 import cmps312.yalapay.view.components.TopBarWithNavigateBack
 import cmps312.yalapay.viewmodel.ReportViewModel
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayAt
+import kotlinx.datetime.*
 
 @Composable
 fun ChequeReport(onNavigateBack: () -> Unit) {
@@ -37,13 +35,13 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
     val cheques =  remember { mutableStateListOf<Cheque>() }
     val toDay = Clock.System.todayAt(TimeZone.currentSystemDefault())
 
-    var chequeStatus by remember { mutableStateOf("") }
-    var fromDate by remember { mutableStateOf(toDay) }
+    var chequeStatus by remember { mutableStateOf("All") }
+    var fromDate by remember { mutableStateOf(toDay.minus(3, DateTimeUnit.MONTH)) }
     var toDate by remember { mutableStateOf(toDay) }
 
     Scaffold(
         topBar = {
-            TopBarWithNavigateBack (title = "Cheques Report", onNavigateBack)
+            TopBarWithNavigateBack (title = "Cheque Report", onNavigateBack)
         }
     ) {
         Column(

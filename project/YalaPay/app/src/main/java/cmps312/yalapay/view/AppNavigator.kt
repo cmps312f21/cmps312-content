@@ -86,9 +86,11 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
             InvoicePayments(
                 onNavigateBack = {
                     navController.navigate(Screen.Invoices.route)
-            }, onUpdatePayment = {
+                },
+                onUpdatePayment = {
                     navController.navigate(Screen.PaymentScreen.route)
-            })
+                }
+            )
         }
 
         composable(route = Screen.PaymentScreen.route) {
@@ -120,7 +122,14 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
 
         /// Reports
         composable(route = Screen.Dashboard.route) {
-            DashboardScreen()
+            DashboardScreen(
+                onInvoiceReport = {
+                    navController.navigate(Screen.InvoiceReport.route)
+                },
+                onChequeReport = {
+                    navController.navigate(Screen.ChequeReport.route)
+                }
+            )
         }
 
         composable(Screen.ChequeReport.route) {
