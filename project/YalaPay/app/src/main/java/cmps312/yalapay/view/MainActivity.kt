@@ -9,7 +9,7 @@ import androidx.compose.material.Surface
 import cmps312.yalapay.ui.theme.YalaPayTheme
 
 class MainActivity : ComponentActivity() {
-    @ExperimentalFoundationApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

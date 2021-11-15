@@ -125,8 +125,7 @@ fun InvoiceCard(
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier
-                    .weight(1f),
+                modifier = Modifier.weight(1f)
             ) {
                 Text(text = "Invoice No. :${invoice.invoiceNo}")
                 Text(text = "Invoice date: ${invoice.invoiceDate}")

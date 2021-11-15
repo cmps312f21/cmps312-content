@@ -30,16 +30,6 @@ class PaymentRepository (private val context: Context) {
     fun getCheques(status: ChequeStatus = ChequeStatus.AWAITING) =
         getCheques().filter { it.status == status.label }
 
-/*    fun getCheques(searchText: String) =
-        if (searchText.isEmpty())
-            getCheques()
-        else
-            getCheques().filter {
-                it.chequeNo.toString().contains(searchText) ||
-                        it.amount.toString().contains(searchText) ||
-                        it.drawer.contains(searchText)
-            }*/
-
     fun addCheque(cheque: Cheque) {
         cheques += cheque
     }
@@ -144,19 +134,34 @@ class PaymentRepository (private val context: Context) {
     fun getChequeDeposit(depositId: Int) = getChequeDeposits().filter { it.depositId == depositId }
 
     fun addChequeDeposit(chequeDeposit: ChequeDeposit) {
+        // Set the status of the included Cheques to Deposited
+        updateChequesStatus(chequeDeposit.chequeNos, ChequeStatus.DEPOSITED)
         chequeDeposits += chequeDeposit
     }
 
     fun deleteChequeDeposit(chequeDeposit: ChequeDeposit) {
+        // Set the status of the included Cheques back to Awaiting
+        updateChequesStatus(chequeDeposit.chequeNos, ChequeStatus.AWAITING)
         chequeDeposits -= chequeDeposit
     }
 
-    fun updateChequeDeposit(chequeDeposit: ChequeDeposit) {
+    fun updateChequeDeposit(chequeDeposit: ChequeDeposit, status: ChequeStatus = ChequeStatus.DEPOSITED) {
+        // Set the status of the included Cheques to Deposited
+        updateChequesStatus(chequeDeposit.chequeNos, status)
         val index = chequeDeposits.indexOfFirst { chequeDeposit.depositId == it.depositId }
         if (index >= 0)
             chequeDeposits[index] = chequeDeposit
     }
-    
+
+    fun updateChequesStatus(chequeNos: List<Int>, status: ChequeStatus) {
+        for (cheque in cheques)
+            if (cheque.chequeNo in chequeNos) {
+                cheque.status = status.label
+                updateCheque(cheque)
+                println(">> Debug ${cheque.toString()}")
+            }
+    }
+
     //// Others
     fun getBanks() =
         Json.decodeFromString<List<String>>(readData(context, "banks.json"))

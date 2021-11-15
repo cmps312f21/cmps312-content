@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -20,7 +21,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayAt
 
-@ExperimentalFoundationApi
+
 @Composable
 fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
     val depositViewModel =
@@ -41,12 +42,12 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
     if (selectedDeposit != null)
         includedCheques.addAll(selectedDeposit.chequeNos)
 
-    val cheques = if (isViewMode)
-        selectedDeposit?.chequeNos?.let {
-            depositViewModel.getCheques()
-        } ?: emptyList()
-    else
+    val cheques = if (isAddMode)
         depositViewModel.getCheques(ChequeStatus.AWAITING)
+    else
+        selectedDeposit?.chequeNos?.let {
+            depositViewModel.getCheques(it)
+        } ?: emptyList()
 
     var bankAccountNo by remember {
         mutableStateOf(
@@ -123,7 +124,7 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
                     val isIncluded = cheque.chequeNo in includedCheques
                     ChequeCard(cheque,
                         isIncluded = isIncluded,
-                        isEnabled = isEditMode,
+                        isEnabled = isAddMode,
                         onChequeIncludeChange = { isIncluded ->
                             if (isIncluded)
                                 includedCheques += cheque.chequeNo

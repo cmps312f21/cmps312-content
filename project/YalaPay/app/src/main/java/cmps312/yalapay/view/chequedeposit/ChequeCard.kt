@@ -1,8 +1,6 @@
 package cmps312.yalapay.view.chequedeposit
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -16,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import cmps312.yalapay.entity.Cheque
 import kotlinx.datetime.*
 
-@ExperimentalFoundationApi
+
 @Composable
 fun ChequeCard(
     cheque: Cheque,
@@ -32,23 +30,23 @@ fun ChequeCard(
         backgroundColor = if (!included) Color.LightGray else Color.Yellow,
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 8.dp)
-            .aspectRatio(1.0f)
+            //.aspectRatio(1.0f)
             .border(
                 width = 2.dp, color = Color.DarkGray,
                 shape = RoundedCornerShape(16.dp)
-            )
-            .combinedClickable(
+            ),
+            /*.combinedClickable(
                 onClick = { },
                 onLongClick = {
                     //enabled = true
                     included = !included
                     onChequeIncludeChange(included)
                 }
-            ),
+            )*/
         shape = RoundedCornerShape(16.dp)
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(8.dp).width(220.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text("Cheque No: ${cheque.chequeNo}")

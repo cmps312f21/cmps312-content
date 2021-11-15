@@ -21,7 +21,7 @@ import cmps312.yalapay.view.report.ChequeReport
 import cmps312.yalapay.view.report.DashboardScreen
 import cmps312.yalapay.view.report.InvoiceReport
 
-@ExperimentalFoundationApi
+
 @Composable
 fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(navController = navController,

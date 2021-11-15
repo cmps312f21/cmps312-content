@@ -20,5 +20,5 @@ data class Cheque(
     var returnedDate: LocalDate? = null,
     var returnReason: String? = null
 ){
-    override fun toString() = "Cheque#$chequeNo - $bankName ($dueDate)"
+    override fun toString() = "Cheque#$chequeNo - $bankName ($dueDate). $status"
 }

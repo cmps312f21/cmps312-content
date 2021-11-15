@@ -41,9 +41,11 @@ fun Drawer(navController: NavController) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
-        drawerItems.forEach { ditem ->
-            var selected = if (currentRoute == ditem.route) true else false
-            Item(ditem, selected = selected, { navController.navigate(ditem.route) })
+        drawerItems.forEach { drawerItem ->
+            val selected = (currentRoute == drawerItem.route)
+            Item(drawerItem, selected = selected) {
+                navController.navigate(drawerItem.route)
+            }
         }
     }
 }
@@ -67,6 +69,4 @@ fun Item(screen: Screen, selected: Boolean, onDrawerItemSelected: () -> Unit) {
         Spacer(Modifier.width(10.dp))
         Text(text = screen.title)
     }
-
-
 }

@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,16 +27,17 @@ fun ChequeDepositsList(onAddChequeDeposit: ()-> Unit,
                        onViewChequeDeposit: ()-> Unit,
                        onUpdateChequeDeposit: ()-> Unit
 ){
-    val chequeDepositViewModel =
+    val depositViewModel =
         viewModel<ChequeDepositViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
-    val chequeDeposits = chequeDepositViewModel.chequeDeposits
+    val chequeDeposits = depositViewModel.chequeDeposits
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    chequeDepositViewModel.selectedChequeDeposit = null
+                    depositViewModel.selectedChequeDeposit = null
+                    depositViewModel.chequeDepositScreenMode = FormMode.ADD
                     onAddChequeDeposit()
                 },
                 content = {
@@ -64,17 +66,17 @@ fun ChequeDepositsList(onAddChequeDeposit: ()-> Unit,
                     items(chequeDeposits) {
                         ChequeDepositCard(chequeDeposit = it,
                             onUpdateChequeDeposit = {
-                                chequeDepositViewModel.selectedChequeDeposit = it
-                                chequeDepositViewModel.chequeDepositScreenMode = FormMode.UPDATE
+                                depositViewModel.selectedChequeDeposit = it
+                                depositViewModel.chequeDepositScreenMode = FormMode.UPDATE
                                 onUpdateChequeDeposit()
                             },
                             onDeleteChequeDeposit = {
-                                chequeDepositViewModel.deleteChequeDeposit(it)
-                                chequeDepositViewModel.selectedChequeDeposit = null
+                                depositViewModel.deleteChequeDeposit(it)
+                                depositViewModel.selectedChequeDeposit = null
                             },
                             onViewChequeDeposit = {
-                                chequeDepositViewModel.selectedChequeDeposit = it
-                                chequeDepositViewModel.chequeDepositScreenMode = FormMode.VIEW
+                                depositViewModel.selectedChequeDeposit = it
+                                depositViewModel.chequeDepositScreenMode = FormMode.VIEW
                                 onViewChequeDeposit()
                             }
                         )
@@ -98,32 +100,37 @@ fun ChequeDepositCard(chequeDeposit: ChequeDeposit,
                 onViewChequeDeposit()
             }
     ) {
-
-        Column(
-            modifier = Modifier.padding(15.dp)
-        ) {
-            Row() {
-                Column() {
-                    Text(text = "Deposit Id: ${chequeDeposit.depositId}")
-                    Text(text = "Deposit Date: ${chequeDeposit.depositDate} ")
-                    Text(text = "Cheques Count: ${chequeDeposit.chequeNos.count()}")
-                }
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = "Edit",
-                        modifier = Modifier
-                            .clickable { onUpdateChequeDeposit() }
-                            .size(20.dp)
-                    )
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        modifier = Modifier
-                            .clickable { onDeleteChequeDeposit() }
-                            .size(20.dp)
-                    )
-                }
+        Row {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = "Deposit Id: ${chequeDeposit.depositId}")
+                Text(text = "Deposit Date: ${chequeDeposit.depositDate} ")
+                Text(text = "Cheques Count: ${chequeDeposit.chequeNos.count()}")
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit",
+                    modifier = Modifier
+                        .clickable { onUpdateChequeDeposit() }
+                        .size(18.dp)
+                )
+                Icon(
+                    imageVector = Icons.Outlined.Visibility,
+                    contentDescription = "View",
+                    modifier = Modifier
+                        .clickable { onViewChequeDeposit() }
+                        .size(18.dp)
+                )
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    modifier = Modifier
+                        .clickable { onDeleteChequeDeposit() }
+                        .size(18.dp)
+                )
             }
         }
     }
