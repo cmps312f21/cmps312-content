@@ -1,5 +1,6 @@
 package cmps312.yalapay.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -12,11 +13,15 @@ import cmps312.yalapay.view.chequedeposit.ChequeDepositScreen
 import cmps312.yalapay.view.chequedeposit.ChequeDepositsList
 import cmps312.yalapay.view.customer.CustomerDetails
 import cmps312.yalapay.view.customer.CustomersList
-import cmps312.yalapay.view.report.DashboardScreen
-import cmps312.yalapay.view.invoice.*
+import cmps312.yalapay.view.invoice.InvoicePayments
+import cmps312.yalapay.view.invoice.InvoiceScreen
+import cmps312.yalapay.view.invoice.InvoicesList
+import cmps312.yalapay.view.invoice.PaymentScreen
 import cmps312.yalapay.view.report.ChequeReport
+import cmps312.yalapay.view.report.DashboardScreen
 import cmps312.yalapay.view.report.InvoiceReport
 
+@ExperimentalFoundationApi
 @Composable
 fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(navController = navController,
@@ -27,14 +32,6 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
            LoginScreen {
                 navController.navigate(Screen.Dashboard.route)
             }
-        }
-
-        composable(route = Screen.Dashboard.route) {
-            DashboardScreen()
-        }
-
-        composable(route = Screen.MainScreen.route) {
-            MainScreen()
         }
 
         /// Customer
@@ -102,7 +99,7 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
 
         /// ChequeDeposit
         composable(route = Screen.ChequeDepositScreen.route) {
-            ChequeDepositScreen{
+            ChequeDepositScreen {
                 navController.navigateUp()
             }
         }
@@ -122,6 +119,10 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
         }
 
         /// Reports
+        composable(route = Screen.Dashboard.route) {
+            DashboardScreen()
+        }
+
         composable(Screen.ChequeReport.route) {
             ChequeReport(
                 onNavigateBack = {

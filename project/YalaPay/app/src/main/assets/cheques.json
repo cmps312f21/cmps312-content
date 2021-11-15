@@ -11,10 +11,20 @@
   },
   {
     "chequeNo": 4567,
-    "amount": 1000.0,
+    "amount": 500.0,
     "drawer": "Sara Dahak",
     "bankName": "Qatar National Bank",
     "status": "Deposited",
+    "receivedDate": "2021-11-15",
+    "dueDate": "2021-11-28",
+    "chequeImageUri": "cheque2"
+  },
+  {
+    "chequeNo": 4568,
+    "amount": 500.0,
+    "drawer": "Sara Dahak",
+    "bankName": "Qatar National Bank",
+    "status": "Awaiting",
     "receivedDate": "2021-11-15",
     "dueDate": "2021-11-28",
     "chequeImageUri": "cheque2"

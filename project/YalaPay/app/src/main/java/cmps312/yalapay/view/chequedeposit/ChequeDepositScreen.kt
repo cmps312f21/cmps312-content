@@ -14,10 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.*
-import cmps312.yalapay.view.components.Datepicker
-import cmps312.yalapay.view.components.Dropdown
-import cmps312.yalapay.view.components.DropdownForMap
-import cmps312.yalapay.view.components.TopBarWithSave
+import cmps312.yalapay.view.components.*
 import cmps312.yalapay.viewmodel.ChequeDepositViewModel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
@@ -36,7 +33,7 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
     val isEditMode = (depositViewModel.chequeDepositScreenMode != FormMode.VIEW)
 
     val screenTitle = if (selectedDeposit != null)
-            "Edit Cheques Deposit (#${selectedDeposit.depositId})"
+            "Cheques Deposit (#${selectedDeposit.depositId})"
         else
             "Add Cheques Deposit"
 
@@ -89,10 +86,14 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
 
     Scaffold(
         topBar = {
-            TopBarWithSave(
-                title = screenTitle,
-                onNavigateBack = onNavigateBack,
-                onSubmit = { onSubmit() })
+            if (isViewMode)
+                TopBarWithNavigateBack(title = screenTitle,
+                    onNavigateBack = onNavigateBack)
+           else
+                TopBarWithSave(
+                    title = screenTitle,
+                    onNavigateBack = onNavigateBack,
+                    onSubmit = { onSubmit() })
         }
     ) {
         Column(
@@ -122,6 +123,7 @@ fun ChequeDepositScreen(onNavigateBack: ()->Unit) {
                     val isIncluded = cheque.chequeNo in includedCheques
                     ChequeCard(cheque,
                         isIncluded = isIncluded,
+                        isEnabled = isEditMode,
                         onChequeIncludeChange = { isIncluded ->
                             if (isIncluded)
                                 includedCheques += cheque.chequeNo

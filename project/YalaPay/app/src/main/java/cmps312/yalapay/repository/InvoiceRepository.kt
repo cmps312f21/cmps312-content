@@ -1,12 +1,13 @@
 package cmps312.yalapay.repository
 
 import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import cmps312.yalapay.entity.Invoice
 import cmps312.yalapay.entity.InvoicesSummary
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.minus
-import kotlinx.datetime.todayAt
+import kotlinx.datetime.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -59,4 +60,12 @@ class InvoiceRepository (private val context: Context) {
 
         return InvoicesSummary(invoicesTotal, invoicesInLess30Days, invoicesInMore30Days)
     }
+
+    fun getInvoices(invoiceStatus: String,
+                    fromDate: LocalDate, toDate: LocalDate): List<Invoice> {
+        // ToDo: Implement Invoices Report
+        val invoices = getInvoices()
+        return invoices
+    }
+
 }

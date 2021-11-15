@@ -54,17 +54,12 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.AttachMoney
     )
 
-    object SortedInvoices : Screen(
-        route = "SortedInvoices", title = "Sorted Invoices",
-        icon = Icons.Outlined.Money
-    )
-
     object ChequeDeposits : Screen(
         route = "ChequeDeposits", title = "Deposits",
         icon = Icons.Outlined.AccountBalanceWallet
     )
 
-    object ChequeDepositScreen: Screen(
+    object ChequeDepositScreen : Screen(
         route = "ChequeDeposit", title = "Cheque Deposit",
         icon = Icons.Outlined.AccountBalanceWallet
     )
@@ -72,10 +67,5 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
     object ChequeReport : Screen(
         route = "ChequeReport", title = "Cheque Report",
         icon = Icons.Default.BarChart
-    )
-
-    object MainScreen : Screen(
-        route = "MainScreen", title = "Main Screen",
-        icon = Icons.Default.ScreenRotation
     )
 }

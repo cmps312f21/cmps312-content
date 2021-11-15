@@ -1,57 +1,51 @@
 package cmps312.yalapay.view.report
 
-import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import cmps312.yalapay.view.cheque.SortedCheques
+import cmps312.yalapay.entity.Cheque
+import cmps312.yalapay.entity.getChequeStatus
+import cmps312.yalapay.view.components.Datepicker
+import cmps312.yalapay.view.components.Dropdown
+import cmps312.yalapay.view.components.TopBarWithNavigateBack
+import cmps312.yalapay.viewmodel.ReportViewModel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
-import cmps312.yalapay.view.components.Datepicker
-import cmps312.yalapay.viewmodel.ReportViewModel
 import kotlinx.datetime.todayAt
-
-enum class ChequeReportStatus { All, Awaiting, Deposited, Cashed, Returned, GrandTotal }
 
 @Composable
 fun ChequeReport(onNavigateBack: () -> Unit) {
     val reportViewModel =
         viewModel<ReportViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
-    val cheques = reportViewModel.getCheques()
 
-    val context = LocalContext.current
+    val cheques =  remember { mutableStateListOf<Cheque>() }
     val toDay = Clock.System.todayAt(TimeZone.currentSystemDefault())
-
-    var expandable by remember {
-        mutableStateOf(false)
-    }
 
     var chequeStatus by remember { mutableStateOf("") }
     var fromDate by remember { mutableStateOf(toDay) }
     var toDate by remember { mutableStateOf(toDay) }
 
-    var appear by remember { mutableStateOf(false) }
-
-    //All, Pending, PartiallyPaid, Paid, GrandTotal
-    var statusOptions = mapOf(
-        "All" to ChequeReportStatus.All,
-        "Awaiting" to ChequeReportStatus.Awaiting,
-        "Deposited" to ChequeReportStatus.Deposited,
-        "Cashed" to ChequeReportStatus.Cashed,
-        "Returned" to ChequeReportStatus.Returned,
-    )
-
-    Scaffold{
+    Scaffold(
+        topBar = {
+            TopBarWithNavigateBack (title = "Cheques Report", onNavigateBack)
+        }
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(8.dp)
@@ -64,47 +58,17 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
                 onDateChange = { toDate = it }
             )
 
-            Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { expandable = !expandable }) {
-                OutlinedTextField(
-                    value = chequeStatus,
-                    onValueChange = { },
-                    enabled = false,
-                    trailingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.ArrowDropDown,
-                            contentDescription = "Dropdown"
-                        )
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text("Status")
-                    }
-                )
-                DropdownMenu(expanded = expandable, onDismissRequest = { expandable = false }) {
-                    statusOptions.forEach { status ->
-                        DropdownMenuItem(onClick = {
-                            chequeStatus = status.key
-                            expandable = false
-                        }) {
-                            Text(text = "${status.key}", fontWeight = FontWeight.Bold)
-                        }
-
-                    }
-                }
-
-            }
+            Dropdown(label = "Cheque Status",
+                options = getChequeStatus(),
+                selectedOption = chequeStatus,
+                onSelectionChange = { chequeStatus = it }
+            )
 
             Button(
                 onClick = {
-                    if (chequeStatus.equals("")) {
-                        Toast.makeText(
-                            context, "Please Enter Status!",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        appear = true
-                    }
+                    //ToDo - Complete the report
+                    cheques.clear()
+                    cheques.addAll(reportViewModel.getCheques(chequeStatus, fromDate, toDate))
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -112,10 +76,21 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
             ) {
                 Text(text = "Submit")
             }
-
-            if (appear) {
-                SortedCheques(cheques = cheques, fromDate, toDate, chequeStatus)
-            }
+            // ToDo: Add Lazy Column
         }
     }
+}
+
+@Composable
+fun ChequeReportFooter(chequesCount: Int, totalAmount: Double) {
+    Text(
+        text = "Cheques Count: $chequesCount - Total Amount: $totalAmount ",
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth(),
+        style = TextStyle(
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            color = Color.Blue
+        )
+    )
 }

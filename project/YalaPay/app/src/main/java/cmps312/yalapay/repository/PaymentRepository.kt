@@ -2,6 +2,7 @@ package cmps312.yalapay.repository
 
 import android.content.Context
 import cmps312.yalapay.entity.*
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -123,6 +124,14 @@ class PaymentRepository (private val context: Context) {
         }
     }
 
+    fun getCheques(chequeStatus: String,
+                    fromDate: LocalDate, toDate: LocalDate
+    ): List<Cheque> {
+        // ToDo: Implement Cheques Report
+        val cheques = getCheques()
+        return cheques
+    }
+    
     /// ChequeDeposits
     fun getChequeDeposits(): List<ChequeDeposit> {
         if (chequeDeposits.isEmpty())

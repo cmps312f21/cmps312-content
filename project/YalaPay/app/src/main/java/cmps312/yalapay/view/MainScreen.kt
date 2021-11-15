@@ -1,5 +1,6 @@
 package cmps312.yalapay.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import cmps312.yalapay.view.components.Drawer
 import cmps312.yalapay.view.components.getCurrentRoute
 
+@ExperimentalFoundationApi
 @Composable
 fun MainScreen() {
     val navHostController = rememberNavController()
