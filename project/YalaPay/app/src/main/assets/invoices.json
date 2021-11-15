@@ -1,0 +1,23 @@
+[
+  {
+    "invoiceNo": 1,
+    "customerId": 1,
+    "amount": 1000.0,
+    "invoiceDate": "2021-11-14",
+    "dueDate": "2021-11-30"
+  },
+  {
+    "invoiceNo": 2,
+    "customerId": 2,
+    "amount": 2000.0,
+    "invoiceDate": "2021-11-14",
+    "dueDate": "2021-11-25"
+  },
+  {
+    "invoiceNo": 3,
+    "customerId": 3,
+    "amount": 3000.0,
+    "invoiceDate": "2021-11-14",
+    "dueDate": "2021-11-30"
+  }
+]
