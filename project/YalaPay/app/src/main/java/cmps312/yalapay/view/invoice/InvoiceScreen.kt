@@ -89,11 +89,11 @@ fun InvoiceScreen(onNavigateBack: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Datepicker(context, "Invoice Date", initialDate = invoiceDate,
-                onDateSelected = { invoiceDate = it }
+            Datepicker("Invoice Date", initialDate = invoiceDate,
+                onDateChange = { invoiceDate = it }
             )
-            Datepicker(context, "Due Date", initialDate = dueDate,
-                onDateSelected = { dueDate = it }
+            Datepicker("Due Date", initialDate = dueDate,
+                onDateChange = { dueDate = it }
             )
         }
     }

@@ -11,4 +11,6 @@ class ReportViewModel (appContext: Application) : AndroidViewModel(appContext) {
 
     fun getInvoicesSummary() = invoiceRepository.getInvoicesSummary()
     fun getChequesSummary() = paymentRepository.getChequesSummary()
+
+    fun getCheques() = paymentRepository.getCheques()
 }

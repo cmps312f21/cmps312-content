@@ -62,8 +62,8 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
                 onUpdateInvoice = {
                     navController.navigate(Screen.InvoiceScreen.route)
                 },
-                onSelectInvoice = {
-                    navController.navigate(Screen.InvoiceDetails.route)
+                onGetPayments = {
+                    navController.navigate(Screen.InvoicePayments.route)
                 },
                 onAddPayment = {
                     navController.navigate(Screen.PaymentScreen.route)
@@ -83,8 +83,8 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
             }
         }
 
-        composable(route = Screen.InvoiceDetails.route) {
-            InvoiceDetails(
+        composable(route = Screen.InvoicePayments.route) {
+            InvoicePayments(
                 onNavigateBack = {
                     navController.navigate(Screen.InvoicesList.route)
             }, onUpdatePayment = {

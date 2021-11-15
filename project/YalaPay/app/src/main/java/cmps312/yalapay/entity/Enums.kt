@@ -21,5 +21,9 @@ enum class PaymentMode(val label: String) {
 }
 
 fun getPaymentModes() = PaymentMode.values().map { it.label }
+fun getChequeDepositStatus() = ChequeDepositStatus.values().map { it.label }
+fun getChequeStatus() = ChequeStatus.values()
+                            .filter { it == ChequeStatus.CASHED || it == ChequeStatus.RETURNED  }
+                            .map { it.label }
 
 enum class FormMode { ADD, EDIT }

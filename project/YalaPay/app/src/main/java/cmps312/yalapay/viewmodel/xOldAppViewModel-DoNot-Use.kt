@@ -68,7 +68,7 @@ class OldAppViewModel(appContext: Application) : AndroidViewModel(appContext) {
     }
 
     fun deleteInvoice(){
-        selectedInvoice?.payments!!.forEach { deletePayment(it) }
+        //selectedInvoice?.payments!!.forEach { deletePayment(it) }
         invoices.remove(selectedInvoice)
     }
 
@@ -80,21 +80,21 @@ class OldAppViewModel(appContext: Application) : AndroidViewModel(appContext) {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     fun searchPayments(searchText: String, invoiceNo: Int): List<Cheque> {
-        var payments = invoices.find { it.invoiceNo == invoiceNo  }?.payments
+/*        var payments = invoices.find { it.invoiceNo == invoiceNo  }?.payments
         if (payments != null) {
             return payments.filter { p ->
                 p.chequeNo!!.toString().toLowerCase(Locale.getDefault())
                     .contains(searchText.lowercase(Locale.getDefault()))
             }
         }
-        else
+        else*/
             return emptyList()
     }
 
     fun deletePayment(payment: Cheque){
-        var paym = selectedInvoice?.payments?.find {it.chequeNo == payment.chequeNo }
-        selectedInvoice?.payments?.remove(paym)
-        cheques.remove(paym)
+        //var paym = selectedInvoice?.payments?.find {it.chequeNo == payment.chequeNo }
+        //selectedInvoice?.payments?.remove(paym)
+        //cheques.remove(paym)
     }
 
     fun addPaymentToInvoice(chequeNo: Int, chequeAmount:Double,
@@ -103,14 +103,14 @@ class OldAppViewModel(appContext: Application) : AndroidViewModel(appContext) {
         var newPayment = Cheque(chequeNo = chequeNo,
             amount = chequeAmount, drawer = drawer, bankName = drawerBank,
             status = paymentStatus, receivedDate = receivedDate, dueDate = dueDate )
-        selectedInvoice?.payments!!.add(newPayment)
+        //selectedInvoice?.payments!!.add(newPayment)
         cheques.add(newPayment)
     }
 
     fun updatePayment(chequeNo:Int, chequeAmount:Double, drawer:String, drawerBank:String, paymentStatus: String, recievedDate: LocalDate, dueDate:LocalDate ){
         var newPayment = Cheque(chequeNo = chequeNo, amount = chequeAmount, drawer = drawer, bankName = drawerBank, status = paymentStatus, receivedDate = recievedDate, dueDate = dueDate )
-        var wanted = selectedInvoice?.payments!!.indexOf(selectedInvoice?.payments!!.find { it.chequeNo == chequeNo })
-        selectedInvoice?.payments!![wanted] = newPayment
+       // var wanted = selectedInvoice?.payments!!.indexOf(selectedInvoice?.payments!!.find { it.chequeNo == chequeNo })
+        //selectedInvoice?.payments!![wanted] = newPayment
     }
     /////////////////////////////////////////////Cheques////////////////////////////////////////////
     fun searchCheques(searchText: String): List<Cheque> {

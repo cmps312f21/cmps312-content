@@ -84,7 +84,7 @@ class PaymentRepository (private val context: Context) {
     fun getPayments(paymentIds: List<Int>) =
         getPayments().filter { paymentIds.contains(it.paymentId) }
 
-    fun getPayments(searchText: String) =
+/*    fun getPayments(searchText: String) =
         if (searchText.isEmpty())
             getPayments()
         else
@@ -92,7 +92,7 @@ class PaymentRepository (private val context: Context) {
                 it.paymentId.toString().contains(searchText) ||
                         it.amount.toString().contains(searchText) ||
                         it.invoiceNo.toString().contains(searchText)
-            }
+            }*/
 
     fun getPayments(invoiceNo: Int) : List<Payment> {
         val payments = getPayments().filter { it.invoiceNo == invoiceNo }

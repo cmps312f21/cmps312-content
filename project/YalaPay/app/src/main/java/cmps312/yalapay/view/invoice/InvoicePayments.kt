@@ -24,19 +24,21 @@ import cmps312.yalapay.view.components.TopBar
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 import cmps312.yalapay.viewmodel.PaymentViewModel
 
-
-//Todo add the navigation
 @Composable
-fun InvoiceDetails(onNavigateBack: () -> Unit, onUpdatePayment: () -> Unit) {
+fun InvoicePayments(onNavigateBack: () -> Unit, onUpdatePayment: () -> Unit) {
     val invoiceViewModel =
         viewModel<InvoiceViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
     val paymentViewModel =
         viewModel<PaymentViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
-    val payments = invoiceViewModel.selectedInvoice?.let {
-        paymentViewModel.getPayments(it.invoiceNo)
-    } ?: emptyList()
+    // LaunchedEffect will be executed when the composable is first launched
+    // True argument means that if the screen recomposes, the coroutine will not re-executed
+    LaunchedEffect(true) {
+        invoiceViewModel.selectedInvoice?.let {
+            paymentViewModel.getPayments(it.invoiceNo)
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -76,7 +78,7 @@ fun InvoiceDetails(onNavigateBack: () -> Unit, onUpdatePayment: () -> Unit) {
                     Text(text = "Amount:$amount QR", Modifier.padding(10.dp))
                     Text(text = "CustomerID: $customerId", Modifier.padding(10.dp))
                     Column() {
-                        if (payments.isEmpty()) {
+                        if (paymentViewModel.payments.isEmpty()) {
                             Text(text = "No payments Found", modifier = Modifier.fillMaxWidth())
                         }
                         LazyColumn(
@@ -86,7 +88,7 @@ fun InvoiceDetails(onNavigateBack: () -> Unit, onUpdatePayment: () -> Unit) {
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            items(payments) { payment ->
+                            items(paymentViewModel.payments) { payment ->
                                 PaymentCard(
                                     payment,
                                     onUpdatePayment = {

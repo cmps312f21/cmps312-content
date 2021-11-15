@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.CreditScore
+import androidx.compose.material.icons.outlined.Payments
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,7 +27,7 @@ import cmps312.yalapay.viewmodel.InvoiceViewModel
 fun InvoicesList(
     onUpdateInvoice: () -> Unit,
     onAddInvoice: () -> Unit,
-    onSelectInvoice: () -> Unit,
+    onGetPayments: () -> Unit,
     onAddPayment: () -> Unit
 ) {
     val invoiceViewModel =
@@ -91,9 +93,9 @@ fun InvoicesList(
                             invoiceViewModel.selectedInvoice = invoice
                             onAddPayment()
                         },
-                        onSelectInvoice = {
+                        onGetPayments = {
                             invoiceViewModel.selectedInvoice = invoice
-                            onSelectInvoice()
+                            onGetPayments()
                         }
                     )
                 }
@@ -105,7 +107,7 @@ fun InvoicesList(
 @Composable
 fun InvoiceCard(
     invoice: Invoice, onUpdateInvoice: () -> Unit, onDeleteInvoice: () -> Unit,
-    onAddPayment: () -> Unit, onSelectInvoice: () -> Unit
+    onAddPayment: () -> Unit, onGetPayments: () -> Unit
 ) {
     Card(
         elevation = 8.dp,
@@ -117,7 +119,7 @@ fun InvoiceCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .clickable { onSelectInvoice() },
+                .clickable { onGetPayments() },
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -132,29 +134,36 @@ fun InvoiceCard(
                 Text(text = "Customer ID: ${invoice.customerId}")
                 Text(text = "Amount: ${invoice.amount}")
             }
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit",
                     modifier = Modifier
                         .clickable { onUpdateInvoice() }
-                        .size(20.dp)
+                        .size(18.dp)
                 )
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
                     modifier = Modifier
                         .clickable { onDeleteInvoice() }
-                        .size(20.dp)
+                        .size(18.dp)
                 )
                 Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add",
+                    imageVector = Icons.Outlined.Payments,
+                    contentDescription = "Payments",
+                    modifier = Modifier
+                        .clickable {  onGetPayments() }
+                        .size(18.dp)
+                )
+                Icon(
+                    imageVector = Icons.Outlined.CreditScore,
+                    contentDescription = "Pay",
                     modifier = Modifier
                         .clickable {
                             onAddPayment()
                         }
-                        .size(20.dp)
+                        .size(18.dp)
                 )
             }
         }

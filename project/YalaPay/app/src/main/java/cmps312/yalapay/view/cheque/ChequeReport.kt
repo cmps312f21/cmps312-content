@@ -17,16 +17,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import cmps312.yalapay.view.components.Datepicker
-import cmps312.yalapay.viewmodel.PaymentViewModel
+import cmps312.yalapay.viewmodel.ReportViewModel
 import kotlinx.datetime.todayAt
 
 enum class ChequeReportStatus { All, Awaiting, Deposited, Cashed, Returned, GrandTotal }
 
 @Composable
 fun ChequeReport(onNavigateBack: () -> Unit) {
-    val paymentViewModel =
-        viewModel<PaymentViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
-    val cheques = paymentViewModel.getCheques()
+    val reportViewModel =
+        viewModel<ReportViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
+    val cheques = reportViewModel.getCheques()
 
     val context = LocalContext.current
     val toDay = Clock.System.todayAt(TimeZone.currentSystemDefault())
@@ -56,11 +56,11 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         ) {
 
-            Datepicker(context, "From Date", initialDate = fromDate,
-                onDateSelected = { fromDate = it }
+            Datepicker("From Date", initialDate = fromDate,
+                onDateChange = { fromDate = it }
             )
-            Datepicker(context, "To Date", initialDate = toDate,
-                onDateSelected = { toDate = it }
+            Datepicker("To Date", initialDate = toDate,
+                onDateChange = { toDate = it }
             )
 
             Row(verticalAlignment = Alignment.CenterVertically,

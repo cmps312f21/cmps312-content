@@ -129,8 +129,8 @@ fun PaymentScreen(onNavigateBack: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Datepicker(context, "Payment Date", initialDate = paymentDate,
-                onDateSelected = {
+            Datepicker("Payment Date", initialDate = paymentDate,
+                onDateChange = {
                     paymentDate = it
                 }
             )
@@ -158,8 +158,8 @@ fun PaymentScreen(onNavigateBack: () -> Unit) {
                     onSelectionChange = { bankName = it }
                 )
 
-                Datepicker(context, "Due Date", initialDate = dueDate,
-                    onDateSelected = {
+                Datepicker("Due Date", initialDate = dueDate,
+                    onDateChange = {
                         dueDate = it
                     }
                 )

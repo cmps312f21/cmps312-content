@@ -51,11 +51,11 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         ) {
 
-                Datepicker(context, "From Date", initialDate = fromDate,
-                    onDateSelected = {  fromDate = it }
+                Datepicker("From Date", initialDate = fromDate,
+                    onDateChange = {  fromDate = it }
                 )
-                Datepicker(context, "To Date", initialDate = toDate,
-                    onDateSelected = {  toDate = it }
+                Datepicker("To Date", initialDate = toDate,
+                    onDateChange = {  toDate = it }
                 )
             Button(
                 onClick = {

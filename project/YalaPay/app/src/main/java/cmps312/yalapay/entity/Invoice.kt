@@ -12,5 +12,4 @@ data class Invoice(
     val amount: Double,
     val invoiceDate: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
     val dueDate: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()).plus(15, DateTimeUnit.DAY),
-    var payments: MutableList<Cheque> = mutableListOf<Cheque>()
 )
