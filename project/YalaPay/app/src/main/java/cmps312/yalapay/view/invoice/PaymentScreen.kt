@@ -18,7 +18,7 @@ import cmps312.yalapay.entity.Payment
 import cmps312.yalapay.entity.getPaymentModes
 import cmps312.yalapay.view.components.Datepicker
 import cmps312.yalapay.view.components.Dropdown
-import cmps312.yalapay.view.components.TopBar
+import cmps312.yalapay.view.components.TopBarWithSave
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 import cmps312.yalapay.viewmodel.PaymentViewModel
 import kotlinx.datetime.*
@@ -98,7 +98,7 @@ fun PaymentScreen(onNavigateBack: () -> Unit) {
 
     Scaffold(
         topBar = {
-            TopBar(
+            TopBarWithSave(
                 title = screenTitle,
                 onNavigateBack = onNavigateBack,
                 onSubmit = { onSubmit() })

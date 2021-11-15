@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.Payment
-import cmps312.yalapay.view.components.TopBar
+import cmps312.yalapay.view.components.TopBarWithNavigateBack
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 import cmps312.yalapay.viewmodel.PaymentViewModel
 
@@ -42,24 +42,7 @@ fun InvoicePayments(onNavigateBack: () -> Unit, onUpdatePayment: () -> Unit) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Invoice Details",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        onNavigateBack()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back",
-                        )
-                    }
-                })
+            TopBarWithNavigateBack (title = "Invoice Payments", onNavigateBack)
         }
     ) {
         Card(

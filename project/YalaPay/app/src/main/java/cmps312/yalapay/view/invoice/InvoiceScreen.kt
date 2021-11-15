@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.FormMode
 import cmps312.yalapay.entity.Invoice
 import cmps312.yalapay.view.components.Datepicker
-import cmps312.yalapay.view.components.TopBar
+import cmps312.yalapay.view.components.TopBarWithSave
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 import kotlinx.datetime.*
 
@@ -65,7 +65,7 @@ fun InvoiceScreen(onNavigateBack: () -> Unit) {
 
     Scaffold(
         topBar = {
-            TopBar(
+            TopBarWithSave(
                 title = screenTitle,
                 onNavigateBack = onNavigateBack,
                 onSubmit = { onSubmit() })

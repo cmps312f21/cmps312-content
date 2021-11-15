@@ -13,7 +13,7 @@ import cmps312.yalapay.entity.Address
 import cmps312.yalapay.entity.ContactDetails
 import cmps312.yalapay.entity.Customer
 import cmps312.yalapay.entity.FormMode
-import cmps312.yalapay.view.components.TopBar
+import cmps312.yalapay.view.components.TopBarWithSave
 import cmps312.yalapay.view.components.displayMessage
 import cmps312.yalapay.viewmodel.CustomerViewModel
 
@@ -88,7 +88,7 @@ fun CustomerDetails(onNavigateBack: ()->Unit) {
 
     Scaffold(
         topBar = {
-            TopBar(
+            TopBarWithSave(
             title = screenTitle,
             onNavigateBack = onNavigateBack,
             onSubmit = { onSubmit() })

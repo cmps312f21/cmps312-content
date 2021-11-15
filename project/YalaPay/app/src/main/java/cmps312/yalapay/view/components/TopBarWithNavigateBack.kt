@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun TopBar(title: String, onNavigateBack: () -> Unit, onSubmit: () -> Unit) {
+fun TopBarWithNavigateBack(title: String, onNavigateBack: () -> Unit) {
     TopAppBar(
         title = {
             Text(
@@ -31,19 +31,6 @@ fun TopBar(title: String, onNavigateBack: () -> Unit, onSubmit: () -> Unit) {
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "Back",
                 )
-            }
-        },
-        actions = {
-            IconButton(onClick = {
-                onSubmit()
-            }) {
-                Column {
-                    Icon(
-                        imageVector = Icons.Outlined.Save,
-                        contentDescription = "Save",
-                    )
-                    Text("Save")
-                }
             }
         }
     )
