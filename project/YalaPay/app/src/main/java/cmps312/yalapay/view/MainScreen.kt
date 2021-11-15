@@ -1,10 +1,7 @@
 package cmps312.yalapay.view
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -46,17 +43,20 @@ fun AppBottomBar(navController: NavController, currentRoute: String?) {
             Screen.ChequeDepositList
         )
         BottomNavigation() {
-            bottomNavItems.forEach { screen ->
+            bottomNavItems.forEach { navItem ->
                 BottomNavigationItem(
-                    selected = screen.route == currentRoute,
+                    selected = navItem.route == currentRoute,
                     onClick = {
-                        navController.navigate(screen.route)
+                        navController.navigate(navItem.route)
                     },
                     icon = {
                         Icon(
-                            imageVector = screen.icon,
-                            contentDescription = screen.title
+                            imageVector = navItem.icon,
+                            contentDescription = navItem.title
                         )
+                    },
+                    label = {
+                        Text(text = navItem.title)
                     },
                     alwaysShowLabel = false
                 )
