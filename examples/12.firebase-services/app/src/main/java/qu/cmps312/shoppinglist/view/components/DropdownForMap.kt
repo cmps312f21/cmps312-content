@@ -14,11 +14,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
 
 @Composable
-fun Dropdown(label: String,
-             options: List<String>,
-             selectedOption: String,
-             onSelectionChange: (String)-> Unit,
-             modifier: Modifier = Modifier) {
+fun DropdownForMap(
+    label: String,
+    options: Map<String, String>?,
+    selectedOptionId: String,
+    onSelectionChange: (String, String)-> Unit) {
+
     var expanded by remember { mutableStateOf(false) }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
@@ -28,12 +29,14 @@ fun Dropdown(label: String,
     else
         Icons.Filled.ArrowDropDown
 
+    val selectedOption = options?.get(selectedOptionId) ?: ""
     Column {
         OutlinedTextField(
             value = selectedOption,
-            onValueChange = onSelectionChange,
-            modifier =
-                modifier.onGloballyPositioned { coordinates ->
+            onValueChange = {  },
+            modifier = Modifier
+                .fillMaxWidth()
+                .onGloballyPositioned { coordinates ->
                     //This value is used to assign to the DropDown the same width
                     textFieldSize = coordinates.size.toSize()
                 },
@@ -51,14 +54,14 @@ fun Dropdown(label: String,
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = modifier.width(width)
+            modifier = Modifier.width(width)
         ) {
-            options.forEach { option ->
+            options?.forEach { option ->
                 DropdownMenuItem(onClick = {
-                    onSelectionChange(option)
+                    onSelectionChange(option.key, option.value)
                     expanded = false
                 }) {
-                    Text(text = option)
+                    Text(text = option.value)
                 }
             }
         }

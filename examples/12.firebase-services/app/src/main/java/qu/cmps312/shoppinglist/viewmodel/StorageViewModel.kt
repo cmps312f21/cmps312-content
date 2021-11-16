@@ -122,6 +122,7 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
         return stream.toByteArray()
     }
 
+    /*
     fun savePictureToInternalStorage(bitmap: Bitmap, filename: String = ""): Uri? {
         return try {
             // Assign a unique identifier is the filename is empty
@@ -144,4 +145,5 @@ class StorageViewModel(private val appContext: Application) : AndroidViewModel(a
             null
         }
     }
+    */
 }

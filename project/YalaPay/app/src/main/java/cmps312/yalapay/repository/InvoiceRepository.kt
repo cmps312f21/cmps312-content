@@ -68,7 +68,7 @@ class InvoiceRepository (private val context: Context) {
     fun getInvoices(invoiceStatus: String,
                     fromDate: LocalDate, toDate: LocalDate): List<Invoice> {
         val invoices = getInvoices()
-        return invoices.filter { (it.dueDate in fromDate..toDate) &&
+        return invoices.filter { (it.invoiceDate in fromDate..toDate) &&
                 (it.status == invoiceStatus || invoiceStatus == "All") }
     }
 }

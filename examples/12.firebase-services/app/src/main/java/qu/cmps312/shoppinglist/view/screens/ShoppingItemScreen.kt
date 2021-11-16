@@ -1,4 +1,4 @@
-package qu.cmps312.shoppinglist.view
+package qu.cmps312.shoppinglist.view.screens
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import qu.cmps312.shoppinglist.entity.ShoppingItem
-import qu.cmps312.shoppinglist.view.components.Dropdown
+import qu.cmps312.shoppinglist.view.components.DropdownForMap
 import qu.cmps312.shoppinglist.view.components.TopBar
 import qu.cmps312.shoppinglist.viewmodel.ShoppingViewModel
 
@@ -80,7 +80,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(8.dp)
         ) {
-            Dropdown(
+            DropdownForMap(
                 label = "Select a Category",
                 options = categoryOptions,
                 selectedOptionId = categoryId,
@@ -88,7 +88,7 @@ fun ShoppingItemScreen(onNavigateBack: () -> Unit) {
                         categoryId = selectedCategoryId
                 })
 
-            Dropdown(
+            DropdownForMap(
                 label = "Select a Product",
                 options = productOptions,
                 selectedOptionId = productId,

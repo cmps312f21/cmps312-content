@@ -9,12 +9,11 @@ import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import qu.cmps312.shoppinglist.entity.ShoppingItem
-import qu.cmps312.shoppinglist.repository.ShoppingFsRepository
 import qu.cmps312.shoppinglist.repository.ShoppingRepository
 
 class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) {
     //private val shoppingRepository = ShoppingRepository(appContext)
-    private val shoppingRepository = ShoppingFsRepository(appContext)
+    private val shoppingRepository = ShoppingRepository(appContext)
 
     var selectedShoppingItem : ShoppingItem? = null
     private var shoppingListUpdateListener : ListenerRegistration? = null
@@ -26,6 +25,7 @@ class ShoppingViewModel(appContext: Application) : AndroidViewModel(appContext) 
         getShoppingListItems()
     }
 
+    // Observe Firestore ShoppingList collection and get notified of changes
     private fun getShoppingListItems() {
         shoppingListUpdateListener?.remove()
 

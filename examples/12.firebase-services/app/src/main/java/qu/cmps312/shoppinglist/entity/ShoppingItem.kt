@@ -1,22 +1,10 @@
 package qu.cmps312.shoppinglist.entity
 
-import androidx.room.*
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
-import kotlinx.datetime.*
-import kotlinx.datetime.TimeZone
 import java.util.*
 
-/*  (foreignKeys = [ForeignKey(entity = Product::class,
-    parentColumns = ["id"],
-    childColumns = ["productId"],
-    onDelete = ForeignKey.CASCADE)],
-    // Create an index on the productId column to speed-up query execution
-    indices = [Index(value = ["productId"])]) */
-
-@Entity
 data class ShoppingItem(
-    @PrimaryKey
     @DocumentId
     val id: String = "",
     var productId: String,

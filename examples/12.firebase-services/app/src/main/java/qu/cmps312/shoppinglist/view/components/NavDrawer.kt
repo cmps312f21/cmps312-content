@@ -64,7 +64,7 @@ fun NavDrawer(navController: NavController,
         authViewModel.currentUser?.let {
             navDrawerItems.add(0,  Screen.Logout)
             Text(
-                text = "Welcome ${it.firstName} ${it.firstName}",
+                text = "Welcome ${it.firstName} ${it.lastName}",
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier

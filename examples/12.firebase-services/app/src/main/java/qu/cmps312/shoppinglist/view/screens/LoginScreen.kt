@@ -1,9 +1,8 @@
-package qu.cmps312.shoppinglist.view
+package qu.cmps312.shoppinglist.view.screens
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -14,7 +13,6 @@ import androidx.compose.material.icons.outlined.Login
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -28,12 +26,13 @@ import qu.cmps312.shoppinglist.view.components.displayMessage
 import qu.cmps312.shoppinglist.viewmodel.AuthViewModel
 
 @Composable
-fun LoginScreen(onLoginSuccess: ()-> Unit) {
+fun LoginScreen(onLoginSuccess: ()-> Unit, onSignup: ()-> Unit) {
     val authViewModel =
         viewModel<AuthViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
     var email by remember { mutableStateOf("erradi@live.com") }
     var password by remember { mutableStateOf("pass123") }
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
@@ -76,7 +75,9 @@ fun LoginScreen(onLoginSuccess: ()-> Unit) {
                 modifier = Modifier.fillMaxWidth(0.8f),
             )
             Button(
-                onClick = { authViewModel.signIn(email, password) },
+                onClick = {
+                        authViewModel.signIn(email, password)
+                },
                 modifier = Modifier.fillMaxWidth(0.8f).height(50.dp)
             ) {
                 Text(text = "Login")
@@ -95,7 +96,7 @@ fun LoginScreen(onLoginSuccess: ()-> Unit) {
             Text(text = "Signup",
                 style = TextStyle(color = Color.Blue, textDecoration = TextDecoration.Underline),
                 modifier = Modifier.clickable {
-
+                    onSignup()
                 }
             )
         }

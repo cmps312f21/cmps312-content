@@ -1,4 +1,4 @@
-package qu.cmps312.shoppinglist.view
+package qu.cmps312.shoppinglist.view.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

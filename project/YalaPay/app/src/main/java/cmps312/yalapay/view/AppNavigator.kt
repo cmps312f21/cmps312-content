@@ -24,10 +24,10 @@ import cmps312.yalapay.view.report.InvoiceReport
 @Composable
 fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues) {
     NavHost(navController = navController,
-            startDestination = Screen.LoginScreen.route,
+            startDestination = Screen.Login.route,
             modifier = Modifier.padding(paddingValues)
     ) {
-        composable(route = Screen.LoginScreen.route) {
+        composable(route = Screen.Login.route) {
            LoginScreen {
                 navController.navigate(Screen.Dashboard.route)
             }
@@ -37,15 +37,15 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
         composable(route = Screen.Customers.route) {
             CustomersList(
                 onAddCustomer = {
-                    navController.navigate(Screen.CustomerScreen.route)
+                    navController.navigate(Screen.Customer.route)
                 },
                 onCustomerEdit = {
-                    navController.navigate(Screen.CustomerScreen.route)
+                    navController.navigate(Screen.Customer.route)
                 }
             )
         }
 
-        composable(route = Screen.CustomerScreen.route) {
+        composable(route = Screen.Customer.route) {
             CustomerScreen {
                 navController.navigateUp()
             }
@@ -55,27 +55,27 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
         composable(route = Screen.Invoices.route) {
             InvoicesList(
                 onAddInvoice = {
-                    navController.navigate(Screen.InvoiceScreen.route)
+                    navController.navigate(Screen.Invoice.route)
                 },
                 onUpdateInvoice = {
-                    navController.navigate(Screen.InvoiceScreen.route)
+                    navController.navigate(Screen.Invoice.route)
                 },
                 onGetPayments = {
                     navController.navigate(Screen.InvoicePayments.route)
                 },
                 onAddPayment = {
-                    navController.navigate(Screen.PaymentScreen.route)
+                    navController.navigate(Screen.Payment.route)
                 }
             )
         }
 
-        composable(route = Screen.InvoiceScreen.route) {
+        composable(route = Screen.Invoice.route) {
             InvoiceScreen{
                 navController.navigateUp()
             }
         }
 
-        composable(route = Screen.PaymentScreen.route) {
+        composable(route = Screen.Payment.route) {
             PaymentScreen {
                 navController.navigateUp()
             }
@@ -87,19 +87,19 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
                     navController.navigate(Screen.Invoices.route)
                 },
                 onUpdatePayment = {
-                    navController.navigate(Screen.PaymentScreen.route)
+                    navController.navigate(Screen.Payment.route)
                 }
             )
         }
 
-        composable(route = Screen.PaymentScreen.route) {
+        composable(route = Screen.Payment.route) {
             PaymentScreen {
                 navController.navigateUp()
             }
         }
 
         /// ChequeDeposit
-        composable(route = Screen.ChequeDepositScreen.route) {
+        composable(route = Screen.ChequeDeposit.route) {
             ChequeDepositScreen {
                 navController.navigateUp()
             }
@@ -108,13 +108,13 @@ fun AppNavigator(navController: NavHostController, paddingValues: PaddingValues)
         composable(Screen.ChequeDeposits.route) {
             ChequeDepositsList(
                 onAddChequeDeposit = {
-                    navController.navigate(Screen.ChequeDepositScreen.route)
+                    navController.navigate(Screen.ChequeDeposit.route)
                 },
                 onViewChequeDeposit = {
-                    navController.navigate(Screen.ChequeDepositScreen.route)
+                    navController.navigate(Screen.ChequeDeposit.route)
                 },
                 onUpdateChequeDeposit = {
-                    navController.navigate(Screen.ChequeDepositScreen.route)
+                    navController.navigate(Screen.ChequeDeposit.route)
                 },
             )
         }

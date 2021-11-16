@@ -9,28 +9,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
-    object LoginScreen : Screen(
-        route = "LoginScreen", title = "Login",
+    object Login : Screen(
+        route = "login", title = "Login",
         icon = Icons.Outlined.Login
     )
 
-    object Dashboard : Screen(
-        route = "Dashboard", title = "Dashboard",
-        icon = Icons.Outlined.Dashboard
+    object Customers : Screen(
+        route = "customers", title = "Customers",
+        icon = Icons.Outlined.People
     )
 
-    object CustomerScreen : Screen(
-        route = "CustomerScreen", title = "Customer",
+    object Customer : Screen(
+        route = "customer", title = "Customer",
         icon = Icons.Outlined.Details
     )
 
-    object Customers : Screen(
-        route = "Customers", title = "Customers",
-        icon = Icons.Outlined.ManageAccounts
-    )
-
     object Invoices : Screen(
-        route = "Invoices", title = "Invoices",
+        route = "invoices", title = "Invoices",
         icon = Icons.Outlined.Receipt
     )
 
@@ -39,18 +34,13 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.Details
     )
 
-    object InvoiceReport : Screen(
-        route = "InvoiceReport", title = "Invoice Report",
-        icon = Icons.Outlined.PieChart
-    )
-
-    object InvoiceScreen : Screen(
-        route = "Invoice", title = "Invoice",
+    object Invoice : Screen(
+        route = "invoice", title = "Invoice",
         icon = Icons.Outlined.AddAPhoto
     )
 
-    object PaymentScreen : Screen(
-        route = "Payment", title = "Payment",
+    object Payment : Screen(
+        route = "payment", title = "Payment",
         icon = Icons.Outlined.AttachMoney
     )
 
@@ -59,9 +49,19 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
         icon = Icons.Outlined.AccountBalanceWallet
     )
 
-    object ChequeDepositScreen : Screen(
+    object ChequeDeposit : Screen(
         route = "ChequeDeposit", title = "Cheque Deposit",
         icon = Icons.Outlined.AccountBalanceWallet
+    )
+
+    object Dashboard : Screen(
+        route = "dashboard", title = "Dashboard",
+        icon = Icons.Outlined.Dashboard
+    )
+
+    object InvoiceReport : Screen(
+        route = "InvoiceReport", title = "Invoice Report",
+        icon = Icons.Outlined.PieChart
     )
 
     object ChequeReport : Screen(

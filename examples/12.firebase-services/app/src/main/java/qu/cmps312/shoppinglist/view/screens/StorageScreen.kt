@@ -1,4 +1,4 @@
-package qu.cmps312.shoppinglist.view
+package qu.cmps312.shoppinglist.view.screens
 
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult

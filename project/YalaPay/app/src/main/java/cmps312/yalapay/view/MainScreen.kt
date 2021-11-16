@@ -17,7 +17,7 @@ fun MainScreen() {
     Scaffold(
         bottomBar = { AppBottomBar(navHostController, currentRoute) },
         drawerContent = {
-            if (currentRoute != Screen.LoginScreen.route) {
+            if (currentRoute != Screen.Login.route) {
                 Drawer(navHostController)
             }
         },
@@ -29,7 +29,7 @@ fun MainScreen() {
 
 @Composable
 fun AppBottomBar(navController: NavController, currentRoute: String?) {
-    if (currentRoute != Screen.LoginScreen.route) {
+    if (currentRoute != Screen.Login.route) {
         val bottomNavItems = listOf(
             Screen.Dashboard,
             Screen.Customers,

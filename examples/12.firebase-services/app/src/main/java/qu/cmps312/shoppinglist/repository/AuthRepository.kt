@@ -20,7 +20,8 @@ class AuthRepository {
     }
 
     suspend fun signUp(user: User) : User? = withContext(Dispatchers.IO) {
-        val authResult = Firebase.auth.createUserWithEmailAndPassword(user.email, user.password).await()
+        val authResult =
+            Firebase.auth.createUserWithEmailAndPassword(user.email, user.password).await()
 
         authResult?.user?.let {
             val userProfileChangeRequest = userProfileChangeRequest {
@@ -39,25 +40,20 @@ class AuthRepository {
             println(">> Debug: signUp.user.uid : ${user.uid}")
             addUser(user)
             user
-        }
+        } ?: throw Exception("Signup failed")
     }
 
     private suspend fun addUser(user: User) {
         userCollectionRef.document(user.uid).set(user).await()
     }
 
-    suspend fun signIn(email: String, password: String) : User? = withContext(Dispatchers.IO) {
+    suspend fun signIn(email: String, password: String) : User = withContext(Dispatchers.IO) {
         val authResult = Firebase.auth.signInWithEmailAndPassword(email, password).await()
         println(">> Debug: signIn.authResult : ${authResult.user?.uid}")
 
-        var user : User? = null
-        // Get the user details from Firestore
         authResult?.user?.let {
-            val uid = it.uid
-            user = getUser(uid)
-        }
-        println(">> Debug: signIn.user : $user")
-        user
+            getUser(it.uid)
+        } ?: throw Exception("Email and/or password invalid")
     }
 
     suspend fun getUser(uid: String) = withContext(Dispatchers.IO) {
