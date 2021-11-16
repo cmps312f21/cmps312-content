@@ -31,7 +31,7 @@ sealed class Screen(val route: String, val title: String, val icon: ImageVector)
 
     object Invoices : Screen(
         route = "Invoices", title = "Invoices",
-        icon = Icons.Outlined.Money
+        icon = Icons.Outlined.Receipt
     )
 
     object InvoicePayments : Screen(

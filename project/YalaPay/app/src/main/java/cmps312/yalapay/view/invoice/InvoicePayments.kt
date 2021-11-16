@@ -15,8 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +29,7 @@ import cmps312.yalapay.entity.status
 import cmps312.yalapay.ui.theme.LightGreen
 import cmps312.yalapay.ui.theme.LightYellow
 import cmps312.yalapay.ui.theme.Orange
+import cmps312.yalapay.view.components.ImageDialog
 import cmps312.yalapay.view.components.TopBarWithNavigateBack
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 import cmps312.yalapay.viewmodel.PaymentViewModel
@@ -106,6 +106,7 @@ fun InvoicePayments(onNavigateBack: () -> Unit, onUpdatePayment: () -> Unit) {
 
 @Composable
 fun PaymentCard(payment: Payment, onUpdatePayment: () -> Unit, onDeletePayment: () -> Unit) {
+    var openImageDialog by remember { mutableStateOf(false) }
     Card(
         elevation = 16.dp,
         backgroundColor = LightGreen,
@@ -142,7 +143,10 @@ fun PaymentCard(payment: Payment, onUpdatePayment: () -> Unit, onDeletePayment: 
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .size(120.dp)
+                                .clickable { openImageDialog = true }
                         )
+                        ImageDialog(openImageDialog, chequeImageId,
+                            onOpenDialogChange = { openImageDialog = it })
                     }
                 }
             }
