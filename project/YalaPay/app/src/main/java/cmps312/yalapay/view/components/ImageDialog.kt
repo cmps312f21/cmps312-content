@@ -1,6 +1,7 @@
 package cmps312.yalapay.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -25,10 +26,8 @@ fun ImageDialog(openDialog: Boolean,
                 Image(
                     painterResource(imageResourceId), contentDescription = "",
                     modifier = Modifier.graphicsLayer { rotationZ = 90F }
-                                       .fillMaxSize(),
-                    //modifier = Modifier.size(640.dp, 480.dp),
-                    contentScale = ContentScale.FillHeight
-                    //modifier = Modifier.fillMaxSize()
+                        .fillMaxSize(),
+                    contentScale = ContentScale.Fit
                 )
             },
             modifier = Modifier.fillMaxSize()
