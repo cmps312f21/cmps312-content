@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cmps312.yalapay.entity.Cheque
+import cmps312.yalapay.ui.theme.LightGreen
+import cmps312.yalapay.ui.theme.LightSilver
+import cmps312.yalapay.ui.theme.LightYellow
 import cmps312.yalapay.view.components.Dropdown
 import kotlinx.datetime.*
 
@@ -33,7 +36,7 @@ fun ChequeCard(
 
     Card(
         elevation = 16.dp,
-        backgroundColor = if (!isIncluded) Color.LightGray else Color.Yellow,
+        backgroundColor = if (!isIncluded) LightSilver else LightGreen,
         modifier = Modifier
             .padding(vertical = 8.dp, horizontal = 8.dp)
             .border(

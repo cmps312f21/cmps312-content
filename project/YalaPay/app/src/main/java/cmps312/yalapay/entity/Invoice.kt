@@ -9,10 +9,14 @@ import java.security.SecureRandom
 data class Invoice(
     var invoiceNo: Int = SecureRandom().nextInt(1000),
     val customerId: Int,
+    //Stored for convenience as it is unlikely the change
+    val customerName: String = "",
     val amount: Double,
     val invoiceDate: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()),
     val dueDate: LocalDate = Clock.System.todayAt(TimeZone.currentSystemDefault()).plus(15, DateTimeUnit.DAY),
 ) {
+    // This property is computed when invoices are retrieved
+    // Used only for displaying and should NOT be stored in the database
     var totalPayments: Double = 0.0
 }
 

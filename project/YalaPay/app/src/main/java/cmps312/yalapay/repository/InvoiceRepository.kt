@@ -1,10 +1,6 @@
 package cmps312.yalapay.repository
 
 import android.content.Context
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import cmps312.yalapay.entity.Invoice
 import cmps312.yalapay.entity.InvoicesSummary
 import cmps312.yalapay.entity.status
@@ -13,7 +9,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class InvoiceRepository (private val context: Context) {
-    val paymentRepository = PaymentRepository(context)
+    private val paymentRepository = PaymentRepository(context)
 
     companion object {
         var invoices = mutableListOf<Invoice>()
@@ -22,6 +18,11 @@ class InvoiceRepository (private val context: Context) {
     fun getInvoices() : List<Invoice> {
         if (invoices.isEmpty())
             invoices = Json.decodeFromString<List<Invoice>>(readData(context, "invoices.json")) as MutableList<Invoice>
+
+        // Not very efficient but could not find a better way to get the latest total payments
+        for(invoice in invoices)
+            invoice.totalPayments = paymentRepository.getTotalPayments(invoice.invoiceNo)
+
         return invoices
     }
 
@@ -67,10 +68,7 @@ class InvoiceRepository (private val context: Context) {
     fun getInvoices(invoiceStatus: String,
                     fromDate: LocalDate, toDate: LocalDate): List<Invoice> {
         val invoices = getInvoices()
-        val filteredInvoices = invoices.filter { (it.dueDate in fromDate..toDate) }
-        for(invoice in filteredInvoices)
-            invoice.totalPayments = paymentRepository.getTotalPayments(invoice.invoiceNo)
-
-        return  filteredInvoices.filter { it.status == invoiceStatus || invoiceStatus == "All" }
+        return invoices.filter { (it.dueDate in fromDate..toDate) &&
+                (it.status == invoiceStatus || invoiceStatus == "All") }
     }
 }

@@ -20,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.Invoice
+import cmps312.yalapay.entity.balance
+import cmps312.yalapay.entity.status
+import cmps312.yalapay.ui.theme.LightYellow
 import cmps312.yalapay.view.components.TopSearchBar
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 
@@ -111,7 +114,7 @@ fun InvoiceCard(
 ) {
     Card(
         elevation = 8.dp,
-        backgroundColor = Color.White,
+        backgroundColor = LightYellow,
         modifier = Modifier.padding(8.dp),
         shape = RoundedCornerShape(15.dp)
     ) {
@@ -127,11 +130,11 @@ fun InvoiceCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "Invoice No. :${invoice.invoiceNo}")
+                Text(text = "Invoice # ${invoice.invoiceNo} (${invoice.status})")
                 Text(text = "Invoice date: ${invoice.invoiceDate}")
                 Text(text = "Due date: ${invoice.dueDate}")
-                Text(text = "Customer ID: ${invoice.customerId}")
-                Text(text = "Amount: ${invoice.amount}")
+                Text(text = "Customer #${invoice.customerId} - ${invoice.customerName}")
+                Text(text = "Amount: ${invoice.amount} - Balance: ${invoice.balance}")
             }
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Icon(

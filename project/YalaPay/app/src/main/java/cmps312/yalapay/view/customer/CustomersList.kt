@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.Customer
+import cmps312.yalapay.ui.theme.LightYellow
 import cmps312.yalapay.view.components.SearchBox
 import cmps312.yalapay.view.components.TopSearchBar
 import cmps312.yalapay.viewmodel.CustomerViewModel
@@ -95,7 +96,7 @@ fun CustomersList(onCustomerEdit: () -> Unit,
 fun CustomerCard(customer: Customer, onUpdateCustomer: () -> Unit, onDeleteCustomer: () -> Unit) {
     Card(
         elevation = 8.dp,
-        backgroundColor = Color.White,
+        backgroundColor = LightYellow,
         modifier = Modifier.padding(8.dp),
         shape = RoundedCornerShape(16.dp)
     ) {

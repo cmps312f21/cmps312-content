@@ -30,6 +30,7 @@ class ChequeDepositViewModel (appContext: Application) : AndroidViewModel(appCon
     private fun getBankAccounts() {
         bankAccounts.putAll(paymentRepository.getBankAccounts())
     }
+
     private fun getRetunReasons() {
         returnReasons.addAll(paymentRepository.getReturnReasons())
     }

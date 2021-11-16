@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.FormMode
 import cmps312.yalapay.entity.Invoice
 import cmps312.yalapay.view.components.Datepicker
+import cmps312.yalapay.view.components.DropdownForMap
 import cmps312.yalapay.view.components.TopBarWithSave
 import cmps312.yalapay.viewmodel.InvoiceViewModel
 import kotlinx.datetime.*
@@ -21,7 +22,6 @@ fun InvoiceScreen(onNavigateBack: () -> Unit) {
     val invoiceViewModel =
         viewModel<InvoiceViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
-    val context = LocalContext.current
     val selectedInvoice = invoiceViewModel.selectedInvoice
 
     var formMode = FormMode.ADD
@@ -35,6 +35,11 @@ fun InvoiceScreen(onNavigateBack: () -> Unit) {
     var customerId by remember {
         mutableStateOf(selectedInvoice?.customerId?.toString() ?: "")
     }
+
+    var customerName by remember {
+        mutableStateOf(selectedInvoice?.customerName?.toString() ?: "")
+    }
+
     var amount by remember {
         mutableStateOf(selectedInvoice?.amount?.toString() ?: "")
     }
@@ -75,12 +80,14 @@ fun InvoiceScreen(onNavigateBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
-            OutlinedTextField(
-                value = customerId,
-                onValueChange = { customerId = it },
-                label = { Text(text = "Customer Id") },
-                modifier = Modifier.fillMaxWidth()
-            )
+
+            DropdownForMap(label = "Customer",
+                options = invoiceViewModel.customers,
+                selectedOptionId = customerId,
+                onSelectionChange = { selectedCustomerId, selectedCustomerName ->
+                    customerId = selectedCustomerId
+                    customerName = selectedCustomerName
+                })
 
             OutlinedTextField(
                 value = amount,

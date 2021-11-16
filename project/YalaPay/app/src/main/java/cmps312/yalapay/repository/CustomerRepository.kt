@@ -17,6 +17,11 @@ class CustomerRepository (private val context: Context) {
         return customers
     }
 
+    // Needed to fill the customer's dropdown
+    fun getCustomersAsMap() : Map<String, String> {
+        return getCustomers().associate { Pair(it.customerId.toString(), it.toString()) }
+    }
+
     fun getCustomer(customerId: Int) = getCustomers().filter { it.customerId == customerId }
 
     fun getCustomers(searchText: String) =

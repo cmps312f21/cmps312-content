@@ -8,11 +8,19 @@ import cmps312.yalapay.repository.PaymentRepository
 
 class PaymentViewModel (appContext: Application) : AndroidViewModel(appContext) {
     private val paymentRepository = PaymentRepository(appContext)
-    val banks = mutableStateListOf(*paymentRepository.getBanks().toTypedArray())
+    val banks = mutableStateListOf<String>()
 
     // Payments for a particular invoice
     val payments = mutableStateListOf<Payment>()
     var selectedPayment: Payment? = null
+
+    init {
+        getBanks()
+    }
+
+    private fun getBanks() {
+        banks.addAll(paymentRepository.getBanks())
+    }
 
     fun getPayments(invoiceNo: Int) {
         payments.clear()

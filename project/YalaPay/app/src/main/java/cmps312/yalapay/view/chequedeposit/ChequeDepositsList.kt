@@ -1,10 +1,12 @@
 package cmps312.yalapay.view.chequedeposit
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,13 +16,14 @@ import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.ChequeDeposit
 import cmps312.yalapay.entity.ChequeDepositStatus
 import cmps312.yalapay.entity.FormMode
+import cmps312.yalapay.ui.theme.LightSilver
+import cmps312.yalapay.ui.theme.LightYellow
 import cmps312.yalapay.viewmodel.ChequeDepositViewModel
 
 @Composable
@@ -95,8 +98,9 @@ fun ChequeDepositCard(chequeDeposit: ChequeDeposit,
                       onDeleteChequeDeposit: ()-> Unit) {
     Card(
         elevation = 20.dp,
-        backgroundColor = Color.White,
-        modifier = Modifier.padding(8.dp).fillMaxSize()
+        backgroundColor = LightYellow,
+        modifier = Modifier.padding(16.dp).fillMaxSize()
+            .border(width = 2.dp, color = LightSilver, shape = RoundedCornerShape(8.dp))
             .clickable {
                 onViewChequeDeposit()
             }
@@ -104,13 +108,16 @@ fun ChequeDepositCard(chequeDeposit: ChequeDeposit,
         Row {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(4.dp).weight(1f)
+                modifier = Modifier.padding(16.dp).weight(1f)
             ) {
                 Text(text = "Deposit #${chequeDeposit.depositId} on ${chequeDeposit.depositDate}")
                 Text(text = "Status: ${chequeDeposit.depositStatus} ")
                 Text(text = "Cheques Count: ${chequeDeposit.chequeNos.count()}")
             }
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Outlined.Visibility,
                     contentDescription = "View",
