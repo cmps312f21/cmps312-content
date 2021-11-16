@@ -1,10 +1,7 @@
 package cmps312.yalapay.view.report
 
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -22,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cmps312.yalapay.entity.Invoice
+import cmps312.yalapay.entity.getChequeStatus
 import cmps312.yalapay.entity.getInvoiceStatus
 import cmps312.yalapay.view.components.Datepicker
 import cmps312.yalapay.view.components.Dropdown
@@ -53,29 +51,39 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         ) {
 
-            Datepicker("From Date", initialDate = fromDate,
-                onDateChange = { fromDate = it }
-            )
-            Datepicker("To Date", initialDate = toDate,
-                onDateChange = { toDate = it }
-            )
-
-            Dropdown(label = "Invoice Status",
-                options = getInvoiceStatus(),
-                selectedOption = invoiceStatus,
-                onSelectionChange = { invoiceStatus = it }
-            )
-
-            Button(
-                onClick = {
-                    invoices.clear()
-                    invoices.addAll(reportViewModel.getInvoices(invoiceStatus, fromDate, toDate))
-                },
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(16.dp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(text = "Submit")
+                Datepicker("From Date", initialDate = fromDate,
+                    modifier = Modifier.weight(1f),
+                    onDateChange = { fromDate = it }
+                )
+                Datepicker("To Date", initialDate = toDate,
+                    modifier = Modifier.weight(1f),
+                    onDateChange = { toDate = it }
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Dropdown(label = "Invoice Status",
+                    options = getInvoiceStatus(),
+                    selectedOption = invoiceStatus,
+                    onSelectionChange = { invoiceStatus = it }
+                )
+
+                Button(
+                    onClick = {
+                        invoices.clear()
+                        invoices.addAll(reportViewModel.getInvoices(invoiceStatus, fromDate, toDate))
+                    },
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Text(text = "Submit")
+                }
             }
             if (invoices.isEmpty()) {
                 Text("No invoices Found.")
@@ -100,12 +108,12 @@ fun InvoiceReport(onNavigateBack: () -> Unit) {
 @Composable
 fun ReportFooter(invoicesCount: Int, invoicesTotal: Double) {
     Text(
-        text = "Invoices Count: $invoicesCount - Total Amount: $invoicesTotal ",
+        text = "Invoices Count: $invoicesCount - Total: $invoicesTotal ",
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
+            fontSize = 16.sp,
             color = Color.Blue
         )
     )

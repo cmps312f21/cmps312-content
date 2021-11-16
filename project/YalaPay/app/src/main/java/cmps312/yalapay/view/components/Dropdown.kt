@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.toSize
 fun Dropdown(label: String,
              options: List<String>,
              selectedOption: String,
-             onSelectionChange: (String)-> Unit) {
+             onSelectionChange: (String)-> Unit,
+             modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
@@ -31,9 +32,8 @@ fun Dropdown(label: String,
         OutlinedTextField(
             value = selectedOption,
             onValueChange = onSelectionChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .onGloballyPositioned { coordinates ->
+            modifier =
+                modifier.onGloballyPositioned { coordinates ->
                     //This value is used to assign to the DropDown the same width
                     textFieldSize = coordinates.size.toSize()
                 },
@@ -51,7 +51,7 @@ fun Dropdown(label: String,
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.width(width)
+            modifier = modifier.width(width)
         ) {
             options.forEach { option ->
                 DropdownMenuItem(onClick = {

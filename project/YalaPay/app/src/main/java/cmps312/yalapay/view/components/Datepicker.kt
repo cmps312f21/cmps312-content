@@ -21,7 +21,8 @@ import kotlinx.datetime.todayAt
 fun Datepicker(dateLabel: String,
                initialDate: LocalDate,
                onDateChange: (LocalDate)->Unit,
-               enabled: Boolean = true
+               enabled: Boolean = true,
+               modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 
@@ -48,7 +49,7 @@ fun Datepicker(dateLabel: String,
             onDateChange(selectedDate)
         },
         label = { Text(dateLabel) },
-        modifier = Modifier.clickable(
+        modifier = modifier.clickable(
                 enabled = enabled,
                 onClick = {
                     datePickerDialog.show()

@@ -175,6 +175,7 @@ class PaymentRepository (private val context: Context) {
 
             if (cheque.chequeNo in returnedCheques.keys) {
                 cheque.status = ChequeStatus.RETURNED.label
+                cheque.returnReason = returnedCheques[cheque.chequeNo]
                 cheque.returnedDate = today
             } else {
                 cheque.status = chequeStatus.label

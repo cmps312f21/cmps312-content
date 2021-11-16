@@ -1,10 +1,7 @@
 package cmps312.yalapay.view.report
 
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -34,7 +31,7 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
     val reportViewModel =
         viewModel<ReportViewModel>(viewModelStoreOwner = LocalContext.current as ComponentActivity)
 
-    val cheques =  remember { mutableStateListOf<Cheque>() }
+    val cheques = remember { mutableStateListOf<Cheque>() }
     val toDay = Clock.System.todayAt(TimeZone.currentSystemDefault())
 
     var chequeStatus by remember { mutableStateOf("All") }
@@ -43,7 +40,7 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
 
     Scaffold(
         topBar = {
-            TopBarWithNavigateBack (title = "Cheque Report", onNavigateBack)
+            TopBarWithNavigateBack(title = "Cheque Report", onNavigateBack)
         }
     ) {
         Column(
@@ -51,30 +48,42 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
             modifier = Modifier.padding(8.dp)
         ) {
 
-            Datepicker("From Date", initialDate = fromDate,
-                onDateChange = { fromDate = it }
-            )
-            Datepicker("To Date", initialDate = toDate,
-                onDateChange = { toDate = it }
-            )
-
-            Dropdown(label = "Cheque Status",
-                options = getChequeStatus(),
-                selectedOption = chequeStatus,
-                onSelectionChange = { chequeStatus = it }
-            )
-
-            Button(
-                onClick = {
-                    cheques.clear()
-                    cheques.addAll(reportViewModel.getCheques(chequeStatus, fromDate, toDate))
-                },
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(16.dp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text(text = "Submit")
+                Datepicker("From Date", initialDate = fromDate,
+                    modifier = Modifier.weight(1f),
+                    onDateChange = { fromDate = it }
+                )
+                Datepicker("To Date", initialDate = toDate,
+                    modifier = Modifier.weight(1f),
+                    onDateChange = { toDate = it }
+                )
             }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Dropdown(
+                    label = "Cheque Status",
+                    options = getChequeStatus(),
+                    selectedOption = chequeStatus,
+                    onSelectionChange = { chequeStatus = it },
+                )
+
+                Button(
+                    onClick = {
+                        cheques.clear()
+                        cheques.addAll(reportViewModel.getCheques(chequeStatus, fromDate, toDate))
+                    },
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Text(text = "Submit")
+                }
+            }
+
             if (cheques.isEmpty()) {
                 Text("No cheques Found.")
             } else {
@@ -98,12 +107,12 @@ fun ChequeReport(onNavigateBack: () -> Unit) {
 @Composable
 fun ChequeReportFooter(chequesCount: Int, totalAmount: Double) {
     Text(
-        text = "Cheques Count: $chequesCount - Total Amount: $totalAmount ",
+        text = "Cheques Count: $chequesCount - Total: $totalAmount ",
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
+            fontSize = 16.sp,
             color = Color.Blue
         )
     )
